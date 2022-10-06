@@ -1,0 +1,31 @@
+﻿@page "LoginUsers"
+@model MyAffTest.Pages.LoginUsers.UserIndexModel
+@{
+    Layout = "../Shared/_Layout_Admin.cshtml";
+}
+<br>
+<h2>List of Registered Users</h2>
+@*<a class="nav-link text-dark" asp-area="" asp-page="/Loginusers/index">Users Info</a>*@
+<table class="table">
+    <thead>
+        <tr>
+            <th>User_Id</th>
+            <th>User Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ListUsers)
+        {
+            <tr>
+                <td>@item.User_Id</td>
+                <td>@item.UserName</td>
+                <td>@item.Email</td>
+                <td>@item.Password</td>
+                <td>@item.Created_at</td>
+            </tr>
+        }
+    </tbody>
+</table>
