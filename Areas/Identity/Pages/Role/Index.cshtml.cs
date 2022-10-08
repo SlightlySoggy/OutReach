@@ -1,18 +1,20 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace MyAffTest.Pages.Admin
+namespace MyAffTest.Areas.Identity.Pages.Role
 {
+    [Authorize]
     // https://learn.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-6.0
     // https://www.yogihosting.com/aspnet-core-identity-roles/
-    public class RoleManagerModel : PageModel
+    public class IndexModel : PageModel
     {
 
         RoleManager<IdentityRole> roleManager;
 
-        public RoleManagerModel(RoleManager<IdentityRole> roleManager)
+        public IndexModel(RoleManager<IdentityRole> roleManager)
         {
             this.roleManager = roleManager;
         }
@@ -23,6 +25,12 @@ namespace MyAffTest.Pages.Admin
 
             return Page();
 
+        }
+        public async Task<IActionResult> OnPostAsync()
+        {
+            IdentityRole role = await roleManager.FindByIdAsync(Request.Form["roleid"]);
+            await roleManager.DeleteAsync(role);
+            return RedirectToPage("Index");
         }
     }
 }
