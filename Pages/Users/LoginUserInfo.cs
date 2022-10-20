@@ -1,4 +1,4 @@
-﻿namespace MyAffTest.Pages.LoginUsers
+﻿namespace MyAffTest.Pages.Users
 {
     public class LoginUserInfo
     {

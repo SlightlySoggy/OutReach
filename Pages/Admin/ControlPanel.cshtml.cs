@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MyAffTest.Pages.LoginUsers;
+using MyAffTest.Pages.Users;
 
 namespace MyAffTest.Pages.Admin
 {

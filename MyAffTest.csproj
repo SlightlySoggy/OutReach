@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Pages\LoginRegister\" />
     <Folder Include="wwwroot\img\our-team\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>

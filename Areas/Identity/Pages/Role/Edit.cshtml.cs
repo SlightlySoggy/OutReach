@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using MyAffTest.Pages.LoginUsers;
+using MyAffTest.Pages.Users;
 
 namespace MyAffTest.Areas.Identity.Pages.Role
 {

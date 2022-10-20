@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyAffTest.Pages
+namespace MyAffTest.Pages.Opportunities
 {
-    public class AboutModel : PageModel
+    public class JoblistModel : PageModel
     { 
 
         public void OnGet()

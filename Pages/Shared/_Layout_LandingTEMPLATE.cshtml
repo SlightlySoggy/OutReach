@@ -142,7 +142,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5">
+        <a class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5" asp-area="" asp-page="/HomePages/">
             <h1 class="m-0 text-primary">OutReached</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -150,32 +150,35 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a href="index.html" class="nav-item nav-link active">Home</a>
-                <a class="nav-item nav-link" asp-area="" asp-page="/JOBSEARCHTEMPLATE/about"> About</a>
+                <a class="nav-item nav-link active" asp-area="" asp-page="/HomePages/index">Home</a>
+                <a class="nav-item nav-link" asp-area="" asp-page="/Content/about"> About</a>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a href="job-list.html" class="dropdown-item">Opportunity List</a>
-                        <a class="dropdown-item" asp-area="" asp-page="/JOBSEARCHTEMPLATE/job-detail">Opportunity Detail</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-detail">Opportunity Detail</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-create">Opportunity Create</a>
                     </div>
                 </div>
 
                 <div class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
                     <div class="dropdown-menu rounded-0 m-0">
-                        <a class="dropdown-item" asp-area="" asp-page="/JOBSEARCHTEMPLATE/category">Opportunity Category</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Content/category">Opportunity Category</a>
                         
-                        <a href="testimonial.html" class="dropdown-item">Testimonial</a>
-                        <a class="dropdown-item" asp-area="" asp-page="/JOBSEARCHTEMPLATE/pagenotfound">404</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Content/testimonial">Testimonial</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Error/404">404</a>
                     </div>
                 </div>
-                <a class="nav-item nav-link" asp-area="" asp-page="/JOBSEARCHTEMPLATE/contact"> Contact</a>
+                <a class="nav-item nav-link" asp-area="" asp-page="/Content/contact">Contact</a> 
 
-                <a class="nav-item nav-link" asp-area="" asp-page="/Loginusers/index"> Sign Up</a>
+                <a class="nav-item nav-link" asp-area="" asp-page="/Users/RegisteredUsers">Users</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Users/RegisteredUsers">Sign In</a>
 
             </div>
-            <a href="" class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block">Post A Opportunity<i class="fa fa-arrow-right ms-3"></i></a>
+            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="" asp-page="/Opportunities/job-create">Post A Opportunity<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
@@ -241,10 +244,10 @@
             <div class="copyright">
                 <div class="row">
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                        &copy; <a class="border-bottom" href="https://freewebsitecode.com">Your Site Name</a>, All Right Reserved.
+                        &copy; <a class="border-bottom" href="">OutReached</a>, All Right Reserved.
 
 
-                        Designed By <a class="border-bottom" href="https://freewebsitecode.com">Free Website Code</a>
+                        Designed By <a class="border-bottom" href="">Maxwell Li</a>
                     </div>
                     <div class="col-md-6 text-center text-md-end">
                         <div class="footer-menu">

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyAffTest.Pages
+namespace MyAffTest.Pages.Content
 {
-    public class PagenotfoundModel : PageModel
+    public class AboutModel : PageModel
     { 
 
         public void OnGet()

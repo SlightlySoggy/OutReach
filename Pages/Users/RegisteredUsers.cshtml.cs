@@ -4,16 +4,16 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyAffTest.Pages.Clients;
 using System.Data.SqlClient;
 
-namespace MyAffTest.Pages.LoginUsers
+namespace MyAffTest.Pages.Users
 {
     [Authorize]
-    public class UserIndexModel : PageModel
+    public class UsersModel : PageModel
     {
-        private readonly ILogger<UserIndexModel> _logger;
+        private readonly ILogger<UsersModel> _logger;
 
         public List<LoginUserInfo> ListUsers = new List<LoginUserInfo>();
 
-        public UserIndexModel(ILogger<UserIndexModel> logger)
+        public UsersModel(ILogger<UsersModel> logger)
         {
             _logger = logger;
         }

@@ -1,185 +1,287 @@
 ﻿<!DOCTYPE html>
-<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
-<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
-<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
-<!--[if (gte IE 9)|!(IE)]><!-->
-<html class="not-ie" lang="en">
- <!--<![endif]-->
+<html lang="en">
+
 <head>
-    <!-- Basic Meta Tags -->
     <meta charset="utf-8">
-    <title>My Affiliates</title>
-    <meta name="description" content="My Affiliates - Share resources and have fun together">
-    <meta name="keywords" content="My Affiliates, Share resources, free, thave fun">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--[if (gte IE 9)|!(IE)]>
-      <meta http-equiv="X-UA-Compatible" content="IE=edge">
-      <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <![endif]-->
+    <title>JobEntry - Job Portal Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
     <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon" type="image/png">
+    <link href="img/favicon.ico" rel="icon">
 
-    <!-- Styles -->
-    <link href="css/styles.css" rel="stylesheet">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Inter:wght@700;800&display=swap" rel="stylesheet">
 
-    <!-- Font Avesome Styles -->
-    <link href="css/font-awesome/font-awesome.css" rel="stylesheet">
-    <!--[if IE 7]>
-        <link href="css/font-awesome/font-awesome-ie7.min.css" rel="stylesheet">
-    <![endif]-->
-    <!-- FlexSlider Style -->
-    <link rel="stylesheet" href="css/flexslider.css" type="text/css" media="screen">
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Internet Explorer condition - HTML5 shim, for IE6-8 support of HTML5 elements -->
-    <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <!-- Libraries Stylesheet -->
+    <link href="~/TEMPLATE/lib/animate/animate.min.css" rel="stylesheet">
+    <link href="~/TEMPLATE/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="~/TEMPLATE/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="~/TEMPLATE/css/style.css" rel="stylesheet">
+
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+        <symbol id="bootstrap" viewBox="0 0 118 94">
+            <title>Bootstrap</title>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
+        </symbol>
+        <symbol id="home" viewBox="0 0 16 16">
+            <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z" />
+        </symbol>
+        <symbol id="speedometer2" viewBox="0 0 16 16">
+            <path d="M8 4a.5.5 0 0 1 .5.5V6a.5.5 0 0 1-1 0V4.5A.5.5 0 0 1 8 4zM3.732 5.732a.5.5 0 0 1 .707 0l.915.914a.5.5 0 1 1-.708.708l-.914-.915a.5.5 0 0 1 0-.707zM2 10a.5.5 0 0 1 .5-.5h1.586a.5.5 0 0 1 0 1H2.5A.5.5 0 0 1 2 10zm9.5 0a.5.5 0 0 1 .5-.5h1.5a.5.5 0 0 1 0 1H12a.5.5 0 0 1-.5-.5zm.754-4.246a.389.389 0 0 0-.527-.02L7.547 9.31a.91.91 0 1 0 1.302 1.258l3.434-4.297a.389.389 0 0 0-.029-.518z" />
+            <path fill-rule="evenodd" d="M0 10a8 8 0 1 1 15.547 2.661c-.442 1.253-1.845 1.602-2.932 1.25C11.309 13.488 9.475 13 8 13c-1.474 0-3.31.488-4.615.911-1.087.352-2.49.003-2.932-1.25A7.988 7.988 0 0 1 0 10zm8-7a7 7 0 0 0-6.603 9.329c.203.575.923.876 1.68.63C4.397 12.533 6.358 12 8 12s3.604.532 4.923.96c.757.245 1.477-.056 1.68-.631A7 7 0 0 0 8 3z" />
+        </symbol>
+        <symbol id="table" viewBox="0 0 16 16">
+            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm15 2h-4v3h4V4zm0 4h-4v3h4V8zm0 4h-4v3h3a1 1 0 0 0 1-1v-2zm-5 3v-3H6v3h4zm-5 0v-3H1v2a1 1 0 0 0 1 1h3zm-4-4h4V8H1v3zm0-4h4V4H1v3zm5-3v3h4V4H6zm4 4H6v3h4V8z" />
+        </symbol>
+        <symbol id="people-circle" viewBox="0 0 16 16">
+            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+        </symbol>
+        <symbol id="grid" viewBox="0 0 16 16">
+            <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5v-3zM2.5 2a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zM1 10.5A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3zm6.5.5A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5v-3zm1.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5h-3z" />
+        </symbol>
+    </svg>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        .media (min-width: 768px) {
+            .bd-placeholder-img-lg
+
+        {
+            font-size: 3.5rem;
+        }
+
+        }
+
+        .b-example-divider {
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+            .nav-scroller .nav {
+                display: flex;
+                flex-wrap: nowrap;
+                padding-bottom: 1rem;
+                margin-top: -1px;
+                overflow-x: auto;
+                text-align: center;
+                white-space: nowrap;
+                -webkit-overflow-scrolling: touch;
+            }
+    </style>
+
+    <!-- Custom styles for this template -->
+    @*    <link href="headers.css" rel="stylesheet">*@
+
+    <style>
+        .form-control-dark {
+            border-color: var(--bs-gray);
+        }
+
+            .form-control-dark:focus {
+                border-color: #fff;
+                box-shadow: 0 0 0 .25rem rgba(255, 255, 255, .25);
+            }
+
+        .text-small {
+            font-size: 85%;
+        }
+
+        .dropdown-toggle {
+            outline: 0;
+        }
+
+    </style>
 </head>
 
 
 <body>
-    <!-- Header -->
-    <header id="header">
-        <div class="container">
-            <div class="row t-container" >
 
-                <!-- Logo -->
-                <div class="span3" >
-                    <div class="logo" style="text-align: center; display: table-cell;  vertical-align: middle;"> 
-                        <a class="nav-link text-dark" asp-area="" asp-page="/HomePages/About"><img src="img/OutReachLogo.png" alt=""></a>
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
+
+        <a class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5" asp-area="" asp-page="/HomePages/">
+            <h1 class="m-0 text-primary">OutReached</h1>
+        </a>
+        <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a class="nav-item nav-link active" asp-area="" asp-page="/HomePages/index">Home</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Content/about"> About</a>
+
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Jobs</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-detail">Opportunity Detail</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Opportunities/job-create">Opportunity Create</a>
                     </div>
                 </div>
 
-                <div class="span9">
-                    <div class="row space60"></div>
-                    <nav id="nav" role="navigation">
-                        <a href="#nav" title="Show navigation">Show navigation</a>
-                        <a href="#" title="Hide navigation">Hide navigation</a>
-                        <ul class="clearfix"> 
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu rounded-0 m-0">
+                        <a class="dropdown-item" asp-area="" asp-page="/Content/category">Opportunity Category</a>
 
-                            <li>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/HomePages/About">About Us</a>
-                            </li>
-
-                            <li style="text-align:center"><a class="nav-link text-dark" asp-area="" asp-page="/Clients/Index">Client Info</a></li>
-
-@*                            <li>
-                                <a class="nav-link text-dark" asp-area="" asp-page="/HomePages/Gallery">Gallery</a>
-                            </li>*@
-                            <li style="text-align:center"><a class="nav-link text-dark" asp-area="" asp-page="/Loginusers/index">Users Info</a></li>
-                            <li style="text-align:center"><a href="/Identity/Account/Register">Register</a></li>
-                            <li style="text-align:center"><a href="/Identity/Account/Login">Login</a></li> 
-                            <li style="text-align:center"><a href="/Identity/Role/Index">Role</a></li>
-                            @*                            <li style="text-align:center">
-                                <a class="nav-link text-dark" asp-area="" asp-page="/HomePages/Career">Career</a>
-                                <ul>
-                                    <!-- Submenu -->
-                                    <li style="text-align:center"><a class="nav-link text-dark" asp-area="" asp-page="/Clients/Index">Client Info</a></li>
-                                    <li style="text-align:center"><a class="nav-link text-dark" asp-area="" asp-page="/Loginusers/index">Users Info</a></li>
-                                    <li style="text-align:center"><a class="nav-link text-dark" asp-area="" asp-page="/Admin/Controlpanel">Admin</a></li>
-                                </ul> <!-- End Submenu -->
-                            </li>*@
-                        </ul>
-                    </nav>
+                        <a class="dropdown-item" asp-area="" asp-page="/Content/testimonial">Testimonial</a>
+                        <a class="dropdown-item" asp-area="" asp-page="/Error/404">404</a>
+                    </div>
                 </div>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Content/contact">Contact</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/LoginRegister/index"> Sign Up</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Clients/Index">Client Info</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Loginusers/index">Users Info</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Identity/Account/Register">Register</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Identity/Account/Login">Login</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Identity/Role/Index">Role</a>
+
+                <a class="nav-link nav-link" asp-area="" asp-page="/HomePages/Career">Career</a>
+
+
             </div>
-@*            <div class="row space40"></div>
-            <div class="slider1 flexslider">
-                <!-- Slider -->
-                <ul class="slides">
-                    <li>
-                        <img src="img/slider/1.jpg" alt="">
-                    </li>
-                    <li>
-                        <img src="img/slider/2.jpg" alt="">
-                    </li>
-                    <li>
-                        <img src="img/slider/3.jpg" alt="">
-                    </li>
-                    <li>
-                        <img src="img/slider/4.jpg" alt="">
-                    </li>
-                </ul>
-            </div>  <!-- Slider End -->
-        </div>*@
-    </header>
-    <!-- Header End -->
+            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="" asp-page="/Opportunities/job-create">Post A Opportunity<i class="fa fa-arrow-right ms-3"></i></a>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
 
 
 
     <div id="content">
         <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
+            <main role="main" class="pb-3">
+                @RenderBody()
             </main>
         </div>
     </div>
-    <!-- Content End -->
-    <!-- Footer -->
-    <footer id="footer">
+
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <footer class="container py-5">
+            <div class="row g-5">
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Company</h5>
+                    <a class="btn btn-link text-white-50" href="">About Us</a>
+                    <a class="btn btn-link text-white-50" href="">Contact Us</a>
+                    <a class="btn btn-link text-white-50" href="">Our Services</a>
+                    <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
+                    <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                    <a class="btn btn-link text-white-50" href="">Join</a>
+
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Quick Links</h5>
+                    <a class="btn btn-link text-white-50" href="">About Us</a>
+                    <a class="btn btn-link text-white-50" href="">Contact Us</a>
+                    <a class="btn btn-link text-white-50" href="">Our Services</a>
+                    <a class="btn btn-link text-white-50" href="">Privacy Policy</a>
+                    <a class="btn btn-link text-white-50" href="">Terms & Condition</a>
+                    <a class="btn btn-link text-white-50" href="">Join</a>
+
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Contact</h5>
+                    <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>Location, City, Country</p>
+                    <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+012 345 67890</p>
+                    <p class="mb-2"><i class="fa fa-envelope me-3"></i>info@example.com</p>
+                    <div class="d-flex pt-2">
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-youtube"></i></a>
+                        <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-white mb-4">Newsletter</h5>
+                    <p>Dolor amet sit justo amet elitr clita ipsum elitr est.</p>
+                    <div class="position-relative mx-auto" style="max-width: 400px;">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Your email">
+                        <button type="button" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
         <div class="container">
-            <div class="row">
-                <div class="span5">
-                    <h3>Contact Form</h3>
-                    <div>
-                        <form class="form-main" name="ajax-form" id="ajax-form" action="#" method="post">
-                            <div id="ajaxsuccess">E-mail was successfully sent.</div>
-                            <div class="error" id="err-name">Please enter name</div>
-                            <input name="name" id="name" type="text" value="Name" onfocus="if(this.value == 'Name') this.value='';" onblur="if(this.value == '') this.value='Name';">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="">OutReached</a>, All Right Reserved.
 
-                            <div class="error" id="err-email">Please enter e-mail</div>
-                            <div class="error" id="err-emailvld">E-mail is not a valid format</div>
-                            <input name="email" id="email" type="text" value="E-mail" onfocus="if(this.value == 'E-mail') this.value='';" onblur="if(this.value == '') this.value='E-mail';">
 
-                            <div class="error" id="err-message">Please enter message</div>
-                            <textarea name="message" id="message" onfocus="if(this.value == 'Message') this.value='';" onblur="if(this.value == '') this.value='Message';">Message</textarea><br>
-                            <div>
-                                <div class="error" id="err-form">There was a problem validating the form please check!</div>
-                                <div class="error" id="err-timedout">The connection to the server timed out!</div>
-                                <div class="error" id="err-state"></div>
-                            </div>
-                            <button id="send" class="btn f-right">Send Message <i class="icon-ok"></i></button>
-                        </form>
+                        Designed By <a class="border-bottom" href="">Maxwell Li</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Cookies</a>
+                            <a href="">Help</a>
+                            <a href="">FQAs</a>
+                        </div>
                     </div>
                 </div>
-                <div class="span3 offset3">
-                    <h3>Address</h3>
-                    123 example street<br>
-                    Los Angeles, CA 90185<br>
-                    United States<br>
-                    <br>
-                    <i class="icon-phone"></i>+01 880 555 999<br>
-                    <i class="icon-envelope"></i><a href="mailto:support@example.com">support@example.com</a><br>
-                    <i class="icon-home"></i><a href="#">www.example.com</a>
-
-                    <div class="row space40"></div>
-
-                    <a href="#" class="social-network sn2 behance"></a>
-                    <a href="#" class="social-network sn2 facebook"></a>
-                    <a href="#" class="social-network sn2 pinterest"></a>
-                    <a href="#" class="social-network sn2 flickr"></a>
-                    <a href="#" class="social-network sn2 dribbble"></a>
-                    <a href="#" class="social-network sn2 lastfm"></a>
-                    <a href="#" class="social-network sn2 forrst"></a>
-                    <a href="#" class="social-network sn2 xing"></a>
-                </div>
             </div>
-
-            <div class="row space50"></div>
-            <div class="row">
-                <div class="span6">
-                    <div class="logo-footer">
-                        Design by <a href="https://www.freshdesignweb.com">Maxwell Li</a>
-                    </div>
-                </div>
-                <div class="span6 right">
-                    &copy; 2022. All rights reserved.
-                </div>
-            </div>
-
         </div>
-    </footer>
+    </div>
     <!-- Footer End -->
+
+
+
+
+
+    <script src="~/lib/bootstrap-5.2.2/dist/js/bootstrap.bundle.js"></script>
     <!-- JavaScripts -->
     <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
@@ -189,3 +291,10 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+
+
+
+
+
+
+
