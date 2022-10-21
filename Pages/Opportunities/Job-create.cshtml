@@ -19,7 +19,8 @@
                 <li class="breadcrumb-item text-white active" aria-current="page">Job Create</li>
             </ol>
         </nav>
-    </div>
+        </div>    
+        
 </div>
 <!-- Header End -->
 
@@ -29,6 +30,7 @@
 
 <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s">
     <div class="container">
+
         <div class="row gy-5 gx-4">
             <div class="col-lg-8">
                 <h3 class="mb-3">Create Your Opportunity</h3>
@@ -50,22 +52,22 @@
 
                     <div class="col-12 col-sm-6">
                         <h4 class="mb-4">Opportunity Title</h4>
-                        <input type="text" class="form-control" placeholder="Name" name="opptitle">
+                        <input type="text" class="form-control" placeholder="Enter the opportunity title..." name="opptitle">
                     </div>
 
                     <h4 class="mb-3">Job description</h4>
                     <div class="col-12">
-                            <textarea class="form-control" rows="5" placeholder="Enter a description..." name="oppdesc"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="Enter the description..." name="oppdesc"></textarea>
                     </div>
 
                     <h4 class="mb-3">Responsibilities</h4>
                     <div class="col-12">
-                            <textarea class="form-control" rows="5" placeholder="Enter responsibilities..." name="oppresp"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="Enter the responsibilities..." name="oppresp"></textarea>
                     </div>
 
                     <h4 class="mb-3">Requirements</h4>
                     <div class="col-12">
-                            <textarea class="form-control" rows="5" placeholder="Enter requirements..." name="oppreq"></textarea>
+                            <textarea class="form-control" rows="5" placeholder="Enter the requirements..." name="oppreq"></textarea>
                     </div>
 
 
@@ -75,8 +77,11 @@
                                 <input type="text" class="form-control" placeholder="Start Date..." name="oppstartdate">
                             </div>
                             <div class="col-12 col-sm-6">
-                                <input type="email" class="form-control" placeholder="End Date..." name="oppenddate" >
+                                <input type="text" class="form-control" placeholder="End Date..." name="oppenddate">
                             </div>
+                            @*<div class="col-12 col-sm-6">
+                                <input type="email" class="form-control" placeholder="End Date..." name="oppenddate">
+                            </div>*@
                             <div class="col-12 col-sm-6">
                                 <input type="text" class="form-control" placeholder="Time Start to End..." name="oppschedule">
                             </div>
@@ -87,6 +92,11 @@
                             <h4 class="mb-4">Pick your tags</h4>
                             <div class="col-12">
                                 <textarea class="form-control" rows="5" placeholder="Tag" name="opptag"></textarea>
+                            </div>
+
+                            <div class='alert alert-warning alert-dismissible fade show' role='alert'>
+                                <strong>@Model.errorMessage</strong>
+                                <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
                             </div>
 
                             <div class="col-2"> 

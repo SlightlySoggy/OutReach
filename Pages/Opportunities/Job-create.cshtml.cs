@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using MyAffTest.Pages.Clients;
+using MyAffTest.Pages.Utilities;
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -11,12 +13,13 @@ namespace MyAffTest.Pages.Opportunities
     public class JobcreateModel : PageModel
     {
         public Organization orgInfo = new Organization();
+        public Opportunity oppInfo = new Opportunity();
+        public int org_id = 1;
+        public int user_id = 2;
         public string errorMessage = "";
         public string successMessage = "";
         public void OnGet()
         {
-            int user_id = 2;
-            int org_id = 1;
             orgInfo = new Organization(org_id.ToString());
 
             //orgInfo = GetOrganizationInfoByOrg_id();
@@ -30,57 +33,30 @@ namespace MyAffTest.Pages.Opportunities
         }
         public void OnPost()
         {
-            orgInfo.Name = Request.Form["opptitle"];
-            //orgInfo.Id = Request.Form["Id"];
-            //orgInfo.Name = Request.Form["Name"];
-            //orgInfo.Description = Request.Form["address"];
-            //orgInfo.PrimaryContactUserId = Request.Form["address"];
-            //orgInfo.Address = Request.Form["address"];
-            //orgInfo.CreatedDate = Request.Form["address"];
-            //orgInfo.CreatedUserId = Request.Form["address"];
-            //orgInfo.StatusId = Request.Form["address"];
-            //orgInfo.Phone = Request.Form["address"];
-            //orgInfo.Email = Request.Form["address"];
-            //orgInfo.WebURL = Request.Form["address"];
-            //if (orgInfo.name.Length == 0 || orgInfo.email.Length == 0 ||
-            //    orgInfo.phone.Length == 0 || orgInfo.address.Length == 0)
-            //{
-            //    errorMessage = "All the fields are required";
-            //    return;
-            //}
+            oppInfo.OpportunityTitle = Request.Form["opptitle"];
+            oppInfo.Description = Request.Form["oppdesc"];
+            oppInfo.Responsibility = Request.Form["oppresp"];
+            oppInfo.Requirement = Request.Form["oppreq"];
+            oppInfo.CreatedOrgId = org_id.ToString();
+            oppInfo.CreatedDate = DateTime.Now.ToString();
+            oppInfo.CreatedUserId = user_id.ToString(); 
+            oppInfo.StartDate = Request.Form["oppstartdate"];
+            oppInfo.EndDate = Request.Form["oppenddate"];
+            oppInfo.Schedule = Request.Form["oppschedule"]; 
+            oppInfo.StatusId = "1";
+            oppInfo.Tags = Request.Form["opptag"];
 
-            ////save the new organization into the database
+            string result = oppInfo.Save();
 
-            //try
-            //{
-            //    var builder = WebApplication.CreateBuilder();
-            //    var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
-            //    //String connectionString = "Data Source=DESKTOP-9A8N31U\\SQLEXPRESS;Initial Catalog=OutReach;Persist Security Info=True;User ID=Maxwellhuodali;Password=M!1axwelliscool";
+            if (result == "ok")
+            {
+                Response.Redirect("Job-list");
+            }
+            else
+            {
+                errorMessage = result;
+            }
 
-            //    using (SqlConnection connection = new SqlConnection(connectionString))
-            //    {
-            //        connection.Open();
-            //        string sql = "INSERT INTO clients " +
-            //                     "(name, email, phone, address) VALUES " +
-            //                     "(@name, @email, @phone, @address);";
-            //        using (SqlCommand cmd = new SqlCommand(sql, connection))
-            //        {
-            //            cmd.Parameters.AddWithValue("@name", orgInfo.name);
-            //            cmd.Parameters.AddWithValue("@email", orgInfo.email);
-            //            cmd.Parameters.AddWithValue("@phone", orgInfo.phone);
-            //            cmd.Parameters.AddWithValue("@address", orgInfo.address);
-
-            //            cmd.ExecuteNonQuery();
-            //        }
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    errorMessage = ex.Message;
-            //    return;
-            //}
-            //orgInfo.name = ""; orgInfo.email = ""; orgInfo.phone = ""; orgInfo.address = "";
-            //successMessage = "New Client Added Correctly";
             //Response.Redirect("Index");
         }
     }

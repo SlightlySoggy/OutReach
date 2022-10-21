@@ -1,0 +1,1014 @@
+﻿@page "ClientView"
+@model ClientViewModel
+@{
+    Layout = "../Shared/_Layout_Landing.cshtml";
+    ViewData["Title"] = "Landing page";
+} 
+
+
+   
+
+
+<div class="main h-100 p-0">
+    <section id="hero-registration-form-countdown" class="bg-img-cover bg-overlay-7">
+        <div class="container h-100">
+        <div class="row h-100 justify-content-center justify-content-lg-between">
+            <div class="col-md-10 col-lg-6 mt-4 pt-5">
+                <span class="font-alt text-white">David Ogilvy says,</span>
+                <h1 class="font-alt font-weight-bold mt-2 text-extra-large-2 text-md-extra-large-3 text-white">If it doesn't sell, it isn't creative.</h1>
+                <p class="font-weight-bold letter-spacing-2 mt-5 text-gray-100 text-uppercase">This promo will expire in..</p>
+
+                <div id="clock" data-until-date="2022/09/28" class="row justify-content-center mt-4"></div>
+
+                <div class="form-inline mt-5">
+                    <a href="#" data-toggle="modal" data-target="#modal-video" class="bg-info icon-circle shadow-lg text-white"><i class="fas fa-play"></i></a>
+                    <span class="font-weight-bold pl-4 text-white">Watch The Video</span>
+                    <span class="font-weight-bold pl-4 text-white">148 seconds</span>
+                </div>
+
+            </div>
+
+            <div class="col-md-10 col-lg-6 col-xl-5 mt-4 pt-5">
+                <div class="bg-dark border border-gray-700 p-5 rounded shadow-lg">
+                <h4 class="font-alt font-weight-bold letter-spacing-2 text-uppercase text-white">Get 1 Month FREE Trial Now</h4>
+                <span class="bg-gray-600 mt-3 sep-line-thin-full"></span>
+                <form action="contact/send_mail_registration.php" method="post" id="form-registration" class="form-registration mt-4">
+
+                    <div class="form-group">
+                        <label for="r_name" class="font-weight-bold text-white">Full Name:</label>
+                        <input type="text" name="r_name" id="r_name" class="form-control required" placeholder="e.g. Wiro Sableng" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="r_email" class="font-weight-bold text-white">Email Address:</label>
+                        <input type="email" name="r_email" id="r_email" class="form-control required email" placeholder="e.g. wirosableng@gmail.com" autocomplete="off">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="r_plan" class="font-weight-bold text-white">Choose Plan:</label>
+                            <div class="select-wrapper">
+                            <select name="r_plan" id="r_plan" class="form-control required">
+                                <option value="">- Choose a Plan -</option>
+                                <option value="Personal">Personal</option>
+                                <option value="Professional">Professional</option>
+                                <option value="Business">Business</option>
+                                <option value="Corporate">Corporate</option>
+                            </select>
+                            </div>
+                    </div>
+
+                    <button type="submit" id="btn-form-registration" class="btn btn-block btn-secondary">Sign Up Free <i class="fas fa-check-circle"></i></button>
+                </form>
+                </div>
+
+             </div>
+
+        </div>
+
+        </div>
+
+    </section>
+
+
+    <div id="promo" class="border-bottom py-3">
+        <div class="container-fluid py-3">
+            <div class="row">
+                <div class="col-12 align-items-center d-lg-flex justify-content-center text-center">
+                    <p class="font-weight-bold text-gray-600">If you don't understand the details of your business you are going to fail. Purchase <a href="#" class="text-underline">Segita</a> for $15 USD.</p>
+                    <a href="#" data-toggle="modal" data-target="#modal-video" class="bg-dark icon-circle mt-4 mt-lg-0 mx-auto mx-lg-4 page-scroll shadow-lg text-light"><i class="fas fa-play"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modal-video" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content shadow-lg">
+                <div class="modal-body p-1">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe width="560" height="315" src="https://www.youtube.com/embed/8tYqsJzE6OY" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <section id="intro">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="font-alt font-weight-bold">Hi, Welcome to Segita</h2>
+                <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+            </div>
+
+                <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <img src="images/intro-1.jpg" alt="" class="img-fluid" />
+                    <h4 class="font-weight-bold mt-4">Click Through</h4>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-md-0">
+                    <img src="images/intro-2.jpg" alt="" class="img-fluid" />
+                    <h4 class="font-weight-bold mt-4">Lead Generation</h4>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-lg-0">
+                    <img src="images/intro-3.jpg" alt="" class="img-fluid" />
+                    <h4 class="font-weight-bold mt-4">Fully Responsive</h4>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="overview" class="bg-img-cover bg-overlay-7">
+        <div class="container">
+            <div class="row justify-content-end no-gutters">
+                <div class="col-lg-6 col-xl-5 bg-white rounded shadow-lg">
+                    <div class="p-5">
+                        <h2 class="font-alt font-weight-bold">Overview</h2>
+                        <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
+                        <span class="bg-primary mt-4 sep-line-thin-long"></span>
+                        <p class="font-weight-bold mt-4 text-gray-600">There are two types of people who will tell you that you cannot make a difference in this world, those who are afraid to try and those who are afraid you will succeed. &mdash; Ray Goforth</p>
+                        <a href="#services" class="btn btn-secondary btn-shadow mt-4 page-scroll">See Our Services</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="services">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="font-alt font-weight-bold">Our Services</h2>
+                    <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+            </div>
+
+            <div class="row justify-content-center no-gutters-xl">
+                <div class="col-md-6 position-relative">
+                    <img src="images/services-1.jpg" alt="" class="img-fluid" />
+                    <div class="bg-white h-xl-100 p-xl-3 position-xl-absolute right-xl top-xl w-xl-50">
+                        <div class="d-xl-flex flex-xl-column h-xl-100 justify-content-xl-center p-xl-3">
+                            <h4 class="font-weight-bold mt-3 mt-xl-0">User Interface Strategy</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 mt-5 mt-md-0 position-relative">
+                    <img src="images/services-2.jpg" alt="" class="img-fluid" />
+                    <div class="bg-white h-xl-100 p-xl-3 position-xl-absolute right-xl top-xl w-xl-50">
+                        <div class="d-xl-flex flex-xl-column h-xl-100 justify-content-xl-center p-xl-3">
+                            <h4 class="font-weight-bold mt-3 mt-xl-0">Interfaces and Websites</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 mt-5 mt-xl-0 position-relative">
+                    <img src="images/services-3.jpg" alt="" class="img-fluid" />
+                    <div class="bg-white h-xl-100 left-xl p-xl-3 position-xl-absolute top-xl w-xl-50">
+                        <div class="d-xl-flex flex-xl-column h-xl-100 justify-content-xl-center p-xl-3">
+                            <h4 class="font-weight-bold mt-3 mt-xl-0">Brand Design & Development</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 mt-5 mt-xl-0 position-relative">
+                    <img src="images/services-4.jpg" alt="" class="img-fluid" />
+                    <div class="bg-white h-xl-100 left-xl p-xl-3 position-xl-absolute top-xl w-xl-50">
+                        <div class="d-xl-flex flex-xl-column h-xl-100 justify-content-xl-center p-xl-3">
+                            <h4 class="font-weight-bold mt-3 mt-xl-0">Web and Mobile Applications</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="how-it-works" class="border-top">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="font-alt font-weight-bold">How It Works</h2>
+                <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-xl-3">
+                    <h4 class="font-weight-bold">1. Purchase Segita</h4>
+                    <img src="images/how-it-works-1.jpg" alt="" class="img-fluid mt-3" />
+                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5 mt-md-0">
+                    <h4 class="font-weight-bold">2. Choose a Layout</h4>
+                    <img src="images/how-it-works-2.jpg" alt="" class="img-fluid mt-3" />
+                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5 mt-xl-0">
+                    <h4 class="font-weight-bold">3. Edit & Customize</h4>
+                    <img src="images/how-it-works-3.jpg" alt="" class="img-fluid mt-3" />
+                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5 mt-xl-0">
+                    <h4 class="font-weight-bold">4. Upload to Hosting</h4>
+                    <img src="images/how-it-works-4.jpg" alt="" class="img-fluid mt-3" />
+                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+            </div>
+        </div>
+     </section>
+
+
+    <section id="benefits" class="bg-img-cover bg-overlay-7">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="font-alt font-weight-bold text-white">The Benefits</h2>
+                    <p class="font-weight-bold mt-3 text-gray-100">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                            <h4 class="font-weight-bold">Ready to Use Layouts</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-md-0">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                        <h4 class="font-weight-bold">Quick and Easy Setup</h4>
+                        <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                        <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-lg-0">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                            <h4 class="font-weight-bold">Fit for Any Purposes</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                            <h4 class="font-weight-bold">Modern Web Technologies</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-lg-4 mt-5">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                            <h4 class="font-weight-bold">Free Lifetime Updates</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5">
+                    <div class="bg-white p-3 rounded shadow-lg">
+                        <div class="p-3">
+                            <h4 class="font-weight-bold">Well Documented</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                            <span class="bg-secondary mt-3 sep-line-thick"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="team">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="font-alt font-weight-bold">Meet The Team</h2>
+                <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-xl-3">
+                    <img src="images/team-1.jpg" alt="" class="img-fluid" />
+                    <h6 class="font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-uppercase">I am Leader</h6>
+                    <h3 class="font-alt font-weight-bold mt-2">Wiro Sableng</h3>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5 mt-md-0 mt-xl-5">
+                    <img src="images/team-2.jpg" alt="" class="img-fluid" />
+                    <h6 class="font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-uppercase">I am a Cat Lady</h6>
+                    <h3 class="font-alt font-weight-bold mt-2">Sinto Weni</h3>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5 mt-xl-0">
+                    <img src="images/team-3.jpg" alt="" class="img-fluid" />
+                    <h6 class="font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-uppercase">I am Hungry</h6>
+                    <h3 class="font-alt font-weight-bold mt-2">Bujang Gila</h3>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+
+                <div class="col-md-6 col-xl-3 mt-5">
+                    <img src="images/team-4.jpg" alt="" class="img-fluid" />
+                    <h6 class="font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-uppercase">I am Creative</h6>
+                    <h3 class="font-alt font-weight-bold mt-2">Rara Murni</h3>
+                    <p class="font-weight-bold mt-2 text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="skills" class="border-top">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="font-alt font-weight-bold">Check Our Skills</h2>
+                    <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 col-lg-4 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="70" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">70%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">Web Design & Dev</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">8 Years Experience</span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-md-0 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="80" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">80%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">UI/UX Design</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">12 Years Experience</span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 mt-lg-0 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="60" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">60%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">Digital Marketing</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">7 Years Experience</span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="90" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">90%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">Identity Design</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">12 Years Experience</span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="70" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">70%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">Brand Development</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">8 Years Experience</span>
+                </div>
+
+                <div class="col-md-6 col-lg-4 mt-5 text-center">
+                    <div class="chart-circle shadow" data-percent="0" data-percent-update="80" data-bar-color="#011eff">
+                        <span class="chart-percent bg-secondary shadow text-white">80%</span>
+                    </div>
+
+                    <h4 class="d-block font-weight-bold mt-4">3D Animation</h4>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-1 text-gray-600 text-small text-uppercase">12 Years Experience</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="portfolio" class="bg-gray-700">
+        <div class="container">
+        <div class="row justify-content-center mb-5 pb-4">
+            <div class="col-lg-8 col-xl-6 text-center">
+                <h2 class="font-alt font-weight-bold text-white">Selected Works</h2>
+                <p class="font-weight-bold mt-3 text-gray-100">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+            </div>
+
+        </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="gallery-wrapper">
+                        <div class="gallery-grid grid-col-3 gutter-wide">
+                        <div class="gallery-item">
+                            <figure>
+                            <img src="images/portfolio-1.jpg" alt="" class="img-fluid">
+                                <div class="figure-link">
+
+                                    <a href="images/portfolio-1.jpg" class="bg-info text-white zoom" title="Accenture &mdash; New Insights">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+
+                                    <a href="https://www.flickr.com/photos/websummit/38213829362/in/album-72157666119393519/" class="bg-dark text-white" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                </div>
+
+                            </figure>
+                            <div class="figure-caption py-3">
+                                <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">UI/UX Design</h6>
+                                <h3 class="font-alt font-weight-bold mt-2 text-white">Accenture &mdash; New Insights</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="gallery-item">
+                            <figure>
+                            <img src="images/portfolio-2.jpg" alt="" class="img-fluid">
+                            <div class="figure-link">
+
+                                <a href="images/portfolio-2.jpg" class="bg-info text-white zoom" title="Dreaminzzz &mdash; Hypnos Mask">
+                                    <i class="fas fa-search"></i>
+                                </a>
+
+                                <a href="https://www.flickr.com/photos/websummit/37575015664/in/album-72157666119393519/" class="bg-dark text-white" target="_blank">
+                                    <i class="fas fa-link"></i>
+                                </a>
+                            </div>
+
+                            </figure>
+                            <div class="figure-caption py-3">
+                                <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">Digital Marketing</h6>
+                                <h3 class="font-alt font-weight-bold mt-2 text-white">Dreaminzzz &mdash; Hypnos Mask</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="gallery-item">
+                            <figure>
+                            <img src="images/portfolio-3.jpg" alt="" class="img-fluid">
+                                <div class="figure-link">
+
+                                    <a href="images/portfolio-3.jpg" class="bg-info text-white zoom" title="Opensoft &mdash; Making Life Easier">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+
+                                    <a href="https://www.flickr.com/photos/websummit/45747471431/in/album-72157701796605091/" class="bg-dark text-white" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                </div>
+
+                            </figure>
+                            <div class="figure-caption py-3">
+                                <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">Logo & Branding</h6>
+                                <h3 class="font-alt font-weight-bold mt-2 text-white">Opensoft &mdash; Making Life Easier</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="gallery-item">
+                            <figure>
+                            <img src="images/portfolio-4.jpg" alt="" class="img-fluid">
+                                <div class="figure-link">
+
+                                    <a href="images/portfolio-4.jpg" class="bg-info text-white zoom" title="Augmented Reality Experience">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+
+                                    <a href="https://www.flickr.com/photos/websummit/38211470622/in/album-72157666119393519/" class="bg-dark text-white" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                </div>
+
+                            </figure>
+                            <div class="figure-caption py-3">
+                                <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">Mobile Application</h6>
+                                <h3 class="font-alt font-weight-bold mt-2 text-white">Augmented Reality Experience</h3>
+                            </div>
+
+                        </div>
+
+                        <div class="gallery-item">
+                            <figure>
+                            <img src="images/portfolio-5.jpg" alt="" class="img-fluid">
+                                <div class="figure-link">
+
+                                    <a href="images/portfolio-5.jpg" class="bg-info text-white zoom" title="Wizzio &mdash; Digital Banking Platform">
+                                        <i class="fas fa-search"></i>
+                                    </a>
+
+                                    <a href="https://www.flickr.com/photos/websummit/44856056535/in/album-72157697475574570/" class="bg-dark text-white" target="_blank">
+                                        <i class="fas fa-link"></i>
+                                    </a>
+                                </div>
+
+                            </figure>
+                            <div class="figure-caption py-3">
+                                <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">Digital Marketing</h6>
+                                <h3 class="font-alt font-weight-bold mt-2 text-white">Wizzio &mdash; Digital Banking Platform</h3>
+                            </div>
+
+                        </div>
+
+                            <div class="gallery-item">
+                                <figure>
+                                <img src="images/portfolio-6.jpg" alt="" class="img-fluid">
+                                    <div class="figure-link">
+
+                                        <a href="images/portfolio-6.jpg" class="bg-info text-white zoom" title="Tilkee &mdash; Track Your Digital Documents">
+                                            <i class="fas fa-search"></i>
+                                        </a>
+
+                                        <a href="https://www.flickr.com/photos/websummit/38230764176/in/album-72157666119393519/" class="bg-dark text-white" target="_blank">
+                                            <i class="fas fa-link"></i>
+                                        </a>
+                                    </div>
+
+                                </figure>
+                                <div class="figure-caption py-3">
+                                    <h6 class="font-weight-bold letter-spacing-2 mt-2 text-gray-100 text-uppercase">UI/UX Design</h6>
+                                    <h3 class="font-alt font-weight-bold mt-2 text-white">Tilkee &mdash; Track Your Digital Documents</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="testimonial">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="font-alt font-weight-bold">Testimonials</h2>
+                    <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-lg-4 col-xl-3 text-center text-md-left">
+                            <img src="images/testimonial-1.jpg" alt="" class="img-fluid" />
+                        </div>
+
+                        <div class="col-lg-8 col-xl-9 mt-3 mt-lg-0 text-center text-md-left">
+                            <h6 class="font-weight-bold letter-spacing-2 text-gray-600 text-uppercase">Company Inc.</h6>
+                            <h3 class="font-alt font-weight-bold mt-2">Wiro Sableng</h3>
+                            <p class="font-weight-bold mt-2 text-gray-600">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <div class="col-md-6 mt-5 mt-md-0">
+                <div class="row">
+                    <div class="col-lg-4 col-xl-3 text-center text-md-left">
+                        <img src="images/testimonial-2.jpg" alt="" class="img-fluid" />
+                    </div>
+
+                    <div class="col-lg-8 col-xl-9 mt-3 mt-lg-0 text-center text-md-left">
+                        <h6 class="font-weight-bold letter-spacing-2 text-gray-600 text-uppercase">Company Inc.</h6>
+                        <h3 class="font-alt font-weight-bold mt-2">Sinto Weni</h3>
+                        <p class="font-weight-bold mt-2 text-gray-600">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-6 mt-5">
+                <div class="row">
+                    <div class="col-lg-4 col-xl-3 text-center text-md-left">
+                        <img src="images/testimonial-3.jpg" alt="" class="img-fluid" />
+                    </div>
+
+                    <div class="col-lg-8 col-xl-9 mt-3 mt-lg-0 text-center text-md-left">
+                        <h6 class="font-weight-bold letter-spacing-2 text-gray-600 text-uppercase">Company Inc.</h6>
+                        <h3 class="font-alt font-weight-bold mt-2">Rara Murni</h3>
+                        <p class="font-weight-bold mt-2 text-gray-600">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                        <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+                <div class="col-md-6 mt-5">
+                    <div class="row">
+                        <div class="col-lg-4 col-xl-3 text-center text-md-left">
+                            <img src="images/testimonial-4.jpg" alt="" class="img-fluid" />
+                        </div>
+
+                        <div class="col-lg-8 col-xl-9 mt-3 mt-lg-0 text-center text-md-left">
+                            <h6 class="font-weight-bold letter-spacing-2 text-gray-600 text-uppercase">Company Inc.</h6>
+                            <h3 class="font-alt font-weight-bold mt-2">Bujang Gila</h3>
+                            <p class="font-weight-bold mt-2 text-gray-600">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
+                            <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <div id="milestones" class="border-top section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-lg-3 border-lg-right text-center">
+                    <span class="timer d-block font-alt font-weight-bold letter-spacing-2 text-extra-large-3 text-uppercase" data-from="0" data-to="17" data-speed="1500">17</span>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-medium text-uppercase">Dance Battles</span>
+                </div>
+
+                <div class="col-md-6 col-lg-3 border-lg-right mt-5 mt-md-0 text-center">
+                    <span class="timer d-block font-alt font-weight-bold letter-spacing-2 text-extra-large-3 text-uppercase" data-from="0" data-to="84" data-speed="1500">84</span>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-medium text-uppercase">Cups of Coffee</span>
+                </div>
+
+                <div class="col-md-6 col-lg-3 border-lg-right mt-5 mt-lg-0 text-center">
+                    <span class="timer d-block font-alt font-weight-bold letter-spacing-2 text-extra-large-3 text-uppercase" data-from="0" data-to="92" data-speed="1500">92</span>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-medium text-uppercase">Naps Taken</span>
+                </div>
+
+                <div class="col-md-6 col-lg-3 mt-5 mt-lg-0 text-center">
+                    <span class="timer d-block font-alt font-weight-bold letter-spacing-2 text-extra-large-3 text-uppercase" data-from="0" data-to="53" data-speed="1500">53</span>
+                    <span class="d-block font-weight-bold letter-spacing-2 mt-4 text-gray-600 text-medium text-uppercase">Ghosts Busted</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <section id="pricing" class="bg-img-cover bg-overlay-7">
+        <div class="container">
+            <div class="row justify-content-center justify-content-lg-between">
+                <div class="col-md-6 col-lg-7 col-xl-6 text-center text-md-left">
+                    <h5 class="font-weight-bold letter-spacing-2 text-uppercase text-white">Everything You Need In One Place</h5>
+                    <span class="d-block font-alt font-weight-bold h1 mt-3 text-white">The best way to predict the future is to create it.</span>
+                    <span class="bg-secondary mt-4 mx-auto mx-md-0 sep-line-extra-thick-long"></span>
+                </div>
+
+                <div class="col-sm-9 col-md-6 col-lg-5 col-xl-4 mt-5 mt-md-0">
+                    <div class="card card-pricing shadow-lg">
+                        <div class="card-header bg-white border-0 pb-4 pt-5 text-center">
+                            <h4 class="font-weight-bold letter-spacing-2 text-uppercase">Business Plan</h4>
+                            <div class="price mt-5">
+                                <span class="price-currency font-alt font-weight-bold position-relative text-extra-large">$</span>
+                                <span class="price-number font-alt font-weight-bold">49</span>
+                                <span class="price-decimal font-alt font-weight-bold position-relative text-extra-large">99</span>
+                                <span class="d-block font-weight-bold letter-spacing-2 mt-2 text-gray-600 text-small text-uppercase">Billed Monthly</span>
+                            </div>
+
+                        </div>
+
+                        <span class="bg-secondary font-weight-bold letter-spacing-2 p-2 text-center text-small text-uppercase text-white">Price in US Dollars</span>
+                        <div class="card-body pb-5 pt-4 px-5">
+                            <ul class="font-weight-bold list-checkmark list-checkmark-primary list-unstyled text-medium">
+                                <li class="my-1">Free Lifetime Updates</li>
+                                <li class="my-1">Cancel Any Time</li>
+                                <li class="my-1">Secure Payments</li>
+                                <li class="my-1">24/7 Customer Support</li>
+                                <li class="my-1">Clear Documentation</li>
+                            </ul>
+                            <p class="font-weight-bold mt-3 text-center text-gray-600">Lorem Ipsum is simply dummy text of the printing industry.</p>
+                        </div>
+
+                        <div class="card-footer bg-dark border-0 p-0 text-center">
+                            <a href="#contact" class="btn btn-large d-block font-weight-bold page-scroll text-white">Start a Project Now</a>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="faq">
+        <div class="container">
+            <div class="row justify-content-center mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6 text-center">
+                    <h2 class="font-alt font-weight-bold">Segita FAQs</h2>
+                    <p class="font-weight-bold mt-3 text-gray-600">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                </div>
+
+            </div>
+
+            <div class="row justify-content-between">
+                <div class="col-lg-5">
+                    <h3 class="font-alt font-weight-bold">Want to know more? Check our FAQ.</h3>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC.</p>
+                    <a href="#contact" class="btn btn-primary btn-shadow mt-4 page-scroll">Get In Touch Now</a>
+                </div>
+
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <div id="accordion-faq" class="accordion" role="tablist">
+                        <div class="card">
+                            <div class="card-header" role="tab" id="heading1" data-target="#collapse1" data-toggle="collapse" aria-expanded="false" aria-controls="collapse1">
+                                <h4 class="font-alt font-weight-bold">How do I get started?</h4>
+                                <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                            </div>
+
+                            <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1" data-parent="#accordion-faq">
+                                <div class="card-body">
+                                    <span class="bg-secondary sep-line-thick"></span>
+                                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading2" data-target="#collapse2" data-toggle="collapse" aria-expanded="false" aria-controls="collapse2">
+                            <h4 class="font-alt font-weight-bold">Is there any nice tutorial?</h4>
+                            <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                        </div>
+
+                        <div id="collapse2" class="collapse" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion-faq">
+                            <div class="card-body">
+                                <span class="bg-secondary sep-line-thick"></span>
+                                <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading3" data-target="#collapse3" data-toggle="collapse" aria-expanded="false" aria-controls="collapse3">
+                            <h4 class="font-alt font-weight-bold">Are there any monthly pricing plans?</h4>
+                            <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                        </div>
+
+                        <div id="collapse3" class="collapse" role="tabpanel" aria-labelledby="heading3" data-parent="#accordion-faq">
+                            <div class="card-body">
+                                <span class="bg-secondary sep-line-thick"></span>
+                                <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading4" data-target="#collapse4" data-toggle="collapse" aria-expanded="false" aria-controls="collapse4">
+                            <h4 class="font-alt font-weight-bold">What's your return policy?</h4>
+                            <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                        </div>
+
+                        <div id="collapse4" class="collapse" role="tabpanel" aria-labelledby="heading4" data-parent="#accordion-faq">
+                            <div class="card-body">
+                                <span class="bg-secondary sep-line-thick"></span>
+                                <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header" role="tab" id="heading5" data-target="#collapse5" data-toggle="collapse" aria-expanded="false" aria-controls="collapse5">
+                            <h4 class="font-alt font-weight-bold">Why do you not have a support phone number?</h4>
+                            <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                        </div>
+
+                    <div id="collapse5" class="collapse" role="tabpanel" aria-labelledby="heading5" data-parent="#accordion-faq">
+                        <div class="card-body">
+                            <span class="bg-secondary sep-line-thick"></span>
+                            <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                        </div>
+
+                    </div>
+
+                    </div>
+
+                        <div class="card">
+                            <div class="card-header" role="tab" id="heading6" data-target="#collapse6" data-toggle="collapse" aria-expanded="false" aria-controls="collapse6">
+                                <h4 class="font-alt font-weight-bold">How to report issue/feedback?</h4>
+                                <i class="fas fa-comment-dots pt-1 text-gray-600"></i>
+                            </div>
+
+                            <div id="collapse6" class="collapse" role="tabpanel" aria-labelledby="heading6" data-parent="#accordion-faq">
+                                <div class="card-body">
+                                    <span class="bg-secondary sep-line-thick"></span>
+                                    <p class="font-weight-bold mt-3 text-gray-600">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="contact" class="border-top">
+        <div class="container">
+            <div class="row mb-5 pb-4">
+                <div class="col-lg-8 col-xl-6">
+                    <span class="font-alt font-weight-bold h1">We are always here to help.</span>
+                </div>
+
+            </div>
+
+            <div class="row justify-content-between">
+                <div class="col-lg-6 col-xl-5">
+                    <div class="row">
+                        <div class="col-md-4 text-center text-md-left">
+                            <img src="images/contact-1.jpg" alt="" class="img-fluid">
+                        </div>
+
+                        <div class="col-md-8 mt-3 mt-md-0 text-center text-md-left">
+                            <h6 class="font-weight-bold letter-spacing-2 text-primary text-uppercase">Kemang Village</h6>
+                            <h4 class="font-alt font-weight-bold mt-2">E: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="9bf3fef7f7f4dbe8fefcf2effab5f8f4f6">[email&#160;protected]</a></h4>
+                            <h4 class="font-alt font-weight-bold mt-2">P: +62 134 445 634</h4>
+                            <p class="font-weight-bold mt-2 text-gray-600">Lippo Mall Kemang 3rd Floor, Jl. Pangeran Antasari No. 36P Jakarta Selatan 12950, Indonesia</p>
+                            <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                        </div>
+
+                    </div>
+
+                <div class="row mt-5">
+                    <div class="col-md-4 text-center text-md-left">
+                        <img src="images/contact-2.jpg" alt="" class="img-fluid">
+                    </div>
+
+                    <div class="col-md-8 mt-3 mt-md-0 text-center text-md-left">
+                        <h6 class="font-weight-bold letter-spacing-2 text-primary text-uppercase">Cibubur Junction</h6>
+                        <h4 class="font-alt font-weight-bold mt-2">E: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="4e2d21203a2f2d3a0e3d2b29273a2f602d2123">[email&#160;protected]</a></h4>
+                        <h4 class="font-alt font-weight-bold mt-2">P: +62 135 446 635</h4>
+                        <p class="font-weight-bold mt-2 text-gray-600">Cibubur Junction 2nd Floor, Jl. Jambore No. 12B, Cibubur Jakarta Selatan 13720, Indonesia</p>
+                        <span class="bg-secondary mt-3 mx-auto mx-md-0 sep-line-thick"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+                <div class="col-lg-6 mt-5 mt-lg-0">
+                    <h3 class="font-weight-bold">Browse the options below to help us direct your enquiry.</h3>
+                    <span class="bg-secondary mt-3 sep-line-thick"></span>
+                    <form action="contact/send_mail.php" method="post" id="form-contact" class="mt-4">
+                        <div class="form-group">
+                            <label for="c_name" class="font-weight-bold">Full Name:</label>
+                            <input type="text" name="c_name" id="c_name" class="bg-gray-200 form-control required" placeholder="e.g. Wiro Sableng" autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c_email" class="font-weight-bold">Email Address:</label>
+                            <input type="email" name="c_email" id="c_email" class="bg-gray-200 form-control required email" placeholder="e.g. wirosableng@gmail.com" autocomplete="off">
+                        </div>
+
+                        <div class="form-group">
+                        <label for="c_topic" class="font-weight-bold">I would like to talk about:</label>
+                            <div class="select-wrapper">
+                                <select name="c_topic" id="c_topic" class="bg-gray-200 form-control required">
+                                    <option value="">- Choose a Topic -</option>
+                                    <option value="I have a project for Segita">I have a project for Segita</option>
+                                    <option value="I am interested in an internship">I am interested in an internship</option>
+                                    <option value="I would like to invite Segita to an event">I would like to invite Segita to an event</option>
+                                    <option value="I just want to say Hi">I just want to say Hi</option>
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <label for="c_message" class="font-weight-bold">Message:</label>
+                            <textarea name="c_message" id="c_message" class="bg-gray-200 form-control required" rows="9" placeholder="How can we help?"></textarea>
+                        </div>
+
+                        <button type="submit" id="btn-form-contact" class="btn btn-primary btn-shadow mt-1">Send Message</button>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="subscribe" class="bg-img-cover bg-overlay-7">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-9 text-center">
+                    <h2 class="font-alt font-weight-bold text-white">If your content isn't driving conversation, you're doing it wrong.</h2>
+
+                    <div id="mc_embed_signup" class="mt-5">
+                        <form action="https://lucky-roo.us11.list-manage.com/subscribe/post?u=1e24a547e8ca8812f4aa39f5d&amp;id=fcb59e27aa" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="bg-dark border border-gray-700 d-inline-block form-subscribe form-subscribe-inline justify-content-center rounded shadow-lg validate" target="_blank" novalidate>
+                            <div class="d-flex flex-column flex-sm-row justify-content-center position-relative">
+                                <div class="form-group m-0 mc-field-group position-relative">
+                                    <div class="label-wrapper">
+                                        <label for="mce-EMAIL"></label>
+                                    </div>
+
+                                    <input type="email" value="" name="EMAIL" class="form-control required email" id="mce-EMAIL" placeholder="Enter Your Email Address">
+                                </div>
+
+                                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                                    <input type="text" name="b_1e24a547e8ca8812f4aa39f5d_fcb59e27aa" tabindex="-1" value="">
+                                </div>
+
+                                <div class="form-group m-0">
+                                    <input type="submit" value="Subscribe Now" name="subscribe" id="mc-embedded-subscribe" class="btn btn-secondary ml-sm-2 ml-md-3 mt-2 mt-sm-0 p-0">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

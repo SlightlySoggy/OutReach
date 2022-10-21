@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 
 
-namespace MyAffTest.Pages.Opportunities
+namespace MyAffTest.Pages.Utilities
 {
     public class Organization
     {
@@ -34,9 +34,7 @@ namespace MyAffTest.Pages.Opportunities
 
         }
         public Organization(string Org_id)
-        {
-
-
+        { // retrive Organization data by Organization ID
             try
             {
                 var builder = WebApplication.CreateBuilder();
