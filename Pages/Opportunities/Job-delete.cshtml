@@ -1,0 +1,23 @@
+﻿@page ""
+@using System.Data.SqlClient;
+@using Outreach.Pages.Utilities
+
+@{
+    try
+    {
+        String oppid = Request.Query["OppId"];
+
+        Opportunity op = new Opportunity(oppid);
+        string result = op.Delete(oppid);
+
+        if (result == "ok")
+        {
+            Response.Redirect("/job-list");
+        }
+         
+    }
+    catch (Exception ex)
+    {
+    }
+    
+}

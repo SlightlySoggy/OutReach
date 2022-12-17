@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyAffTest.Pages.Content
+namespace Outreach.Pages.Content
 {
     public class ContactModel : PageModel
     { 

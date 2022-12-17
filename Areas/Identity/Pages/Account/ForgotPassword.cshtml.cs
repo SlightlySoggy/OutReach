@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 
-namespace MyAffTest.Areas.Identity.Pages.Account
+namespace Outreach.Areas.Identity.Pages.Account
 {
     public class ForgotPasswordModel : PageModel
     {

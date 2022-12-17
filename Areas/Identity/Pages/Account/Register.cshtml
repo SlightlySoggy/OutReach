@@ -1,6 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
+    Layout = "/Areas/Identity/Pages/Shared/_Layout_LoginRegister.cshtml";
     ViewData["Title"] = "Register";
 }
 
@@ -9,9 +10,124 @@
     https://www.yogihosting.com/aspnet-core-identity-authentication/*@
 
 
-<h1>@ViewData["Title"]</h1>
+@*<h1>@ViewData["Title"]</h1>*@
 
-<div class="row">
+<section>
+    <div class="container py-5 h-75">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <!-- Pills navs -->
+                        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-login"
+                                   aria-controls="pills-login" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab-register"
+                                   aria-controls="pills-register" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+                            </li>
+                        </ul>
+                        <!-- Pills navs -->
+                        <!-- Pills content -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active">
+                                <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                                    <div class="text-center mb-3">
+
+                                        <p>Sign up with:</p>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-google"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-twitter"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-github"></i>
+                                        </button>
+
+                                    </div>
+
+                                    <p class="text-center">or:</p>
+
+                                    <!-- Username input -->
+                                    <div class="form-outline mb-4">
+                                        <input type="text" id="registerUsername" class="form-control" />
+                                        <label class="form-label" for="registerUsername">Username</label>
+                                    </div>
+
+
+                                    <!-- FistName input -->
+                                    <div class="form-outline mb-4 form-floating">
+                                        <input asp-for="Input.FistName" class="form-control" autocomplete="fistname" aria-required="true" />
+                                        <label asp-for="Input.FistName" class="form-label"></label>
+                                        <span asp-validation-for="Input.FistName" class="text-danger"></span>
+                                    </div>
+
+
+
+                                    <!-- LastName input -->
+                                    <div class="form-outline mb-4 form-floating">
+                                        <input asp-for="Input.LastName" class="form-control" autocomplete="lastrname" aria-required="true" />
+                                        <label asp-for="Input.LastName" class="form-label"></label>
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                    </div>
+
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4 form-floating">
+                                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                                        <label asp-for="Input.Email" class="form-label"></label>
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-floating">
+                                        <input asp-for="Input.Password" class="form-control" autocomplete="new-password" aria-required="true" />
+                                        <label asp-for="Input.Password"></label>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                    <!-- Repeat Password input -->
+                                    <div class="form-floating">
+                                        <input asp-for="Input.ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" />
+                                        <label asp-for="Input.ConfirmPassword"></label>
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+
+                                    <!-- Checkbox -->
+                                    <div class="form-check d-flex justify-content-center mb-4">
+                                        <input class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                                               aria-describedby="registerCheckHelpText" />
+                                        <label class="form-check-label" for="registerCheck">
+                                            I have read and agree to the terms
+                                        </label>
+                                    </div>
+
+                                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                                    <!-- Submit button -->
+                                    <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+                                </form>
+                                
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@*<div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
             <h2>Create a new account.</h2>
@@ -35,8 +151,8 @@
             <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
         </form>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-       @* <section>
+    @*<div class="col-md-6 col-md-offset-2">
+        <section>
             <h3>Use another service to register.</h3>
             <hr />
             @{
@@ -63,8 +179,8 @@
                     </form>
                 }
             }
-        </section>*@
-    </div>
+        </section>
+    </div>*@
 </div>
 
 @section Scripts {

@@ -1,0 +1,55 @@
+﻿@page "/Tags/Edit"
+@model Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Tags.EditModel
+@{ 
+    ViewData["Title"] = "Edit Tag";
+    Layout = "../../Pages/Shared/_Layout_Interactive";
+
+}
+
+<h1>Edit Tag</h1>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' Tag='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+<form method="post" class="mt-3">
+    <div class="form-group row">
+        <label asp-for="Tagid" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input type="hidden" asp-for="Tagid" />
+            <input asp-for="Tagid" disabled class="form-control">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label asp-for="Tagname" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Tagname" class="form-control">
+            <span asp-validation-for="Tagname" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <a class="btn btn-secondary" href="./" Tag="button">Cancel</a> 
+        </div>
+    </div>
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class='alert alert-success alert-dismissible fade show' Tag='alert'>
+                    <strong>@Model.successMessage</strong>
+                    <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                </div>
+            </div>
+        </div> 
+    } 
+</form>
+

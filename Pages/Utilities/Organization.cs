@@ -1,9 +1,9 @@
-﻿using MyAffTest.Pages.Clients;
+﻿//using Outreach.Pages.Clients;
 using System.Data;
 using System.Data.SqlClient;
 
 
-namespace MyAffTest.Pages.Utilities
+namespace Outreach.Pages.Utilities
 {
     public class Organization
     {

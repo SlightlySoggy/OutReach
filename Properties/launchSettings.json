@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "MyAffTest": {
+    "Outreach": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

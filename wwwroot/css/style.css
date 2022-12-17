@@ -1,0 +1,128 @@
+﻿
+body {
+    background: #fff;
+}
+
+.cursor {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    z-index: 999;
+    border: 1px solid black;
+    outline: 1px solid #c9d3ff;
+    overflow: none;
+    mix-blend-mode: multiply;
+    background: rgba(100, 100, 100, 0.1);
+}
+
+
+#content {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: sans-serif;
+    overflow: hidden;
+    /*cursor: none*/
+}
+
+/*#cursor {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    box-sizing: border-box;
+    transition: 0.05s;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+*/
+h2:hover ~ #cursor {
+    width: 100px;
+    height: 100px;
+    border: 2px dashed #000;
+    animation: animate 5s linear infinite
+}
+
+@keyframes animate {
+    0% {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+
+.cursor {
+    left: 750px;
+    top: 40px;
+}
+
+.circle {
+    background: rgba(100, 100, 100, 0.1);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
+    outline: 1px solid #c9d3ff;
+    overflow: hidden;
+}
+
+    .circle::after,
+    .cursor::after {
+        display: block;
+        content: '';
+        height: 1px;
+        background: #c9d3ff;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        right: 0;
+    }
+
+    .circle::before,
+    .cursor::before {
+        display: block;
+        content: '';
+        width: 1px;
+        background: #c9d3ff;
+        position: absolute;
+        left: 50%;
+        top: 0;
+        bottom: 0;
+    }
+
+.inter {
+    width: 10px;
+    height: 10px;
+    background: black;
+    border-radius: 50%;
+    position: absolute;
+    display: none;
+}
+
+.inner-cursor {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    position: absolute;
+    pointer-events: none;
+    background: green;
+    left: 50%;
+    top: 50%;
+}
+
+
+
+

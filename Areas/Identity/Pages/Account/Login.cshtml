@@ -2,18 +2,125 @@
 @model LoginModel
 
 @{
+
+    Layout = "/Areas/Identity/Pages/Shared/_Layout_LoginRegister.cshtml";
     ViewData["Title"] = "Log in";
 }
+
 
 @*Customize asp.net core login and registration using identity:  https://bluerhinolabs.medium.com/customize-login-page-on-asp-net-core-web-application-73cc9574da32
     https://www.yogihosting.com/aspnet-core-identity-authentication/*@
 
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
+@*<h1>@ViewData["Title"]</h1>*@
+
+<section>
+    <div class="container py-5 h-75">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                <div class="card shadow-2-strong" style="border-radius: 1rem;">
+                    <div class="card-body p-5 text-center">
+
+                        <!-- Pills navs -->
+                        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="tab-login"
+                                   aria-controls="pills-login" asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="tab-register"
+                                   aria-controls="pills-register" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register</a>
+                            </li>
+                        </ul>
+                        <!-- Pills navs -->
+                        <!-- Pills content -->
+                        <div class="tab-content">
+                            <div class="tab-pane fade show active">
+                                <form id="account" method="post">
+
+                                    <div class="text-center mb-3">
+                                        <p>Sign in with:</p>
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-google"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-twitter"></i>
+                                        </button>
+
+                                        <button type="button" class="btn btn-link btn-floating mx-1">
+                                            <i class="fab fa-github"></i>
+                                        </button>
+                                    </div>
+
+                                    <p class="text-center">or:</p>
+
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4 form-floating">
+                                        <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" />
+                                        <label asp-for="Input.Email" class="form-label"></label>
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-outline mb-4 form-floating">
+                                        <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" />
+                                        <label asp-for="Input.Password" class="form-label"></label>
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                  
+
+                                    <!-- 2 column grid layout -->
+                                    <div class="row mb-4">
+                                        <div class="col-md-6 d-flex justify-content-center">
+                                            <!-- Checkbox -->
+                                            <div class="form-check mb-3 mb-md-0">
+                                                <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked />
+                                                <div class="form-check-label checkbox">
+                                                    <label asp-for="Input.RememberMe" class="form-label">
+                                                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                                                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 d-flex justify-content-center">
+                                            <!-- Simple link -->
+                                            <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+                                        </div>
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
+                                        <p>Not a member? <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a></p>
+                                    </div>
+
+                                </form>
+                            </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@*<div>
+    <!-- Pills content -->
+
     <div class="col-md-4">
         <section>
             <form id="account" method="post">
+
                 <h2>Use a local account to log in.</h2>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -35,9 +142,11 @@
                         </label>
                     </div>
                 </div>
+
                 <div>
                     <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
                 </div>
+
                 <div>
                     <p>
                         <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
@@ -49,11 +158,16 @@
                         <a id="resend-confirmation" asp-page="./ResendEmailConfirmation">Resend email confirmation</a>
                     </p>
                 </div>
+
+                
+
             </form>
         </section>
     </div>
-    <div class="col-md-6 col-md-offset-2">
-  @*      <section>
+
+
+    @*<div class="col-md-6 col-md-offset-2">
+        <section>
             <h3>Use another service to log in.</h3>
             <hr />
             @{
@@ -80,9 +194,11 @@
                     </form>
                 }
             }
-        </section>*@
+        </section>
     </div>
-</div>
+</div>*@
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

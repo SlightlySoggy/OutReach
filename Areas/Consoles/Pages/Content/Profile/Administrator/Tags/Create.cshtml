@@ -1,0 +1,53 @@
+﻿@page "/Tags/Create"
+@model Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Tags.CreateModel
+@{
+    Layout = "../../Pages/Shared/_Layout_Interactive";
+}
+
+<br>
+<h2>New Tag</h2>
+
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' Tag='alert'>
+        <strong>@Model.errorMessage</strong>
+        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+    </div>
+}
+
+<form method="POST">
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Tag Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="tagname" value="">
+
+        </div>
+
+        <div class="row mb-3">
+        </div>
+
+        <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Tags/Index" Tag="button">Cancel</a>
+        </div>
+    </div>
+
+
+        @if (Model.successMessage.Length > 0)
+        {
+            <div class="row mb-3">
+                <div class="col-sm-9">
+                    <div class='alert alert-success alert-dismissible fade show' Tag='alert'>
+                        <strong>@Model.successMessage</strong>
+                        <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                    </div>
+                </div>
+            </div>
+        }
+</form>

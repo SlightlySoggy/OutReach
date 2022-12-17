@@ -1,7 +1,7 @@
 ﻿@page "/Job-detail"
 @model JobdetailModel
 @{
-    Layout = "../Shared/_Layout_LandingTEMPLATE.cshtml";
+    Layout = "../Shared/_Layout_Landing.cshtml";
     ViewData["Title"] = "Job-detail page";
 }
 
@@ -25,7 +25,7 @@
         <div class="row gy-5 gx-4">
             <div class="col-lg-8">
                 <div class="d-flex align-items-center mb-5">
-                    <img class="flex-shrink-0 img-fluid border rounded" src="TEMPLATE/img/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
+                    <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-2.jpg" alt="" style="width: 80px; height: 80px;">
                     <div class="text-start ps-4">
                         <h3 class="mb-3">Job:&nbsp; @Model.opportunity.OpportunityTitle</h3>
                         <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>Work Site : @Model.opportunity.SiteAddress</span>
@@ -47,27 +47,10 @@
                     <h4 class="mb-3">Schedule</h4>
                     <p>StartDate : @Model.opportunity.StartDate &nbsp; &nbsp; &nbsp; &nbsp; EndDate : @Model.opportunity.EndDate</p>
                     <p>Work Shedule : @Model.opportunity.Schedule</p>
-@*                    <h4 class="mb-3">Responsibility</h4>
-                    <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-                    </ul>
-                    <h4 class="mb-3">Requirements</h4>
-                    <p>Magna et elitr diam sed lorem. Diam diam stet erat no est est. Accusam sed lorem stet voluptua sit sit at stet consetetur, takimata at diam kasd gubergren elitr dolor</p>
-                    <ul class="list-unstyled">
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Dolor justo tempor duo ipsum accusam</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Elitr stet dolor vero clita labore gubergren</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Rebum vero dolores dolores elitr</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Est voluptua et sanctus at sanctus erat</li>
-                        <li><i class="fa fa-angle-right text-primary me-2"></i>Diam diam stet erat no est est</li>
-                    </ul>*@
+
                 </div>
 
-                <div class="">
+                <div class="mb-5">
                     <h4 class="mb-4">Apply For The Job</h4>
                     <form>
                         <div class="row g-3">
@@ -104,9 +87,24 @@
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Location: New York, USA</p>
                     <p class="m-0"><i class="fa fa-angle-right text-primary me-2"></i>Date Line: 01 Jan, 2045</p>
                 </div>
+
                 <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
                     <h4 class="mb-4">Company Detail</h4>
                     <p class="m-0">Ipsum dolor ipsum accusam stet et et diam dolores, sed rebum sadipscing elitr vero dolores. Lorem dolore elitr justo et no gubergren sadipscing, ipsum et takimata aliquyam et rebum est ipsum lorem diam. Et lorem magna eirmod est et et sanctus et, kasd clita labore.</p>
+                </div>
+
+                <div class="bg-light rounded p-5 wow slideInUp" data-wow-delay="0.1s">
+                    <h4 class="mb-4">Opportunity Actions</h4>
+                    @if (Model.DefaultShow)
+                    {
+                  
+                        <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-edit" asp-route-OppId="@Model.opportunity.Id">Edit</a>
+                     
+                        <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-delete" asp-route-OppId="@Model.opportunity.Id">Delete</a>
+
+                    }
+                    <button class="btn btn-primary w-100" type="submit">Status</button>
+
                 </div>
             </div>
         </div>

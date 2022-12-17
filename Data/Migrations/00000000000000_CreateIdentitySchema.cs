@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 
-namespace MyAffTest.Data.Migrations
+namespace Outreach.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

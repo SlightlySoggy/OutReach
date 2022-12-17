@@ -1,4 +1,4 @@
-﻿namespace MyAffTest.Pages.Utilities
+﻿namespace Outreach.Pages.Utilities
 {
     public class ClientInfo
     {
