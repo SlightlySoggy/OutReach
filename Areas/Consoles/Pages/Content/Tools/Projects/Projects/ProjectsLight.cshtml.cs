@@ -1,6 +1,8 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Outreach.Pages.Utilities;
+using System.Data;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectLight
 {
@@ -15,68 +17,49 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectLight
             GeneralUtilities ut = new GeneralUtilities();
             Project pro = new Project();
 
-            if (Request.Query["Searchkeyword"] != "")
+            if (!string.IsNullOrWhiteSpace(Request.Query["Searchkeyword"])) //if (Request.Query["Searchkeyword"] != "" && Request.Query["Searchkeyword"].Count != 0) //if (Request.Query["Searchkeyword"] != null && Request.Query["Searchkeyword"].ToString() != "")
             {
                 string txtSearch = Request.Query["Searchkeyword"];
-                //ProjectList = ut.SearchOpportunities(txtSearch, "");
-                ProjectList = pro.GetProjectListByStatusId("1"); //get all planned projects
-
                 defaultsearchtext = txtSearch;
+
+                ProjectList = ut.GetProjectListByNameSearch(txtSearch); //get projects name contain search word
+            }
+            else if (!string.IsNullOrWhiteSpace(Request.Query["statusid"])) // 
+            {
+                ProjectList = ut.GetProjectListByStatusId(Request.Query["statusid"]); //get projects list with specified status
             }
             else
             {
-                ProjectList = pro.GetProjectListByStatusId(""); //get all projects
+                ProjectList = ut.GetProjectListByStatusId(""); //get all projects
             }
 
-            //Tag tag = new Tag();
-            //ListTag = tag.GetReferencedTagsbyOpptunityId(""); // get all active tags
         }
-
-        //public IActionResult OnPostButton1(IFormCollection data)
-        //{
-        //    //...
-        //}
-
-
-        //public IActionResult OnPostButton2(IFormCollection data)
-        //{
-        //    //...
-        //}
 
         public void OnPost()
         {
             // https://www.learnrazorpages.com/razor-pages/handler-methods
-            string clickedbuttonName = "";
+            string result = "";
             Project pro = new Project();
 
-            if (Request.Form["submitbutton1"] != "")
+            try
             {
-                clickedbuttonName = Request.Form["submitbutton1"];
+                if (!string.IsNullOrWhiteSpace(Request.Form["hid_DeleteProjectid"]))
+                {
+                    result = pro.Delete(Request.Form["hid_DeleteProjectid"]);
+                }
+
+                if (result == "ok")
+                {
+                    GeneralUtilities ut = new GeneralUtilities();
+                    ProjectList = ut.GetProjectListByNameSearch(""); //get all planned projects
+                    //Response.Redirect("ProjectsLight");
+                }
+
             }
-            //else if (Request.Form["submitbutton2"] != "")
-            //{ 
-            //    clickedbuttonName = Request.Form["submitbutton2"];
-            //}
-
-
-            string txtSearch = "";
-            if (Request.Form["TxtSearch1"] != "")
+            catch (Exception ex)
             {
-                txtSearch = Request.Form["TxtSearch1"];
-            }
-            //else if (Request.Form["TxtSearch2"] != "")
-            //{
-            //    txtSearch = Request.Form["TxtSearch2"];
-            //}
-
-            GeneralUtilities ut = new GeneralUtilities();
-
-            if (txtSearch != null || Request.Form["chktag"] != "")
-            {
-                //ProjectList = ut.SearchOpportunities(txtSearch, Request.Form["chktag"]);
-                ProjectList = pro.GetProjectListByStatusId(""); //get all projects
             }
         }
-        //Response.Redirect("Index");
     }
-}
+             
+} 

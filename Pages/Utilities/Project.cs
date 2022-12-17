@@ -1,6 +1,7 @@
 ﻿//using Outreach.Pages.Clients;
 using System.Data;
 using System.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 
 
 namespace Outreach.Pages.Utilities
@@ -32,7 +33,7 @@ namespace Outreach.Pages.Utilities
             CreatedOrgId = "";
             CreatedDate = "";
             CreatedUserId = "";
-            ProjectManagerUserId = "";
+            ProjectManagerUserId = "1"; //default status is planned 1
             StartDate = "";
             DueDate = "";
             CompletionDate = ""; 
@@ -105,76 +106,6 @@ namespace Outreach.Pages.Utilities
 
         }
 
-        public List<Project> GetProjectListByStatusId(string statusId = "")
-        { // retrive Project data by Project ID
-
-            List<Project> listPro = new List<Project>();
-
-            try
-            {
-                var builder = WebApplication.CreateBuilder();
-                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    string sql = "";
-                    if (statusId.Trim() != "") 
-                        sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) where ProjectTaskStatusId = " + statusId + " order by ID Desc";
-                    else 
-                        sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) order by ID Desc";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-
-                            {
-
-                                Id = reader.GetInt32(0).ToString();
-                                if (reader["ProjectName"].GetType() != typeof(DBNull))
-                                {
-                                    ProjectName = reader["ProjectName"].ToString();
-                                }
-
-                                if (reader["Description"].GetType() != typeof(DBNull))
-                                {
-                                    Description = reader["Description"].ToString();
-                                }
-
-                                if (reader["EstimatedBudget"].GetType() != typeof(DBNull))
-                                {
-                                    EstimatedBudget = reader["EstimatedBudget"].ToString();
-                                }
-
-                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
-                                {
-                                    ActualSpent = reader["ActualSpent"].ToString();
-                                }
-
-                                CreatedOrgId = reader.GetInt32(5).ToString();
-                                CreatedDate = reader.GetDateTime(6).ToString();
-                                CreatedUserId = reader.GetInt32(7).ToString();
-                                ProjectManagerUserId = reader.GetInt32(8).ToString();
-                                StartDate = reader.GetDateTime(9).ToString();
-                                DueDate = reader.GetDateTime(10).ToString();
-                                CompletionDate = reader.GetDateTime(11).ToString();
-                                ProjectTaskStatusId = reader.GetInt32(12).ToString();
-
-                                listPro.Add(this);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message.ToString());
-            }
-
-            return listPro;
-        }
-
         public string Save(string ProjectId) // int Id, string ProjectName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
             //save the new Project into the database
@@ -194,8 +125,8 @@ namespace Outreach.Pages.Utilities
                     if (ProjectId=="" || ProjectId == "0")
                     {
                         sql = "INSERT INTO Project " +
-                                      "(ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay) VALUES " +
-                                      "(@ProjectName,@Description,@EstimatedBudget,@ActualSpent,@CreatedOrgId,@CreatedDate,@CreatedUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId,@DurationByDay);" +
+                                      "(ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay) VALUES " +
+                                      "(@ProjectName,@Description,@EstimatedBudget,@ActualSpent,@CreatedOrgId,@CreatedDate,@CreatedUserId,@ProjectManagerUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId,@DurationByDay);" +
                                       "Select newID=MAX(id) FROM Project"; 
                     }
                     else
@@ -322,4 +253,7 @@ namespace Outreach.Pages.Utilities
             return result;
         }
     }
+
+
+
 }

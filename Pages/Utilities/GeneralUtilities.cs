@@ -1,4 +1,5 @@
 ﻿//using Outreach.Pages.Clients;
+using Microsoft.VisualBasic;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -222,5 +223,153 @@ namespace Outreach.Pages.Utilities
             return listOpp;
 
         }
+
+
+
+        public List<Project> GetProjectListByNameSearch(string NameSearch = "")
+        { // retrive Project data by partial of name 
+
+            List<Project> listPro = new List<Project>();  
+            string sql = "";
+
+            if (NameSearch.Trim() != "")
+            {
+                sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) where ProjectName like  '%" + NameSearch + "%' order by ProjectName ";
+            }
+            else
+            { // get all project
+                sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) order by ProjectName";
+            }
+
+            listPro = GetProjectListBySQLQuery(sql); 
+
+            return listPro;
+        }
+
+        public List<Project> GetProjectListByStatusId(string statusId = "")
+        { // retrive Project data by status ID
+            List<Project> listPro = new List<Project>();
+            string sql = "";
+
+            if (statusId.Trim() != "")
+            {
+                sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) where ProjectTaskStatusId = " + statusId + " order by ProjectName";
+            }
+            else
+            { // get all project
+                sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) order by ProjectName";
+            }
+
+            listPro = GetProjectListBySQLQuery(sql);
+
+            return listPro;
+        }
+         
+    public List<Project> GetProjectListBySQLQuery(string sql)
+        { // retrive Project data by given sql query
+
+            List<Project> listPro = new List<Project>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read()) 
+                            {
+
+                                Project p = new Project();
+
+                                p.Id = reader.GetInt32(0).ToString();
+                                if (reader["ProjectName"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectName = reader["ProjectName"].ToString();
+                                }
+
+                                if (reader["Description"].GetType() != typeof(DBNull))
+                                {
+                                    p.Description = reader["Description"].ToString();
+                                }
+
+                                if (reader["EstimatedBudget"].GetType() != typeof(DBNull))
+                                {
+                                    p.EstimatedBudget = reader["EstimatedBudget"].ToString();
+                                }
+
+                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
+                                {
+                                    p.ActualSpent = reader["ActualSpent"].ToString();
+                                }
+
+
+                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
+                                {
+                                    p.ActualSpent = reader["ActualSpent"].ToString();
+                                }
+
+
+                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedOrgId = reader.GetInt32(5).ToString();
+                                }
+
+                                if (reader["CreatedDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedDate = reader.GetDateTime(6).ToString();
+                                }
+
+                                if (reader["CreatedUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedUserId = reader.GetInt32(7).ToString();
+                                }
+
+                                if (reader["ProjectManagerUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectManagerUserId = reader.GetInt32(8).ToString();
+                                }
+
+                                if (reader["StartDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.StartDate = reader.GetDateTime(9).ToString();
+                                }
+
+                                if (reader["DueDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.DueDate = reader.GetDateTime(10).ToString();
+                                }
+
+                                if (reader["CompletionDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CompletionDate = reader.GetDateTime(11).ToString();
+                                }
+
+                                if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectTaskStatusId = reader.GetInt32(12).ToString();
+                                }
+
+
+                                listPro.Add(p);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listPro;
+        }
+
+
     }
 }
