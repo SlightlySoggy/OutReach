@@ -5,6 +5,12 @@
 }
 
 
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+
 <form method="post">
 
     <!-- Content Wrapper. Contains page content -->
@@ -51,7 +57,13 @@
                                     <label for="inputDescription">Project Description</label>
                                     <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.projectInfo.Description</textarea>
                                 </div>
+<<<<<<< HEAD
+
+                                       
+@*                            <!-- Date and time range -->
+=======
                             <!-- Date range -->
+>>>>>>> 6fffaefbd9eb64b751040b6a27cd693b9900027d
                             <div class="form-group">
                                 <label>Project Date Range:</label>
 
@@ -61,13 +73,21 @@
                                             <i class="far fa-calendar-alt"></i>
                                         </span>
                                     </div>
+<<<<<<< HEAD
+
+                                    <input type="text" class="form-control float-right" id="inputTimeRange" name="inputTimeRange" value="@Model.projectInfo.ProjectName">
+
+=======
                                     <input type="text" class="form-control float-right" id="reservation">
+>>>>>>> 6fffaefbd9eb64b751040b6a27cd693b9900027d
                                 </div>
                                 <!-- /.input group -->
-                            </div>
+                            </div>*@
 
                             <!-- Date and time -->
                             @*<div class="form-group">
+<<<<<<< HEAD
+=======
                                 <label>Start Time:</label>
                                 <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
@@ -90,12 +110,36 @@
 
                             <!-- Date and time -->
                             <div class="form-group">
+>>>>>>> 6fffaefbd9eb64b751040b6a27cd693b9900027d
                                 <label>Time Completed:</label>
                                 <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
                                     <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
+                                </div>
+                            </div>*@
+
+                             <div class="form-group">
+                                <label>StartDate:</label>
+                                <div class="input-group date"  data-target-input="nearest" >
+                                    <input type="text" id="inputStartDate" name="inputStartDate" value="@Model.projectInfo.StartDate" />
+                                </div>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>DueDate:</label>
+                                <div class="input-group date"  data-target-input="nearest">
+                                    <input type="text" id="inputDueDate" name="inputDueDate" value="@Model.projectInfo.DueDate">
+                                </div>
+                            </div> 
+
+
+                            <div class="form-group">
+                                <label>Completion Date:</label>
+                                <div class="input-group date"  data-target-input="nearest" >
+                                    <input type="text" id="inputCompletionDate" name="inputCompletionDate" value="@Model.projectInfo.CompletionDate">
                                 </div>
                             </div>
 
@@ -440,6 +484,11 @@
     <!-- /.content-wrapper -->
 </form>
 
+  <script>
+    $(function() {
+        $("#inputStartDate,#inputDueDate,#inputCompletionDate").datepicker();
+    });
+  </script>
 
 
 

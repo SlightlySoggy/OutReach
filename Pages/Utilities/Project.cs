@@ -177,50 +177,7 @@ namespace Outreach.Pages.Utilities
             return result;
         }
 
-
-
-        //public string SaveTags(string ProjectId, string tagId, string action)
-        //{ 
-
-        //    string result = "ok";
-        //    int newProdID = 0;
-        //    try
-        //    {
-        //        var builder = WebApplication.CreateBuilder();
-        //        var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
-
-        //        using (SqlConnection connection = new SqlConnection(connectionString))
-        //        {
-        //            connection.Open();
-        //            string sql = "";
-
-        //            if (ProjectId != "" && tagId != "" && action.ToLower() == "insert")
-        //            {
-        //                sql = "INSERT INTO OpportunityTag " +
-        //                              "(OpportunityId,TagId) VALUES " +
-        //                              "(@OpportunityId,@TagId);";
-        //            }
-        //            else if (ProjectId != "" && tagId != "" && action.ToLower() == "delete")
-        //            {
-        //                sql = "Delete INTO OpportunityTag " +
-        //                              "(OpportunityId,TagId) VALUES " +
-        //                              "(@OpportunityId,@TagId);";
-        //            } 
-
-        //            using (SqlCommand cmd = new SqlCommand(sql, connection))
-        //            {
-        //                cmd.Parameters.AddWithValue("@OpportunityId", ProjectId);
-        //                cmd.Parameters.AddWithValue("@TagId", tagId);  
-        //                cmd.ExecuteNonQuery(); 
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result = "failed" + ex.Message;
-        //    }
-        //    return result;
-        //}
+         
 
         public string Delete(string ProjectId) // int Id, string ProjectName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {

@@ -5,6 +5,9 @@
         public String Id;
         public String User_Id;
         public String UserName;
+        public String firstName;
+        public String lastName; 
+        public String PhoneNumber; 
         public String Email;
         public String Password;
         public String Created_at;
@@ -13,6 +16,9 @@
             Id = "";
             User_Id = "";
             UserName = "";
+            firstName = "";
+            lastName = "";
+            PhoneNumber = "";
             Email = "";
             Password = "";
             Created_at = "";

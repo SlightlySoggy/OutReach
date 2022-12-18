@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
@@ -14,10 +15,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
     {
         public Organization orgInfo = new Organization();
         public Project projectInfo = new Project();
-        //public List<PTStatus> ListTag = new List<PTStatus>(); //Project Task Status 
 
-        RoleManager<IdentityRole> roleManager;
-        UserManager<ApplicationUser> userManager;
+        public List<ProjTaskStatus> StatusList = new List<ProjTaskStatus>();  
+        public List<LoginUserInfo> LoginUserList = new List<LoginUserInfo>();  
+
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<JobdetailModel> _logger;
@@ -50,8 +51,11 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 throw new InvalidOperationException($"Unable to find signin user info.");
                 return Page();
             }
-            GeneralUtilities generalUtilities = new GeneralUtilities();
-            user_id = generalUtilities.GetLoginUserIntIDbyGUID(user.Id);
+            GeneralUtilities ut = new GeneralUtilities();
+            user_id = ut.GetLoginUserIntIDbyGUID(user.Id);
+
+            StatusList = ut.GetProjTaskStatusList();
+            LoginUserList = ut.GetLoginUserList("");
 
             //user_id = Convert.ToInt32(user.User_Id);
             projectInfo.CreatedOrgId = org_id.ToString();

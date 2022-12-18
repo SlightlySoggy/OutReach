@@ -1,5 +1,6 @@
 ﻿//using Outreach.Pages.Clients;
 using Microsoft.VisualBasic;
+using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using System.Data;
 using System.Data.SqlClient;
 
@@ -368,6 +369,110 @@ namespace Outreach.Pages.Utilities
             }
 
             return listPro;
+        }
+
+
+        public List<ProjTaskStatus> GetProjTaskStatusList()
+        { // retrive ProjTaskStatus data by ProjTaskStatus ID
+
+            List<ProjTaskStatus> listProjTaskStatus = new List<ProjTaskStatus>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql =  "select Id,StatusName from ProjTaskStatus with(nolock)  order by Id";
+                    //else 
+                    //    sql = "select Id,Name from ProjTaskStatus with(nolock) order by Id";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+
+                            {
+                                ProjTaskStatus s = new ProjTaskStatus();
+
+                                s.Id = reader.GetInt32(0).ToString();
+                                if (reader["StatusName"].GetType() != typeof(DBNull))
+                                {
+                                    s.StatusName = reader["StatusName"].ToString();
+                                }
+
+                                listProjTaskStatus.Add(s);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listProjTaskStatus;
+        }
+
+        public List<LoginUserInfo> GetLoginUserList(string OrgId="")
+        { // retrive login user by org ID in the future, now just list all
+
+            List<LoginUserInfo> userlist= new List<LoginUserInfo>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    String sql = "SELECT User_Id,UserName,Email,Password='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) ";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                LoginUserInfo userinfo = new LoginUserInfo();
+                                userinfo.User_Id = reader.GetInt32(0).ToString();
+                                userinfo.UserName = reader.GetString(1);
+                                userinfo.Email = reader.GetString(2);
+                                userinfo.Password = reader.GetString(3);
+                                userinfo.Created_at = reader.GetString(4);
+
+
+                                if (reader["firstName"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.firstName = reader["firstName"].ToString();
+                                }
+
+                                if (reader["lastName"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.lastName = reader["lastName"].ToString();
+                                }
+
+                                if (reader["PhoneNumber"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.PhoneNumber = reader["PhoneNumber"].ToString();
+                                }
+                                  
+                                userlist.Add(userinfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return userlist;
         }
 
 
