@@ -3,134 +3,415 @@
 @{
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
- 
+
 
 <form method="post">
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <div class="container-fluid">
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1>Project Create/Edit</h1>
-          </div>
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Project Add</li>
-            </ol>
-          </div>
-        </div>
-      </div><!-- /.container-fluid -->
-    </section>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Project Create/Edit</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Project Add</li>
+                        </ol>
+                    </div>
+                </div>
+            </div><!-- /.container-fluid -->
+        </section>
 
-    <!-- Main content -->
-    <section class="content">
-      <div class="row">
-        <div class="col-md-6">
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">General</h3>
+        <!-- Main content -->
+        <section class="content">
+            <!-- Main row -->
+            <div class="row">
+                <!-- Left col -->
+                <section class="col-lg-6">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">General</h3>
 
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputName">Project Name</label>
-                            <input type="text" id="inputName" class="form-control" placeholder="Enter the Project name..." name="inputName" value="@Model.projectInfo.ProjectName">
-              </div>
-              <div class="form-group">
-                <label for="inputDescription">Project Description</label>
-                            <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.projectInfo.Description</textarea>
-              </div>
-@*              <div class="form-group">
-                <label for="inputStatus">Status</label>
-                <select id="inputStatus" class="form-control custom-select">
-                  <option selected disabled>Select one</option>
-                  <option>On Hold</option>
-                  <option>Canceled</option>
-                  <option>Success</option>
-                </select>
-              </div>*@
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputName">Project Name</label>
+                                    <input type="text" id="inputName" class="form-control" placeholder="Enter the Project name..." name="inputName" value="@Model.projectInfo.ProjectName">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputDescription">Project Description</label>
+                                    <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.projectInfo.Description</textarea>
+                                </div>
+                            <!-- Date and time range -->
+                            <div class="form-group">
+                                <label>Project Time Range:</label>
 
-                        <div class="form-group">
-                            <label for="inputStartDate">Project Start Date</label>
-                            <input type="text" id="inputStartDate" class="form-control" placeholder="" name="inputStartDate" value="@Model.projectInfo.StartDate">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="reservationtime">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label>Date Completed</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask data-target="#reservationdate"/> 
+
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="form-group">
+                                    <label for="inputClientCompany">Client Company</label>
+                                    <input type="text" id="inputClientCompany" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputProjectLeader">Project Leader</label>
+                                    <input type="text" id="inputProjectLeader" class="form-control">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
+                    
+                </section>
 
-                        <div class="form-group">
-                            <label for="inputDueDate">Project Due Date</label>
-                            <input type="text" id="inputDueDate" class="form-control" placeholder="" name="inputDueDate" value="@Model.projectInfo.DueDate">
+                <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                <section class="col-lg-6">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Budget</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="inputEstimatedBudget">Estimated budget</label>
+                                    <input type="number" id="inputEstimatedBudget" class="form-control" placeholder="Enter the budget $..." name="inputEstimatedBudget" value="@Model.projectInfo.EstimatedBudget">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inputSpentBudget">Total amount spent</label>
+                                    <input type="number" id="inputSpentBudget" class="form-control" name="inputSpentBudget" value="@Model.projectInfo.ActualSpent">
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
                         </div>
+                        <!-- /.card -->
 
-                        <div class="form-group">
-                            <label for="inputCompletionDate">Project Completion Date</label>
-                            <input type="text" id="inputCompletionDate" class="form-control" placeholder="" name="inputCompletionDate" value="@Model.projectInfo.CompletionDate">
+                        <div class="card card-secondary">
+                            <div class="card-header">
+                                <h3 class="card-title">Members</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label>Multiple</label>
+                                    <select class="select2bs4" multiple="multiple" data-placeholder="Select Members"
+                                            style="width: 100%;">
+                                        <option>Maxwell Li</option>
+                                    </select>
+                                </div>
+                                
+                            </div>
+                            <!-- /.card-body -->
                         </div>
-              <div class="form-group">
-                <label for="inputClientCompany">Client Company</label>
-                <input type="text" id="inputClientCompany" class="form-control">
-              </div>
-              <div class="form-group">
-                <label for="inputProjectLeader">Project Leader</label>
-                <input type="text" id="inputProjectLeader" class="form-control">
-              </div>
+                        <!-- /.card -->
+                </section>
             </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-        <div class="col-md-6">
-          <div class="card card-secondary">
-            <div class="card-header">
-              <h3 class="card-title">Budget</h3>
-
-              <div class="card-tools">
-                <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                  <i class="fas fa-minus"></i>
-                </button>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label for="inputEstimatedBudget">Estimated budget</label>
-                            <input type="number" id="inputEstimatedBudget" class="form-control" placeholder="Enter the budget $..." name="inputEstimatedBudget" value="@Model.projectInfo.EstimatedBudget">
-              </div>
-              <div class="form-group">
-                <label for="inputSpentBudget">Total amount spent</label>
-                            <input type="number" id="inputSpentBudget" class="form-control" name="inputSpentBudget" value="@Model.projectInfo.ActualSpent">
-              </div>
-              <div class="form-group">
-                <label for="inputEstimatedDuration">Estimated duration by days</label>
-                            <input type="number" id="inputEstimatedDuration" class="form-control" name="inputEstimatedDuration" value="@Model.projectInfo.DurationByDay">
-              </div>
-            </div>
-            <!-- /.card-body -->
-          </div>
-          <!-- /.card -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-12">
-          <a href="#" class="btn btn-secondary">Cancel</a>
-          <input type="submit" value="Save" class="btn btn-success float-right">
+            <div class="row">
+                <div class="col-12">
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Save" class="btn btn-success float-right">
 
                     <input type="hidden" class="form-control" placeholder="" name="hid_oppId" value="@Model.projectInfo.Id">
                     <input type="hidden" class="form-control" placeholder="" name="hid_orgid" value="@Model.projectInfo.CreatedOrgId">
                     <input type="hidden" class="form-control" placeholder="" name="hid_userId" value="@Model.projectInfo.CreatedUserId">
-        </div>
-      </div>
-    </section>
-    <!-- /.content -->
-  </div>
-  <!-- /.content-wrapper -->
+                </div>
+            </div>
 
-          
-<!-- Job Detail End -->             
+
+
+            <div class="container-fluid">
+                <!-- SELECT2 EXAMPLE -->
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Select2 (Bootstrap4 Theme)</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Minimal</label>
+                                    <select class="form-control select2bs4" style="width: 100%;">
+                                        <option selected="selected">Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>Disabled</label>
+                                    <select class="form-control select2bs4" disabled="disabled" style="width: 100%;">
+                                        <option selected="selected">Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Multiple</label>
+                                    <select class="select2bs4" multiple="multiple" data-placeholder="Select a State"
+                                            style="width: 100%;">
+                                        <option>Alabama</option>
+                                        <option>Alaska</option>
+                                        <option>California</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                                <div class="form-group">
+                                    <label>Disabled Result</label>
+                                    <select class="form-control select2bs4" style="width: 100%;">
+                                        <option selected="selected">Alabama</option>
+                                        <option>Alaska</option>
+                                        <option disabled="disabled">California (disabled)</option>
+                                        <option>Delaware</option>
+                                        <option>Tennessee</option>
+                                        <option>Texas</option>
+                                        <option>Washington</option>
+                                    </select>
+                                </div>
+                                <!-- /.form-group -->
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.card-body -->
+                    <div class="card-footer">
+                        Visit <a href="https://select2.github.io/">Select2 documentation</a> for more examples and information about
+                        the plugin.
+                    </div>
+                </div>
+                <!-- /.card -->
+
+
+
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div class="card card-danger">
+                            <div class="card-header">
+                                <h3 class="card-title">Input masks</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Date dd/mm/yyyy -->
+                                <div class="form-group">
+                                    <label>Date masks:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="dd/mm/yyyy" data-mask>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- Date mm/dd/yyyy -->
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/dd/yyyy" data-mask>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- phone mask -->
+                                <div class="form-group">
+                                    <label>US phone mask:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask='"mask": "(999) 999-9999"' data-mask>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- phone mask -->
+                                <div class="form-group">
+                                    <label>Intl US phone mask:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control"
+                                               data-inputmask="'mask': ['999-999-9999 [x99999]', '+099 99 99 9999[9]-9999']" data-mask>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- IP mask -->
+                                <div class="form-group">
+                                    <label>IP mask:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fas fa-laptop"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" data-inputmask="'alias': 'ip'" data-mask>
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+
+
+                    </div>
+                    <!-- /.col (left) -->
+                    <div class="col-md-6">
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Date picker</h3>
+                            </div>
+                            <div class="card-body">
+                                <!-- Date -->
+                                <div class="form-group">
+                                    <label>Date:</label>
+                                    <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                        <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Date and time -->
+                                <div class="form-group">
+                                    <label>Date and time:</label>
+                                    <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                        <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                        <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- /.form group -->
+                                <!-- Date range -->
+                                <div class="form-group">
+                                    <label>Date range:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="far fa-calendar-alt"></i>
+                                            </span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="reservation">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- Date and time range -->
+                                <div class="form-group">
+                                    <label>Date and time range:</label>
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control float-right" id="reservationtime">
+                                    </div>
+                                    <!-- /.input group -->
+                                </div>
+                                <!-- /.form group -->
+                                <!-- Date and time range -->
+                                <div class="form-group">
+                                    <label>Date range button:</label>
+
+                                    <div class="input-group">
+                                        <button type="button" class="btn btn-default float-right" id="daterange-btn">
+                                            <i class="far fa-calendar-alt"></i> Date range picker
+                                            <i class="fas fa-caret-down"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <!-- /.form group -->
+                            </div>
+                            <div class="card-footer">
+                                Visit <a href="https://getdatepicker.com/5-4/">tempusdominus </a> for more examples and information about
+                                the plugin.
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col (right) -->
+                </div>
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
 </form>
+
+
+
+
