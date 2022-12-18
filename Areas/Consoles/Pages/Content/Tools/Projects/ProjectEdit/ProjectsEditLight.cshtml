@@ -51,18 +51,42 @@
                                     <label for="inputDescription">Project Description</label>
                                     <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.projectInfo.Description</textarea>
                                 </div>
-                            <!-- Date and time range -->
+                            <!-- Date range -->
                             <div class="form-group">
-                                <label>Project Time Range:</label>
+                                <label>Project Date Range:</label>
 
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
                                     </div>
-                                    <input type="text" class="form-control float-right" id="reservationtime">
+                                    <input type="text" class="form-control float-right" id="reservation">
                                 </div>
                                 <!-- /.input group -->
                             </div>
+
+                            <!-- Date and time -->
+                            @*<div class="form-group">
+                                <label>Start Time:</label>
+                                <div class="input-group date" id="reservationdatetime1" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Date and time -->
+                            <div class="form-group">
+                                <label>Due:</label>
+                                <div class="input-group date" id="reservationdatetime2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>*@
 
                             <!-- Date and time -->
                             <div class="form-group">
