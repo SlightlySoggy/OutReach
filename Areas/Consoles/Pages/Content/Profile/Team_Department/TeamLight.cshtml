@@ -1,0 +1,156 @@
+﻿@page "/Team_Department/TeamLight"
+@model Outreach.Areas.Consoles.Pages.Content.Tools.Departments.DepartmentLight.DepartmentsLightModel
+@{
+    Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
+}
+
+<form method="post" id="Form1" name="Form1">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Departments/Teams</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Departments</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+        <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Departments/DepartmentEdit/DepartmentsEditLight" >
+            <i class="fas fa-pencil-alt"></i>
+            Create
+        </a>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+                    <h3 class="card-title">Department/Team</h3>
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped Departments">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Name
+                      </th>
+                      <th style="width: 30%">
+                          Manager/Lead
+                      </th> 
+                      <th style="width: 8%" class="text-center">
+                          Status
+                      </th>
+                      <th style="width: 20%">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody> 
+
+                    @foreach (var pro in Model.DepartmentList)
+                    {
+
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td> 
+                                        @pro.Name 
+                                    <br />
+                                    <small>
+                                            @pro.CreatedDate
+                                    </small>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar3.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
+                                        </li>
+                                        </ul>
+                                </td>
+
+                                <td class="Department-actions text-right">
+                                </td> 
+
+                                <td class="Department-actions text-right"> 
+                                    <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Profile/Team_Department/TeamEditLight" asp-route-DepartmentId="@pro.Id" >
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" onclick="ConfirmDelete('@pro.Id');" href="#">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </a> 
+
+                                </td>
+                            </tr>
+
+                            
+                            <input type="hidden" id="hid_DeleteDepartmentid" name="hid_DeleteDepartmentid" value="">
+                             
+                    }
+
+
+
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+ </form>
+
+<script>
+    function ConfirmDelete(id) {
+        if (confirm("Are you sure you want to delete?")) {
+            //alert(id);
+            document.getElementById("hid_DeleteDepartmentid").value = id;
+            //alert(document.getElementById("hid_DeleteDepartmentid").value);
+            document.Form1.submit();
+
+        }
+        else {
+            //alert("false");
+            return false;
+        }
+    }
+</script>
+

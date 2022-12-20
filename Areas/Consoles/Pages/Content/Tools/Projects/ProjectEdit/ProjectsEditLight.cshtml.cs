@@ -89,11 +89,11 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 Project op = new Project(ProjectId);
                 projectInfo = op;
 
-                ProjectManagerUserList = ut.ResetUserList(LoginUserList, op.ProjectManagerUserIds);
+                ProjectManagerUserList = ut.ResetProjectTaskUserList(LoginUserList, op.ProjectManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
                 LoginUserList = ut.GetLoginUserList("");
-                ProjectMemberList = ut.ResetUserList(LoginUserList, op.ProjectMemberUserIds);
+                ProjectMemberList = ut.ResetProjectTaskUserList(LoginUserList, op.ProjectMemberUserIds);
 
                  
     }
@@ -145,7 +145,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 Project existingProject = new Project(Request.Form["hid_CurrentProjectid"]);
                 List<string> newUserLeadlist = Request.Form["inputProjectLeader"].ToString().Split(',').ToList(); 
 
-                if (!ut.IsMemberChanged(existingProject.ProjectManagerUserIds,newUserLeadlist))
+                if (!ut.IsProjTaskMemberChanged(existingProject.ProjectManagerUserIds,newUserLeadlist))
                 {
                     // if member changed, then delete all old selection and add new selected users again
 
@@ -169,7 +169,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 //2 update the project member selection for existing project  
                 List<string> newMemberlist = Request.Form["inputProjectMember"].ToString().Split(',').ToList();
 
-                if (!ut.IsMemberChanged(existingProject.ProjectMemberUserIds, newMemberlist))
+                if (!ut.IsProjTaskMemberChanged(existingProject.ProjectMemberUserIds, newMemberlist))
                 {
                     // if member changed, then delete all old selection and add new selected users again
 

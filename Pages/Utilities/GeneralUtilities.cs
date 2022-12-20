@@ -427,6 +427,53 @@ namespace Outreach.Pages.Utilities
             return listProjTaskStatus;
         }
 
+
+        public List<StandardStatus> GetStandardStatusList()
+        { // retrive StandardStatus data by StandardStatus ID
+
+            List<StandardStatus> listStandardStatus = new List<StandardStatus>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    string sql = "select Id,StatusName from StandardStatus with(nolock) order by Id";
+                    //else 
+                    //    sql = "select Id,Name from StandardStatus with(nolock) order by Id";
+
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+
+                            {
+                                StandardStatus s = new StandardStatus();
+
+                                s.Id = reader.GetInt32(0).ToString();
+                                if (reader["StatusName"].GetType() != typeof(DBNull))
+                                {
+                                    s.StatusName = reader["StatusName"].ToString();
+                                }
+
+                                listStandardStatus.Add(s);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listStandardStatus;
+        }
+
         public List<LoginUserInfo> GetLoginUserList(string OrgId="")
         { // retrive login user by org ID in the future, now just list all
 
@@ -564,8 +611,7 @@ namespace Outreach.Pages.Utilities
 
 
         public string DeleteAllProjectTaskUser(string ProjectId = "", string TaskId = "", string IsLead = "")
-        { // retrive login user by org ID in the future, now just list all
-
+        {  
             string result = "";
             List<ProjectTaskUser> userlist = new List<ProjectTaskUser>();
 
@@ -590,14 +636,14 @@ namespace Outreach.Pages.Utilities
                     sql = "Delete ProjectTaskUser where ProjectId='" + ProjectId + "' "; 
             }
 
-            result = DeleteAllProjectTaskUserBySQL(sql);
+            result = DeleteTableDataBySQL(sql);
 
             return result;
         }
 
-        public string DeleteAllProjectTaskUserBySQL(string sql)
+        public string DeleteTableDataBySQL(string sql)
         {// move to utility
-            string result = "ok"; 
+            string result = "ok";
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -606,9 +652,9 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                     
+
                     using (SqlCommand command = new SqlCommand(sql, connection))
-                    { 
+                    {
                         command.ExecuteNonQuery();
                     }
                 }
@@ -616,11 +662,32 @@ namespace Outreach.Pages.Utilities
             catch (Exception ex)
             {
                 result = "failed" + ex.Message;
-            } 
+            }
             return result;
         }
 
-        public List<LoginUserInfo> ResetUserList(List<LoginUserInfo> originalloginUserlist, List<ProjectTaskUser> ptuserlist)
+        public string DeleteAllDepartmentUser(string Dept_Id = "", string IsLead = "")
+        { //  
+
+            string result = "";
+            List<ProjectTaskUser> userlist = new List<ProjectTaskUser>();
+
+            string sql = " ";
+             
+            if (IsLead.Trim().ToLower() == "true")
+                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + "' and isnull(IsLead,0) = 1 ";
+            else if (IsLead.Trim().ToLower() == "false")
+                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + "' and isnull(IsLead,0) = 0 ";
+            else // (IsLead.Trim() == "")
+                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + " ";
+
+
+            result = DeleteTableDataBySQL(sql);
+
+            return result;
+        } 
+
+        public List<LoginUserInfo> ResetProjectTaskUserList(List<LoginUserInfo> originalloginUserlist, List<ProjectTaskUser> ptuserlist)
         { // mark if user is selected
             List<LoginUserInfo> finalloginUserlist = new List<LoginUserInfo>();
 
@@ -629,7 +696,7 @@ namespace Outreach.Pages.Utilities
             //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist
 
 
-            if (ptuserlist.Count > 0)
+            if (ptuserlist != null && ptuserlist.Count > 0)
             {
                 foreach (ProjectTaskUser ptu in ptuserlist)
                 {
@@ -645,16 +712,57 @@ namespace Outreach.Pages.Utilities
             return finalloginUserlist;
         }
 
-        public Boolean IsMemberChanged(List<ProjectTaskUser> ptuserlist, List<string> newuidlist)
+
+        public List<LoginUserInfo> ResetDepartmentUserList(List<LoginUserInfo> originalloginUserlist, List<DepartmentUser> ptuserlist)
+        { // mark if user is selected
+            List<LoginUserInfo> finalloginUserlist = new List<LoginUserInfo>();
+
+            //originalloginUserlist.ForEach(u => finalloginUserlist.Add(u));
+            finalloginUserlist = originalloginUserlist.ToList();
+            //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist
+
+
+            if (ptuserlist != null && ptuserlist.Count > 0)
+            {
+                foreach (DepartmentUser ptu in ptuserlist)
+                {
+                    foreach (LoginUserInfo userinfo in finalloginUserlist)
+                    {
+                        if (ptu.UserId == userinfo.User_Id)
+                        {
+                            userinfo.IsSelected = "selected";
+                        }
+                    }
+                }
+            }
+            return finalloginUserlist;
+        }
+
+        public Boolean IsProjTaskMemberChanged(List<ProjectTaskUser> ptuserlist, List<string> newuidlist)
         { // mark if user is selected
             Boolean match = false;
 
-            List<string> ori_uidlist = new List<string>();
-            ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
-            match = CompareTwoList(ori_uidlist, newuidlist);
-
+            if (ptuserlist != null && newuidlist != null)
+            {
+                List<string> ori_uidlist = new List<string>();
+                ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
+                match = CompareTwoList(ori_uidlist, newuidlist);
+            }
             return match;
         }
+        public Boolean IsDepartmentMemberChanged(List<DepartmentUser> ptuserlist, List<string> newuidlist)
+        { // mark if user is selected
+            Boolean match = false;
+
+            if (ptuserlist != null && newuidlist != null)
+            {
+                List<string> ori_uidlist = new List<string>();
+                ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
+                match = CompareTwoList(ori_uidlist, newuidlist);
+            }
+            return match;
+        }
+
         public Boolean CompareTwoList(List<string> list1, List<string> list2)
         { // check if two list of string matched
             Boolean match = false; 
@@ -677,6 +785,161 @@ namespace Outreach.Pages.Utilities
             bool isNum = Double.TryParse(Convert.ToString(Expression), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out retNum);
             return isNum;
         }
+         
+
+
+        public List<Department> GetDepartmentListByNameSearch(string NameSearch = "")
+        { // retrive Team/Department info by part of its name 
+
+            List<Department> listPro = new List<Department>();
+            string sql = "";
+
+            if (NameSearch.Trim() != "")
+            {
+                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Department with(nolock) where statusid=1 and Name like  '%" + NameSearch + "%' order by Name ";
+            }
+            else
+            { // get all active Team/Department
+                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Department with(nolock) where statusid=1  order by Name ";
+            }
+
+            listPro = GetDepartmentListBySQLQuery(sql);
+
+            return listPro;
+        }
+
+
+        public List<Department> GetDepartmentListBySQLQuery(string sql)
+        { // retrive Project data by given sql query
+
+            List<Department> listPro = new List<Department>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                Department p = new Department();
+
+                                p.Id = reader.GetInt32(0).ToString();
+                                if (reader["Name"].GetType() != typeof(DBNull))
+                                {
+                                    p.Name = reader["Name"].ToString();
+                                }
+
+                                if (reader["Description"].GetType() != typeof(DBNull))
+                                {
+                                    p.Description = reader["Description"].ToString();
+                                } 
+
+                                if (reader["OrganizationId"].GetType() != typeof(DBNull))
+                                {
+                                    p.OrganizationId = reader["OrganizationId"].ToString();
+                                }
+
+                                if (reader["CreatedDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedDate = reader["CreatedDate"].ToString();
+                                }
+
+                                if (reader["CreatedUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedUserId = reader["CreatedUserId"].ToString();
+                                } 
+                                 
+                                if (reader["StatusId"].GetType() != typeof(DBNull))
+                                {
+                                    p.StatusId = reader["StatusId"].ToString();
+                                }
+                                 
+
+                                listPro.Add(p);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listPro;
+        }
+
+
+        public List<DepartmentUser> GetDepartmentUserList(string DepartmentId = "", string IsLead = "")
+        { // retrive login user by org ID in the future, now just list all
+
+            List<DepartmentUser> userlist = new List<DepartmentUser>();
+
+            string sql = "";
+
+              // get all Department level users  
+            if (IsLead.Trim().ToLower() == "true")
+                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' and isnull(IsLead,0) = 1 order by Id";
+            else if (IsLead.Trim().ToLower() == "false")
+                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' and isnull(IsLead,0) = 0 order by Id";
+            else // (IsLead.Trim() == "")
+                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' order by Id";
+          
+
+            userlist = GetDepartmentUserListbySQL(sql);
+
+            return userlist;
+        }
+
+        public List<DepartmentUser> GetDepartmentUserListbySQL(string sql)
+        { // retrive DepartmentTask_User data by DepartmentTask_User ID
+            List<DepartmentUser> userlist = new List<DepartmentUser>();
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                DepartmentUser userinfo = new DepartmentUser();
+                                userinfo.Id = reader.GetInt32(0).ToString();
+                                userinfo.DepartmentId = reader.GetInt32(1).ToString();
+                                userinfo.UserId = reader.GetInt32(2).ToString();
+
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
+                                {// task level user
+                                    userinfo.IsLead = reader["IsLead"].ToString();
+                                }
+
+                                userlist.Add(userinfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return userlist;
+        }
+
 
     }
 } 

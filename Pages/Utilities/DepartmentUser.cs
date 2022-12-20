@@ -8,24 +8,22 @@ using System.Threading.Tasks;
 
 namespace Outreach.Pages.Utilities
 {
-    public class ProjectTaskUser
+    public class DepartmentUser
     {
         public string Id;
-        public string ProjectId;
-        public string TaskId; // if it is null then it is project level user, otherwise it is task level user
+        public string DepartmentId; 
         public string UserId;
         public string IsLead;
 
-        public ProjectTaskUser()
+        public DepartmentUser()
         {
             Id = "";
-            ProjectId = "";
-            TaskId = "";
+            DepartmentId = ""; 
             UserId = "";
             IsLead = "";
         }
-        public ProjectTaskUser(string projectTaskUserId)
-        { // retrive ProjectTaskUser data by ProjectTaskUser ID
+        public DepartmentUser(string DepartmentUserId)
+        { // retrive DepartmentTask_User data by DepartmentTask_User ID
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -35,8 +33,8 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (projectTaskUserId.Trim() != "")
-                        sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where Id='" + projectTaskUserId + "' order by Id";
+                    if (DepartmentUserId.Trim() != "")
+                        sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where Id='" + DepartmentUserId + "' order by Id";
  
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -47,12 +45,12 @@ namespace Outreach.Pages.Utilities
                             {
 
                                 Id = reader.GetInt32(0).ToString();
-                                ProjectId = reader.GetInt32(1).ToString();
+                                DepartmentId = reader.GetInt32(1).ToString();
                                 UserId = reader.GetInt32(3).ToString();
 
-                                if (reader["TaskId"].GetType() != typeof(DBNull))
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
                                 {// task level user
-                                    TaskId = reader["TaskId"].ToString();
+                                    IsLead = reader["IsLead"].ToString();
                                 }
 
                             }
@@ -68,9 +66,9 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public string Save() // int Id, string ProjectTaskUserName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskUserTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Save() // int Id, string DepartmentTask_UserName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int DepartmentTask_UserTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
-            //save the new ProjectTaskUser into the database 
+            //save the new DepartmentTask_User into the database 
 
             string result = "ok";
             int newProdID = 0;
@@ -82,25 +80,15 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO ProjectTaskUser " +
-                                  "(ProjectId, TaskId, UserId,IsLead) VALUES " +
-                                  "(@ProjectId, @TaskId, @UserId,@IsLead);" +
-                                  "Select newID=MAX(id) FROM ProjectTaskUser"; 
+                    string sql = "INSERT INTO DepartmentUser " +
+                                  "(DepartmentId,  UserId,IsLead) VALUES " +
+                                  "(@DepartmentId,  @UserId,@IsLead);" +
+                                  "Select newID=MAX(id) FROM DepartmentUser"; 
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        cmd.Parameters.AddWithValue("@UserId", this.UserId);
-
-                        if (this.TaskId != "")
-                        { // task levle user, must set Projectid with null
-                            cmd.Parameters.AddWithValue("@ProjectId", DBNull.Value);
-                            cmd.Parameters.AddWithValue("@TaskId", this.TaskId);
-                        }
-                        else
-                        { // Project levle user, must set taskid with null
-                            cmd.Parameters.AddWithValue("@ProjectId", this.ProjectId);
-                            cmd.Parameters.AddWithValue("@TaskId", DBNull.Value);
-                        }
+                        cmd.Parameters.AddWithValue("@UserId", this.UserId); 
+                        cmd.Parameters.AddWithValue("@DepartmentId", this.DepartmentId);
 
                         if (this.IsLead != "")
                         { // task levle user
@@ -124,9 +112,9 @@ namespace Outreach.Pages.Utilities
 
          
 
-        public string Delete(string ProjectTaskUserId)
+        public string Delete(string DepartmentTask_UserId)
         { 
-            //we should not call this method especially when status is reference by other project or task
+            //we should not call this method especially when status is reference by other Department or task
 
             string result = "ok";
 
@@ -139,10 +127,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Delete ProjectTaskUser WHERE id=@id"; 
+                    String sql = "Delete DepartmentUser WHERE id=@id"; 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", ProjectTaskUserId);
+                        command.Parameters.AddWithValue("@id", DepartmentTask_UserId);
 
                         command.ExecuteNonQuery();
                     }
