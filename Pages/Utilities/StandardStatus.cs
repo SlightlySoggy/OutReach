@@ -6,18 +6,18 @@ using System.Reflection.PortableExecutable;
 
 namespace Outreach.Pages.Utilities
 {
-    public class ProjTaskStatus
+    public class StandardStatus
     {
         public string Id;
         public string StatusName; 
 
-        public ProjTaskStatus()
+        public StandardStatus()
         {
             Id = "";
             StatusName = ""; 
         }
-        public ProjTaskStatus(string ProjTaskStatusId)
-        { // retrive ProjTaskStatus data by ProjTaskStatus ID
+        public StandardStatus(string StandardStatusId)
+        { // retrive StandardStatus data by StandardStatus ID
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -27,10 +27,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (ProjTaskStatusId.Trim() != "")
-                        sql = "select Id,StatusName from ProjTaskStatus with(nolock) where Id='" + ProjTaskStatusId + "' order by Id";
+                    if (StandardStatusId.Trim() != "")
+                        sql = "select Id,StatusName from StandardStatus with(nolock) where Id='" + StandardStatusId + "' order by Id";
                     //else 
-                    //    sql = "select Id,Name from ProjTaskStatus with(nolock) order by Id";
+                    //    sql = "select Id,Name from StandardStatus with(nolock) order by Id";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -59,9 +59,9 @@ namespace Outreach.Pages.Utilities
 
         }
 
-        public string Save(string ProjTaskStatusId) // int Id, string ProjTaskStatusName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjTaskStatusTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Save(string StandardStatusId) // int Id, string StandardStatusName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int StandardStatusTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
-            //save the new ProjTaskStatus into the database
+            //save the new StandardStatus into the database
 
             string result = "ok";
             int newProdID = 0;
@@ -75,18 +75,18 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
 
-                    if (ProjTaskStatusId=="" || ProjTaskStatusId == "0")
+                    if (StandardStatusId=="" || StandardStatusId == "0")
                     {
-                        sql = "INSERT INTO ProjTaskStatus " +
+                        sql = "INSERT INTO StandardStatus " +
                                       "(StatusName) VALUES " +
                                       "(@StatusName));" +
-                                      "Select newID=MAX(id) FROM ProjTaskStatus"; 
+                                      "Select newID=MAX(id) FROM StandardStatus"; 
                     }
                     else
                     {
-                        sql = "Update ProjTaskStatus " +
+                        sql = "Update StandardStatus " +
                                "set StatusName = @StatusName "   +
-                                "where id = '" + ProjTaskStatusId + "'";
+                                "where id = '" + StandardStatusId + "'";
 
                     }
 
@@ -108,7 +108,7 @@ namespace Outreach.Pages.Utilities
 
          
 
-        public string Delete(string ProjTaskStatusId)
+        public string Delete(string StandardStatusId)
         { 
             //we should not call this method especially when status is reference by other project or task
 
@@ -123,10 +123,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Delete ProjTaskStatus WHERE id=@id"; 
+                    String sql = "Delete StandardStatus WHERE id=@id"; 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", ProjTaskStatusId);
+                        command.Parameters.AddWithValue("@id", StandardStatusId);
 
                         command.ExecuteNonQuery();
                     }

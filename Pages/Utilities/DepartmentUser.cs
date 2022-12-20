@@ -1,23 +1,29 @@
 ﻿//using Outreach.Pages.Clients;
+using Microsoft.CodeAnalysis;
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
 
 
 namespace Outreach.Pages.Utilities
 {
-    public class ProjTaskStatus
+    public class DepartmentUser
     {
         public string Id;
-        public string StatusName; 
+        public string DepartmentId; 
+        public string UserId;
+        public string IsLead;
 
-        public ProjTaskStatus()
+        public DepartmentUser()
         {
             Id = "";
-            StatusName = ""; 
+            DepartmentId = ""; 
+            UserId = "";
+            IsLead = "";
         }
-        public ProjTaskStatus(string ProjTaskStatusId)
-        { // retrive ProjTaskStatus data by ProjTaskStatus ID
+        public DepartmentUser(string DepartmentUserId)
+        { // retrive DepartmentTask_User data by DepartmentTask_User ID
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -27,11 +33,9 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (ProjTaskStatusId.Trim() != "")
-                        sql = "select Id,StatusName from ProjTaskStatus with(nolock) where Id='" + ProjTaskStatusId + "' order by Id";
-                    //else 
-                    //    sql = "select Id,Name from ProjTaskStatus with(nolock) order by Id";
-
+                    if (DepartmentUserId.Trim() != "")
+                        sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where Id='" + DepartmentUserId + "' order by Id";
+ 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -41,12 +45,14 @@ namespace Outreach.Pages.Utilities
                             {
 
                                 Id = reader.GetInt32(0).ToString();
-                                if (reader["StatusName"].GetType() != typeof(DBNull))
-                                {
-                                    StatusName = reader["StatusName"].ToString();
+                                DepartmentId = reader.GetInt32(1).ToString();
+                                UserId = reader.GetInt32(3).ToString();
+
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
+                                {// task level user
+                                    IsLead = reader["IsLead"].ToString();
                                 }
-                                 
-                                // listOrgs.Add(Org);
+
                             }
                         }
                     }
@@ -59,9 +65,10 @@ namespace Outreach.Pages.Utilities
 
         }
 
-        public string Save(string ProjTaskStatusId) // int Id, string ProjTaskStatusName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjTaskStatusTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+
+        public string Save() // int Id, string DepartmentTask_UserName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int DepartmentTask_UserTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
-            //save the new ProjTaskStatus into the database
+            //save the new DepartmentTask_User into the database 
 
             string result = "ok";
             int newProdID = 0;
@@ -73,26 +80,23 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "";
-
-                    if (ProjTaskStatusId=="" || ProjTaskStatusId == "0")
-                    {
-                        sql = "INSERT INTO ProjTaskStatus " +
-                                      "(StatusName) VALUES " +
-                                      "(@StatusName));" +
-                                      "Select newID=MAX(id) FROM ProjTaskStatus"; 
-                    }
-                    else
-                    {
-                        sql = "Update ProjTaskStatus " +
-                               "set StatusName = @StatusName "   +
-                                "where id = '" + ProjTaskStatusId + "'";
-
-                    }
+                    string sql = "INSERT INTO DepartmentUser " +
+                                  "(DepartmentId,  UserId,IsLead) VALUES " +
+                                  "(@DepartmentId,  @UserId,@IsLead);" +
+                                  "Select newID=MAX(id) FROM DepartmentUser"; 
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        cmd.Parameters.AddWithValue("@StatusName", this.StatusName); 
+                        cmd.Parameters.AddWithValue("@UserId", this.UserId); 
+                        cmd.Parameters.AddWithValue("@DepartmentId", this.DepartmentId);
+
+                        if (this.IsLead != "")
+                        { // task levle user
+                            cmd.Parameters.AddWithValue("@IsLead", this.IsLead);
+                        }
+                        else
+                            cmd.Parameters.AddWithValue("@IsLead", DBNull.Value);
+                         
                         //cmd.ExecuteNonQuery();
                         newProdID = (Int32)cmd.ExecuteScalar();
                          
@@ -108,9 +112,9 @@ namespace Outreach.Pages.Utilities
 
          
 
-        public string Delete(string ProjTaskStatusId)
+        public string Delete(string DepartmentTask_UserId)
         { 
-            //we should not call this method especially when status is reference by other project or task
+            //we should not call this method especially when status is reference by other Department or task
 
             string result = "ok";
 
@@ -123,10 +127,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Delete ProjTaskStatus WHERE id=@id"; 
+                    String sql = "Delete DepartmentUser WHERE id=@id"; 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", ProjTaskStatusId);
+                        command.Parameters.AddWithValue("@id", DepartmentTask_UserId);
 
                         command.ExecuteNonQuery();
                     }

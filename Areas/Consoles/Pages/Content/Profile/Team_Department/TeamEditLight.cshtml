@@ -1,5 +1,5 @@
-﻿@page "/ProjectsEditLight"
-@model Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit.ProjectsEditLightModel
+﻿@page "/Team_Department/TeamEditLight"
+@model Outreach.Areas.Consoles.Pages.Content.Tools.Departments.DepartmentEdit.DepartmentsEditLightModel
 @{
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
@@ -20,12 +20,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>Project Create/Edit</h1>
+                        <h1>Team/Department Create/Edit</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Project Add</li>
+                            <li class="breadcrumb-item active">Department Add</li>
                         </ol>
                     </div>
                 </div>
@@ -50,22 +50,22 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="inputName">Project Name</label>
-                                <input type="text" id="inputName" class="form-control" placeholder="Enter the Project name..." name="inputName" value="@Model.projectInfo.ProjectName">
+                                <label for="inputName">Name</label>
+                                <input type="text" id="inputName" class="form-control" placeholder="Enter the Department name..." name="inputName" value="@Model.DepartmentInfo.Name">
                             </div>
                             <div class="form-group">
-                                <label for="inputDescription">Project Description</label>
-                                <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.projectInfo.Description</textarea>
+                                <label for="inputDescription">Department Description</label>
+                                <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.DepartmentInfo.Description</textarea>
                             </div>
 
 
                             <div class="form-group">
-                                <label for="inputProjectStatus">Status</label>
+                                <label for="inputDepartmentStatus">Status</label>
                                 <div class="form-group">
-                                    <select class="select2bs4" data-placeholder="" style="width: 100%;" id="inputProjectStatus" name="inputProjectStatus">
+                                    <select class="select2bs4" data-placeholder="" style="width: 100%;" id="inputDepartmentStatus" name="inputDepartmentStatus">
                                         @foreach (var st in Model.StatusList)
                                         {
-                                            if (@st.Id == @Model.projectInfo.ProjectTaskStatusId)
+                                            if (@st.Id == @Model.DepartmentInfo.StatusId)
                                             {
                                                 <option value="@st.Id" selected>@st.StatusName</option> 
                                             }
@@ -80,14 +80,14 @@
 
                             @*                            <!-- Date and time range -->
                                 <div class="form-group">
-                                    <label>Project Date Range:</label>
+                                    <label>Department Date Range:</label>
 
                                     <div class="input-group">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="far fa-clock"></i></span>
                                         </div>
 
-                                        <input type="text" class="form-control float-right" id="inputTimeRange" name="inputTimeRange" value="@Model.projectInfo.ProjectName">
+                                        <input type="text" class="form-control float-right" id="inputTimeRange" name="inputTimeRange" value="@Model.DepartmentInfo.Name">
 
                                     </div>
                                     <!-- /.input group -->
@@ -103,29 +103,8 @@
                                         </div>
                                     </div>
                                 </div>*@
-
-                            <div class="form-group">
-                                <label>StartDate:</label>
-                                <div class="input-group date" data-target-input="nearest">
-                                    <input type="text" id="inputStartDate" name="inputStartDate" value="@Model.projectInfo.StartDate" />
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label>DueDate:</label>
-                                <div class="input-group date" data-target-input="nearest">
-                                    <input type="text" id="inputDueDate" name="inputDueDate" value="@Model.projectInfo.DueDate">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group">
-                                <label>Completion Date:</label>
-                                <div class="input-group date" data-target-input="nearest">
-                                    <input type="text" id="inputCompletionDate" name="inputCompletionDate" value="@Model.projectInfo.CompletionDate">
-                                </div>
-                            </div>
+                                 
+                                 
 
 @*                            <div class="form-group">
                                 <label for="inputClientCompany">Client Company</label>
@@ -133,10 +112,10 @@
                             </div>*@
 
                             <div class="form-group">
-                                <label for="inputProjectLeader">Project Leader</label>
+                                <label for="inputDepartmentLeader">Department Leader</label>
                                 <div class="form-group">
-                                    <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputProjectLeader" name="inputProjectLeader" >
-                                        @foreach (var st in Model.ProjectManagerUserList)
+                                    <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputDepartmentLeader" name="inputDepartmentLeader" >
+                                        @foreach (var st in Model.DepartmentManagerUserList)
                                         {
                                             if (@st.IsSelected == "selected")
                                             {
@@ -172,16 +151,12 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="inputEstimatedBudget">Estimated budget</label>
-                                <input type="number" id="inputEstimatedBudget" class="form-control" placeholder="Enter the budget $..." name="inputEstimatedBudget" value="@Model.projectInfo.EstimatedBudget">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputSpentBudget">Total amount spent</label>
-                                <input type="number" id="inputSpentBudget" class="form-control" name="inputSpentBudget" value="@Model.projectInfo.ActualSpent">
-                            </div>
+                                <label for="inputOrganizationId">Estimated budget</label>
+                                <input type="number" id="inputOrganizationId" class="form-control" placeholder="Enter the budget $..." name="inputOrganizationId" value="@Model.DepartmentInfo.OrganizationId">
+                            </div> 
 @*                            <div class="form-group">
                                 <label for="inputEstimatedDuration">Estimated Duration by day</label>
-                                <input type="number" id="inputEstimatedDuration" class="form-control" name="inputEstimatedDuration" value="@Model.projectInfo.DurationByDay">
+                                <input type="number" id="inputEstimatedDuration" class="form-control" name="inputEstimatedDuration" value="@Model.DepartmentInfo.DurationByDay">
                             </div>*@
                         </div>
                         <!-- /.card-body -->
@@ -201,8 +176,8 @@
                         <div class="card-body">
                             <div class="form-group">
                                 <label>Multiple</label>
-                                <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputProjectMember" name="inputProjectMember">
-                                    @foreach (var st in Model.ProjectMemberList)
+                                <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputDepartmentMember" name="inputDepartmentMember">
+                                    @foreach (var st in Model.DepartmentMemberList)
                                         {
                                         if (@st.IsSelected == "selected")
                                         {
@@ -226,14 +201,14 @@
                     <a href="#" class="btn btn-secondary">Cancel</a>
                     <input type="submit" value="Save" class="btn btn-success float-right">
 
-                    <input type="hidden" class="form-control" placeholder="" name="hid_oppId" value="@Model.projectInfo.Id">
-                    <input type="hidden" class="form-control" placeholder="" name="hid_orgid" value="@Model.projectInfo.CreatedOrgId">
-                    <input type="hidden" class="form-control" placeholder="" name="hid_userId" value="@Model.projectInfo.CreatedUserId">
+                    <input type="hidden" class="form-control" placeholder="" name="hid_oppId" value="@Model.DepartmentInfo.Id">
+                    <input type="hidden" class="form-control" placeholder="" name="hid_orgid" value="@Model.DepartmentInfo.OrganizationId">
+                    <input type="hidden" class="form-control" placeholder="" name="hid_userId" value="@Model.DepartmentInfo.CreatedUserId">
                 </div>
             </div>
 
             
-            <input type="hidden" id="hid_CurrentProjectid" name="hid_CurrentProjectid" value="@Request.Query["ProjectId"]">
+            <input type="hidden" id="hid_CurrentDepartmentid" name="hid_CurrentDepartmentid" value="@Request.Query["DepartmentId"]">
 
 
             @*<div class="container-fluid">

@@ -11,6 +11,7 @@
         public String Email;
         public String Password;
         public String Created_at;
+        public String IsSelected; // sepecial use when project or task select member 
         public LoginUserInfo()
         {
             Id = "";
@@ -22,6 +23,7 @@
             Email = "";
             Password = "";
             Created_at = "";
+            IsSelected = "";//  "selected"
         }
     }
 }
