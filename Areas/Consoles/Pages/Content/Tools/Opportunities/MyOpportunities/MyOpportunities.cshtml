@@ -4,8 +4,6 @@
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
 
-<!-- Select2 -->
-<link rel="stylesheet" href="../../plugins/select2/css/select2.min.css">
 
 
 <!-- Content Wrapper. Contains page content -->
@@ -33,7 +31,7 @@
         <!-- Default box -->
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title"></h3>
+                <h3 class="card-title">Search</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -48,7 +46,7 @@
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                         <div class="row">
-                            <div class="col-12 col-sm-4">
+@*                            <div class="col-12 col-sm-4">
                                 <div class="info-box bg-light">
                                     <div class="info-box-content">
                                         <span class="info-box-text text-center text-muted">Estimated budget</span>
@@ -71,38 +69,69 @@
                                         <span class="info-box-number text-center text-muted mb-0">20</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>*@
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                @*<h4>Recent Activity</h4>
-                                <div class="post">
-                                    <div class="user-block">
-                                        <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                        <span class="username">
-                                            <a href="#">Jonathan Burke Jr.</a>
-                                        </span>
-                                        <span class="description">Shared publicly - 7:45 PM today</span>
+                                <form action="enhanced-results.html">
+                                    <div class="row">
+                                        <div class="col-md-10 offset-md-1">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label>Result Type:</label>
+                                                        <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                                            <option>Opportunities</option>
+                                                            <option>Organizations</option>
+                                                            <option>Users</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label>Tags:</label>
+                                                        <select class="select2" style="width: 100%;">
+                                                        @foreach (var tag in Model.ListTag)
+                                                        {
+                                                        <option>@tag.TagName</option>
+                                                        }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label>Order By:</label>
+                                                        <select class="select2" style="width: 100%;">
+                                                            <option selected>Title</option>
+                                                            <option>Date</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-lg">
+                                                    <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="">
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="btn btn-lg btn-default">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- /.user-block -->
-                                    <p>
-                                        Lorem ipsum represents a long-held tradition for designers,
-                                        typographers and the like. Some people hate it and argue for
-                                        its demise, but others ignore.
-                                    </p>
-
-                                    <p>
-                                        <a href="#" class="link-black text-sm"><i class="fas fa-link mr-1"></i> Demo File 1 v2</a>
-                                    </p>
-                                </div>*@
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
-                        <p class="text-muted">This feature is still in developement, please report any bugs you find using our contact page!</p>
-                       
-                        
+                        <p class="text-muted">This feature is still in developement, please report any bugs you find using our contact page!
+
+                            If there are persistent issues contact Maxwell Li directly
+                        </p>
+
+
                         <div class="text-center mt-5 mb-3">
                             <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
                         </div>
@@ -112,58 +141,6 @@
             <!-- /.card-body -->
         </div>
         <!-- /.card -->
-
-
-        <div class="container-fluid">
-            <h2 class="text-center display-4">Enhanced Search</h2>
-            <form action="enhanced-results.html">
-                <div class="row">
-                    <div class="col-md-10 offset-md-1">
-                        <div class="row">
-                            <div class="col-6">
-                                <div class="form-group">
-                                    <label>Result Type:</label>
-                                    <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
-                                        <option>Text only</option>
-                                        <option>Images</option>
-                                        <option>Video</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Sort Order:</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>ASC</option>
-                                        <option>DESC</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-3">
-                                <div class="form-group">
-                                    <label>Order By:</label>
-                                    <select class="select2" style="width: 100%;">
-                                        <option selected>Title</option>
-                                        <option>Date</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="input-group input-group-lg">
-                                <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="Lorem ipsum">
-                                <div class="input-group-append">
-                                    <button type="submit" class="btn btn-lg btn-default">
-                                        <i class="fa fa-search"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-
 
         <div class="container-fluid">
             <div class="row">
@@ -180,16 +157,8 @@
 
                             <h3 class="profile-username text-center">Nina Mcintire</h3>
 
-                            @*<p class="text-muted text-center">Software Engineer</p>*@
-
                             <ul class="list-group list-group-unbordered mb-3">
 
-                                @*<li class="list-group-item">
-                                <a class="nav-link" asp-area="" asp-page="/HomePages/index">
-                                <i class="far fa-file-alt"></i>
-                                <b>View Profile</b>
-                                </a>
-                                </li>*@
 
                                 <li class="list-group-item">
                                     <b>Followers</b> <a class="float-right">1,322</a>
@@ -201,7 +170,7 @@
                                     <b>Friends</b> <a class="float-right">13,287</a>
                                 </li>
                             </ul>
-                            <a class="btn btn-primary btn-block" asp-area="" asp-page="/HomePages/index"><b>View Profile</b></a>
+                            <a class="btn btn-primary btn-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight"><b>View Profile</b></a>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -250,271 +219,53 @@
                 <!-- /.col -->
                 <div class="col-md-9">
                     <div class="card">
-                        <div class="card-header p-2">
-                            <ul class="nav nav-pills">
-                                <li class="nav-item"><a class="nav-link active" href="#activity" data-toggle="tab">Activity</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#timeline" data-toggle="tab">Timeline</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#settings" data-toggle="tab">Settings</a></li>
-                            </ul>
-                        </div><!-- /.card-header -->
                         <div class="card-body">
-                            <div class="tab-content">
+                            <div class="content">
                                 <div class="active tab-pane" id="activity">
                                     <!-- Post -->
                                     <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
-                                            <span class="username">
-                                                <a href="#">Jonathan Burke Jr.</a>
-                                                <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                                            </span>
-                                            <span class="description">Shared publicly - 7:30 PM today</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            Lorem ipsum represents a long-held tradition for designers,
-                                            typographers and the like. Some people hate it and argue for
-                                            its demise, but others ignore the hate as they create awesome
-                                            tools to help create filler text for everyone from bacon lovers
-                                            to Charlie Sheen fans.
-                                        </p>
+                                        @foreach (var opp in Model.oppList)
+                                        {
+                                            <div class="job-item p-4 mb-4">
+                                                <div class="card m-b-30">
+                                                    <div class="card-body py-5">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 text-center">
+                                                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
+                                                                <div class="button-list mt-4 mb-3">
+                                                                    <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
+                                                                    @*                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>View Details</button>
+                                                                *@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                                <h4>@opp.OpportunityTitle</h4>
+                                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt"></i>@opp.SiteAddress</span>
+                                                                <hr class="dashed">
 
-                                        <p>
-                                            <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
-                                            <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                            <span class="float-right">
-                                                <a href="#" class="link-black text-sm">
-                                                    <i class="far fa-comments mr-1"></i> Comments (5)
-                                                </a>
-                                            </span>
-                                        </p>
-
-                                        <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
-                                    </div>
-                                    <!-- /.post -->
-                                    <!-- Post -->
-                                    <div class="post clearfix">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user7-128x128.jpg" alt="User Image">
-                                            <span class="username">
-                                                <a href="#">Sarah Ross</a>
-                                                <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                                            </span>
-                                            <span class="description">Sent you a message - 3 days ago</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <p>
-                                            Lorem ipsum represents a long-held tradition for designers,
-                                            typographers and the like. Some people hate it and argue for
-                                            its demise, but others ignore the hate as they create awesome
-                                            tools to help create filler text for everyone from bacon lovers
-                                            to Charlie Sheen fans.
-                                        </p>
-
-                                        <form class="form-horizontal">
-                                            <div class="input-group input-group-sm mb-0">
-                                                <input class="form-control form-control-sm" placeholder="Response">
-                                                <div class="input-group-append">
-                                                    <button type="submit" class="btn btn-danger">Send</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <!-- /.post -->
-                                    <!-- Post -->
-                                    <div class="post">
-                                        <div class="user-block">
-                                            <img class="img-circle img-bordered-sm" src="../../dist/img/user6-128x128.jpg" alt="User Image">
-                                            <span class="username">
-                                                <a href="#">Adam Jones</a>
-                                                <a href="#" class="float-right btn-tool"><i class="fas fa-times"></i></a>
-                                            </span>
-                                            <span class="description">Posted 5 photos - 5 days ago</span>
-                                        </div>
-                                        <!-- /.user-block -->
-                                        <div class="row mb-3">
-                                            <div class="col-sm-6">
-                                                <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
-                                            </div>
-                                            <!-- /.col -->
-                                            <div class="col-sm-6">
-                                                <div class="row">
-                                                    <div class="col-sm-6">
-                                                        <img class="img-fluid mb-3" src="../../dist/img/photo2.png" alt="Photo">
-                                                        <img class="img-fluid" src="../../dist/img/photo3.jpg" alt="Photo">
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless mb-0">
+                                                                        <tbody>
+                                                                            @*<tr>
+                                                                        <th scope="row" class="p-1">Description:</th>
+                                                                        <div>*@
+                                                                            <span class="text-truncate me-3">@*<i class="fa fa-map-marker-alt text-primary me-2"></i>*@@opp.Description</span>
+                                                                            @*</div>
+                                                                        </tr>*@
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                @*<div class="button-list mt-4 mb-3">
+                                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
+                                                            </div>*@
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                    <!-- /.col -->
-                                                    <div class="col-sm-6">
-                                                        <img class="img-fluid mb-3" src="../../dist/img/photo4.jpg" alt="Photo">
-                                                        <img class="img-fluid" src="../../dist/img/photo1.png" alt="Photo">
-                                                    </div>
-                                                    <!-- /.col -->
                                                 </div>
-                                                <!-- /.row -->
                                             </div>
-                                            <!-- /.col -->
-                                        </div>
-                                        <!-- /.row -->
-
-                                        <p>
-                                            <a href="#" class="link-black text-sm mr-2"><i class="fas fa-share mr-1"></i> Share</a>
-                                            <a href="#" class="link-black text-sm"><i class="far fa-thumbs-up mr-1"></i> Like</a>
-                                            <span class="float-right">
-                                                <a href="#" class="link-black text-sm">
-                                                    <i class="far fa-comments mr-1"></i> Comments (5)
-                                                </a>
-                                            </span>
-                                        </p>
-
-                                        <input class="form-control form-control-sm" type="text" placeholder="Type a comment">
+                                        }
                                     </div>
                                     <!-- /.post -->
-                                </div>
-                                <!-- /.tab-pane -->
-                                <div class="tab-pane" id="timeline">
-                                    <!-- The timeline -->
-                                    <div class="timeline timeline-inverse">
-                                        <!-- timeline time label -->
-                                        <div class="time-label">
-                                            <span class="bg-danger">
-                                                10 Feb. 2014
-                                            </span>
-                                        </div>
-                                        <!-- /.timeline-label -->
-                                        <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-envelope bg-primary"></i>
-
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock"></i> 12:05</span>
-
-                                                <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-
-                                                <div class="timeline-body">
-                                                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                                    quora plaxo ideeli hulu weebly balihoo...
-                                                </div>
-                                                <div class="timeline-footer">
-                                                    <a href="#" class="btn btn-primary btn-sm">Read more</a>
-                                                    <a href="#" class="btn btn-danger btn-sm">Delete</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
-                                        <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-user bg-info"></i>
-
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock"></i> 5 mins ago</span>
-
-                                                <h3 class="timeline-header border-0">
-                                                    <a href="#">Sarah Young</a> accepted your friend request
-                                                </h3>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
-                                        <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-comments bg-warning"></i>
-
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock"></i> 27 mins ago</span>
-
-                                                <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-
-                                                <div class="timeline-body">
-                                                    Take me to your leader!
-                                                    Switzerland is small and neutral!
-                                                    We are more like Germany, ambitious and misunderstood!
-                                                </div>
-                                                <div class="timeline-footer">
-                                                    <a href="#" class="btn btn-warning btn-flat btn-sm">View comment</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
-                                        <!-- timeline time label -->
-                                        <div class="time-label">
-                                            <span class="bg-success">
-                                                3 Jan. 2014
-                                            </span>
-                                        </div>
-                                        <!-- /.timeline-label -->
-                                        <!-- timeline item -->
-                                        <div>
-                                            <i class="fas fa-camera bg-purple"></i>
-
-                                            <div class="timeline-item">
-                                                <span class="time"><i class="far fa-clock"></i> 2 days ago</span>
-
-                                                <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-
-                                                <div class="timeline-body">
-                                                    <img src="https://placehold.it/150x100" alt="...">
-                                                    <img src="https://placehold.it/150x100" alt="...">
-                                                    <img src="https://placehold.it/150x100" alt="...">
-                                                    <img src="https://placehold.it/150x100" alt="...">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- END timeline item -->
-                                        <div>
-                                            <i class="far fa-clock bg-gray"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- /.tab-pane -->
-
-                                <div class="tab-pane" id="settings">
-                                    <form class="form-horizontal">
-                                        <div class="form-group row">
-                                            <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputName" placeholder="Name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputEmail" placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputName2" class="col-sm-2 col-form-label">Name</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputName2" placeholder="Name">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputExperience" class="col-sm-2 col-form-label">Experience</label>
-                                            <div class="col-sm-10">
-                                                <textarea class="form-control" id="inputExperience" placeholder="Experience"></textarea>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputSkills" class="col-sm-2 col-form-label">Skills</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" id="inputSkills" placeholder="Skills">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="offset-sm-2 col-sm-10">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> I agree to the <a href="#">terms and conditions</a>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <div class="offset-sm-2 col-sm-10">
-                                                <button type="submit" class="btn btn-danger">Submit</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                                 <!-- /.tab-pane -->
                             </div>
@@ -529,154 +280,3 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-@*
-
-
-
-<div class="tab-content">
-    @foreach (var tag in Model.ListTag)
-    {
-        <div class="col-12 col-sm-4">
-            @tag.TagName <input type="checkbox" name="chktag" value="@tag.Id" />
-        </div>
-    }
-</div>*@
-
-
-
-<form method="post">
-
-
-
-<div class="container-xxl bg-white p-0">
-    <div class="container">
-
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="left-sidebar">
-                    <div class="accordion" id="accordionExample">
-                        <div class="card mt-4">
-                            <a data-toggle="collapse" href="#collapseOne" class="job-list" aria-expanded="true" aria-controls="collapseOne">
-                                <div class="card-header" id="headingOne">
-                                    <h6 class="mb-0 text-dark f-18">Job Type</h6>
-                                </div>
-                            </a>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
-                                <div class="card-body p-0">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheckAll">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheckAll">All Type</label>
-                                    </div>
-
-                                    
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="card mt-4">
-                            <a data-toggle="collapse" href="#collapsetwo" class="job-list" aria-expanded="true" aria-controls="collapsetwo">
-                                <div class="card-header" id="headingtwo">
-                                    <h6 class="mb-0 text-dark f-18">Designation</h6>
-                                </div>
-                            </a>
-                            <div id="collapsetwo" class="collapse show" aria-labelledby="headingtwo">
-                                <div class="card-body p-0">
-                                    
-                                    
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck5">Project Manager</label>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-9 pt-3">
-
-                    <!-- Start col -->
-                    @foreach (var opp in Model.oppList)
-                    {
-                        <div class="job-item p-4 mb-4">
-                            <div class="card m-b-30">
-                                <div class="card-body py-5">
-                                    <div class="row">
-                                        <div class="col-lg-3 text-center">
-                                            <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
-                                            <div class="button-list mt-4 mb-3">
-                                                <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
-                                                @*                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>View Details</button>
-*@                                        </div>
-                                        </div>
-                                        <div class="col-lg-9">
-                                            <h4>@opp.OpportunityTitle</h4>
-                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.SiteAddress</span>
-                                            <hr class="dashed">
-
-                                            <div class="table-responsive">
-                                                <table class="table table-borderless mb-0">
-                                                    <tbody>
-                                                        @*<tr>
-                                                        <th scope="row" class="p-1">Description:</th>
-                                                        <div>*@
-                                                                <span class="text-truncate me-3">@*<i class="fa fa-map-marker-alt text-primary me-2"></i>*@@opp.Description</span>
-                                                        @*</div>
-                                                    </tr>*@
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            @*<div class="button-list mt-4 mb-3">
-                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
-                                        </div>*@
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
-                    <!-- End col -->
-                    
-
-            <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
-
-
-
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <nav aria-label="Page navigation example">
-                                    <ul class="pagination job-pagination justify-content-center mt-5 mb-5">
-                                        <li class="page-item disabled">
-                                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                                <i class="mdi mdi-chevron-double-left f-15"></i>
-                                            </a>
-                                        </li>
-                                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                        <li class="page-item">
-                                            <a class="page-link" href="#">
-                                                <i class="mdi mdi-chevron-double-right f-15"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                    </div>
-                
-</form>
-
-<!-- Select2 -->
-<script src="../../plugins/select2/js/select2.full.min.js"></script>
-
-<script>
-    $(function () {
-        $('.select2').select2()
-    });
-</script>
