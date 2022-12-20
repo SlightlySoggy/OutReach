@@ -15,8 +15,8 @@ namespace Outreach.Pages.Opportunities
         public Opportunity opportunity = new Opportunity();
         public Boolean DefaultShow = false; 
 
-        RoleManager<IdentityRole> roleManager;
-        UserManager<ApplicationUser> userManager;
+        //RoleManager<IdentityRole> roleManager;
+        //UserManager<ApplicationUser> userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<JobdetailModel> _logger;

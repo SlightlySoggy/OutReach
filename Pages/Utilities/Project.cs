@@ -16,12 +16,14 @@ namespace Outreach.Pages.Utilities
         public string CreatedOrgId;
         public string CreatedDate;
         public string CreatedUserId;
-        public string ProjectManagerUserId;
+        public List<ProjectTaskUser> ProjectManagerUserIds;
+        public List<ProjectTaskUser> ProjectMemberUserIds;
         public string StartDate;
         public string DueDate;
         public string CompletionDate; 
-        public string DurationByDay;
-        public string ProjectTaskStatusId; 
+        public string Estimated_DurationByDay;
+        public string ProjectTaskStatusId;
+        public string ProjectTaskStatus;
 
         public Project()
         {
@@ -33,18 +35,21 @@ namespace Outreach.Pages.Utilities
             CreatedOrgId = "";
             CreatedDate = "";
             CreatedUserId = "";
-            ProjectManagerUserId = "1"; //default status is planned 1
+            ProjectManagerUserIds = new List<ProjectTaskUser>();
+            ProjectMemberUserIds  = new List<ProjectTaskUser>();
             StartDate = "";
             DueDate = "";
-            CompletionDate = ""; 
-            DurationByDay = "";
-            ProjectTaskStatusId = "";
+            CompletionDate = "";
+            Estimated_DurationByDay = "";
+            ProjectTaskStatusId = "1";//default status is planned 1
+            ProjectTaskStatus = ""; // the status name
 
         }
         public Project(string projectId)
         { // retrive Project data by Project ID
             try
             {
+                GeneralUtilities ut = new GeneralUtilities();
                 var builder = WebApplication.CreateBuilder();
                 var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
 
@@ -53,7 +58,7 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
 //                    if (projectId.Trim() != "")
-                    sql = "select Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay from Project with(nolock) where Id='" + projectId + "'";
+                    sql = "select P.Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Project p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where P.Id='" + projectId + "'";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -87,12 +92,15 @@ namespace Outreach.Pages.Utilities
                                 CreatedOrgId = reader.GetInt32(5).ToString();
                                 CreatedDate = reader.GetDateTime(6).ToString();
                                 CreatedUserId = reader.GetInt32(7).ToString();
-                                ProjectManagerUserId = reader.GetInt32(8).ToString();
-                                StartDate = reader.GetDateTime(9).ToString();
-                                DueDate = reader.GetDateTime(10).ToString();
-                                CompletionDate = reader.GetDateTime(11).ToString();
-                                ProjectTaskStatusId = reader.GetInt32(12).ToString();
+                                //ProjectManagerUserId = reader.GetInt32(8).ToString();
+                                StartDate = reader.GetDateTime(8).ToString();
+                                DueDate = reader.GetDateTime(9).ToString();
+                                CompletionDate = reader.GetDateTime(10).ToString();
+                                ProjectTaskStatusId = reader.GetInt32(11).ToString();
+                                ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
 
+                                ProjectManagerUserIds = ut.GetProjectorTaskUserList(projectId, "", "true");
+                                ProjectMemberUserIds  = ut.GetProjectorTaskUserList(projectId, "", "false");
                                 // listOrgs.Add(Org);
                             }
                         }
@@ -106,7 +114,7 @@ namespace Outreach.Pages.Utilities
 
         }
 
-        public string Save(string ProjectId) // int Id, string ProjectName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Save() // int Id, string ProjectName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
             //save the new Project into the database
 
@@ -122,11 +130,11 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
 
-                    if (ProjectId=="" || ProjectId == "0")
+                    if (this.Id == "" || this.Id == "0")
                     {
                         sql = "INSERT INTO Project " +
-                                      "(ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,ProjectManagerUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,DurationByDay) VALUES " +
-                                      "(@ProjectName,@Description,@EstimatedBudget,@ActualSpent,@CreatedOrgId,@CreatedDate,@CreatedUserId,@ProjectManagerUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId,@DurationByDay);" +
+                                      "(ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId) VALUES " +
+                                      "(@ProjectName,@Description,@EstimatedBudget,@ActualSpent,@CreatedOrgId,@CreatedDate,@CreatedUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId);" +
                                       "Select newID=MAX(id) FROM Project"; 
                     }
                     else
@@ -139,14 +147,12 @@ namespace Outreach.Pages.Utilities
                                    "CreatedOrgId = @CreatedOrgId," +
                                    "CreatedDate = @CreatedDate," +
                                    "CreatedUserId = @CreatedUserId," +
-                                   "ProjectManagerUserId = @ProjectManagerUserId," +
+                                   //"ProjectManagerUserId = @ProjectManagerUserId," +
                                    "StartDate = @StartDate," +
                                    "DueDate = @DueDate," +
-                                   "CompletionDate = @CompletionDate," + 
-                                   "ProjectTaskStatusId = @ProjectTaskStatusId," +
-                                   "DurationByDay = @DurationByDay " +
-                                "where id = '" + ProjectId + "'";
-
+                                   "CompletionDate = @CompletionDate," +
+                                   "ProjectTaskStatusId = @ProjectTaskStatusId " + 
+                                " where id = '" + this.Id + "' ; Select newID=" + this.Id + "";
                     }
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
@@ -158,12 +164,11 @@ namespace Outreach.Pages.Utilities
                         cmd.Parameters.AddWithValue("@CreatedOrgId", this.CreatedOrgId);
                         cmd.Parameters.AddWithValue("@CreatedDate", this.CreatedDate);
                         cmd.Parameters.AddWithValue("@CreatedUserId", this.CreatedUserId);
-                        cmd.Parameters.AddWithValue("@ProjectManagerUserId", this.ProjectManagerUserId);
+                        //cmd.Parameters.AddWithValue("@ProjectManagerUserId", this.ProjectManagerUserId);
                         cmd.Parameters.AddWithValue("@StartDate", this.StartDate);
                         cmd.Parameters.AddWithValue("@DueDate", this.DueDate);
                         cmd.Parameters.AddWithValue("@CompletionDate", this.CompletionDate); 
-                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId); 
-                        cmd.Parameters.AddWithValue("@DurationByDay", this.DurationByDay);
+                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId);  
                         //cmd.ExecuteNonQuery();
                         newProdID = (Int32)cmd.ExecuteScalar();
                          

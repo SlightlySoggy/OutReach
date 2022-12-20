@@ -9,12 +9,12 @@ namespace Outreach.Pages.Utilities
     public class ProjTaskStatus
     {
         public string Id;
-        public string StatusName;
+        public string StatusName; 
 
         public ProjTaskStatus()
         {
             Id = "";
-            StatusName = "";
+            StatusName = ""; 
         }
         public ProjTaskStatus(string ProjTaskStatusId)
         { // retrive ProjTaskStatus data by ProjTaskStatus ID
