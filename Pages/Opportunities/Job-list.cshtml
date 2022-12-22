@@ -5,360 +5,279 @@
     ViewData["Title"] = "Job-l page";
 }
 
-<style>
-    
-.candidates-listing-bg {
-    padding: 210px 0px 60px 0px;
-    background-image: url("../images/candidates-listing-bg.jpg");
-    background-size: cover;
-    position: relative;
-    background-position: center center;
-}
-
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label:before {
-    background-color: #ff4f6c;
-    border-color: #ff4f6c;
-}
-
-.custom-checkbox .custom-control-input:focus ~ .custom-control-label:before {
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-.candidates-img img {
-    max-width: 90px;
-}
-
-.fav-icon i {
-    -webkit-text-stroke: 2px #ff4f6c;
-    -webkit-text-fill-color: transparent;
-}
-
-    .fav-icon i:hover {
-        -webkit-text-stroke: 0px #ff4f6c;
-        -webkit-text-fill-color: #ff4f6c;
-    }
-
-.candidates-list-desc {
-    overflow: hidden;
-}
-
-.candidates-right-details {
-    position: absolute;
-    top: 0;
-    right: 20px;
-}
-
-.candidates-item-desc {
-    margin-left: 45px;
-}
-
-.list-grid-item {
-    border: 1px solid #ececec;
-    border-radius: 6px;
-    -webkit-transition: all 0.5s;
-    transition: all 0.5s;
-}
-
-    .list-grid-item:hover {
-        -webkit-box-shadow: 0 0 20px 0px rgba(47, 47, 47, 0.09);
-        box-shadow: 0 0 20px 0px rgba(47, 47, 47, 0.09);
-        -webkit-transition: all 0.5s;
-        transition: all 0.5s;
-        border-color: transparent;
-    }
-
-.left-sidebar .card-body {
-    border-bottom: 1px solid #ececec;
-}
-
-.custom-control {
-    margin: 11px 20px;
-}
-
-.card-header {
-    background-color: transparent;
-    margin-bottom: 0 !important;
-}
-
-.pagination.job-pagination .page-link {
-    border-radius: 50% !important;
-    margin: 0 4px;
-    height: 46px;
-    width: 45px;
-    line-height: 29px;
-    text-align: center;
-    color: #777777;
-}
-
-.page-item.active .page-link {
-    background-color: #ff4f6c;
-    border-color: #ff4f6c;
-    color: #ffffff !important;
-}
-
-.f-14 {
-    font-size: 14px;
-}
-
-.btn-outline {
-    color: #ff4f6c;
-    border-color: #ff4f6c;
-}
-
-.btn-sm {
-    padding: 8px 22px;
-}
-
-</style>
 
 
-<form method="post">
-
-    <div class="container-xl py-3 mb-5">
-        <h1 class="text-center mb-5 display-3 wow fadeInUp" data-wow-delay="0.1s">About Us</h1>
-        <hr class="dashed">
-    </div>
-
-    <!-- Intro -->
-    <div class="intro">
-        <div class="container">
-            <div class="intro-text">
-                <div class="check-out">
-                    <div class="form">
-                        <div class="job-search">
-                            <img style="width: 20px; margin-right: 30px;" src="img/icon/search-icon.svg" alt="">
-                            <input type="text" name="TxtSearch1" placeholder="Type key word of job to search">
-                        </div>
-                        <div class="location">
-                            <label for="lname">location:</label>
-                            <select name="location" id="location">
-                                <option value="0">Edmonton</option>
-                                <option value="1">Calgary</option>
-                            </select>
-                            <input class="search main-btn" type="submit" value="Search">
-                        </div>
-                    </div>
+<!-- Content Wrapper. Contains page content -->
+<div class="">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Home</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">User Profile</li>
+                    </ol>
                 </div>
             </div>
-        </div>
-    </div>
+        </div><!-- /.container-fluid -->
+    </section>
 
-<div class="container-xxl bg-white p-0">
-    <div class="container">
+    <!-- Main content -->
+    <section class="content">
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Search</h3>
 
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="left-sidebar">
-                    <div class="accordion" id="accordionExample">
-                        <div class="card mt-4">
-                            <a data-toggle="collapse" href="#collapseOne" class="job-list" aria-expanded="true" aria-controls="collapseOne">
-                                <div class="card-header" id="headingOne">
-                                    <h6 class="mb-0 text-dark f-18">Job Type</h6>
-                                </div>
-                            </a>
-                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne">
-                                <div class="card-body p-0">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheckAll">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheckAll">All Type</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheck22">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck22">Freelancer</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheck23">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck23">Full Time</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheck3">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck3">Part Time</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input all-select" id="customCheck4">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck4">Internship</label>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                        <div class="row">
+@*                            <div class="col-12 col-sm-4">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Estimated budget</span>
+                                        <span class="info-box-number text-center text-muted mb-0">2300</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="card mt-4">
-                            <a data-toggle="collapse" href="#collapsetwo" class="job-list" aria-expanded="true" aria-controls="collapsetwo">
-                                <div class="card-header" id="headingtwo">
-                                    <h6 class="mb-0 text-dark f-18">Designation</h6>
-                                </div>
-                            </a>
-                            <div id="collapsetwo" class="collapse show" aria-labelledby="headingtwo">
-                                <div class="card-body p-0">
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck5">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck5">Project Manager</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck6">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck6">Web Designer</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck7">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck7">Banking</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck8">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck8">Digital &amp; Creative</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck9">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck9">IT Contractor</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck10">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck10">Java Developer</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck11">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck11">Civil Engineert</label>
-                                    </div>
-
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck12">
-                                        <label class="custom-control-label ml-1 text-muted f-15" for="customCheck12">SEO</label>
+                            <div class="col-12 col-sm-4">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Total amount spent</span>
+                                        <span class="info-box-number text-center text-muted mb-0">2000</span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-lg-9 pt-3">
-
-                    <!-- Start col -->
-                    @foreach (var opp in Model.oppList)
-                    {
-                    <div class="job-item p-4 mb-4">
-                        <div class="card m-b-30">
-                            <div class="card-body py-5">
-                                <div class="row">
-                                    <div class="col-lg-3 text-center">
-                                        <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
-                                        <div class="button-list mt-4 mb-3">
-                                            <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
-@*                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>View Details</button>
-*@                                        </div>
+                            <div class="col-12 col-sm-4">
+                                <div class="info-box bg-light">
+                                    <div class="info-box-content">
+                                        <span class="info-box-text text-center text-muted">Estimated project duration</span>
+                                        <span class="info-box-number text-center text-muted mb-0">20</span>
                                     </div>
-                                    <div class="col-lg-9">
-                                        <h4>@opp.OpportunityTitle</h4>
-                                            <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.SiteAddress</span>
-                                        <hr class="dashed">
-
-                                        <div class="table-responsive">
-                                            <table class="table table-borderless mb-0">
-                                                <tbody>
-                                                    @*<tr>
-                                                        <th scope="row" class="p-1">Description:</th>
-                                                        <div>*@
-                                                            <span class="text-truncate me-3">@*<i class="fa fa-map-marker-alt text-primary me-2"></i>*@@opp.Description</span>
-                                                        @*</div>
-                                                    </tr>*@
-                                                </tbody>
-                                            </table>
+                                </div>
+                            </div>*@
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-10 offset-md-1">
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label>Result Type:</label>
+                                                        <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+                                                            <option>Opportunities</option>
+                                                            <option>Organizations</option>
+                                                            <option>Users</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label>Tags:</label>
+                                                        <select class="select2" style="width: 100%;">
+                                                        @foreach (var tag in Model.ListTag)
+                                                        {
+                                                        <option>@tag.TagName</option>
+                                                        }
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div class="form-group">
+                                                        <label>Order By:</label>
+                                                        <select class="select2" style="width: 100%;">
+                                                            <option selected>Title</option>
+                                                            <option>Date</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group input-group-lg">
+                                                    <input type="search" class="form-control form-control-lg" placeholder="Type your keywords here" value="">
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="btn btn-lg btn-default">
+                                                            <i class="fa fa-search"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                        @*<div class="button-list mt-4 mb-3">
-                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
-                                        </div>*@
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                    }
+                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
+                        <p class="text-muted">This feature is still in developement, please report any bugs you find using our contact page!
 
-                    <div class="tab-content">
-                        @foreach (var tag in Model.ListTag)
-                        {
-                            <div class="col-12 col-sm-4">
-                                @tag.TagName <input type="checkbox" name="chktag" value="@tag.Id" />
-                            </div>
-                        }
-                    </div>
-                    <!-- End col -->
-                    @*@foreach (var opp in Model.oppList)
-                    {
-                        <div class="job-item p-4 mb-4">
-                            <div class="row g-4">
-                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                    <img class="flex-shrink-0 img-fluid border rounded" src="img/com-logo-1.jpg" alt="" style="width: 80px; height: 80px;">
-                                    <div class="text-start ps-4">
-                                        <h5 class="mb-3">@opp.OpportunityTitle</h5>
-                                        <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.SiteAddress</span>
-                                        <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.Description</span>
-                                        <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.Responsibility</span>
-                                        <span class="text-truncate me-3"><i class="fa fa-map-marker-alt text-primary me-2"></i>@opp.Requirement</span>
-                                        <span class="text-truncate me-3"><i class="far fa-clock text-primary me-2"></i>@opp.StartDate</span>
-                                        <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>@opp.EndDate</span>
-                                        <span class="text-truncate me-0"><i class="far fa-money-bill-alt text-primary me-2"></i>@opp.Schedule</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                    <div class="d-flex mb-3">
-                                        <a class="btn btn-light btn-square me-3" href=""><i class="far fa-heart text-primary"></i></a>
-                                        <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
-                                    </div>
-                                    <small class="text-truncate"><i class="far fa-calendar-alt text-primary me-2"></i>Date Line: 01 Jan, 2045</small>
-                                </div>
-                            </div>
+                            If there are persistent issues contact Maxwell Li directly
+                        </p>
+
+
+                        <div class="text-center mt-5 mb-3">
+                            <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
                         </div>
-                    }
-
-                    <div class="tab-content">
-                        @foreach (var tag in Model.ListTag)
-                        {
-                            <div class="col-12 col-sm-4">
-                                @tag.TagName <input type="checkbox" name="chktag" value="@tag.Id" />
-                            </div>
-                        }
-                    </div>*@
-
-            <a class="btn btn-primary py-3 px-5" href="">Browse More Jobs</a>
-                    
-
-
-        <div class="row">
-            <div class="col-lg-12">
-                <nav aria-label="Page navigation example">
-                    <ul class="pagination job-pagination justify-content-center mt-5 mb-5">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-                                <i class="mdi mdi-chevron-double-left f-15"></i>
-                            </a>
-                        </li>
-                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">
-                                <i class="mdi mdi-chevron-double-right f-15"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                    </div>
+                </div>
             </div>
+            <!-- /.card-body -->
         </div>
-    </div>
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-</form>
+        <!-- /.card -->
+
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+
+                    <!-- Profile Image -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                <img class="profile-user-img img-fluid img-circle"
+                                     src="../../dist/img/user4-128x128.jpg"
+                                     alt="User profile picture">
+                            </div>
+
+                            <h3 class="profile-username text-center">Nina Mcintire</h3>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+
+
+                                <li class="list-group-item">
+                                    <b>Followers</b> <a class="float-right">1,322</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Following</b> <a class="float-right">543</a>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Friends</b> <a class="float-right">13,287</a>
+                                </li>
+                            </ul>
+                            <a class="btn btn-primary btn-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight"><b>View Profile</b></a>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <!-- About Me Box -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">About Me</h3>
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                            <p class="text-muted">
+                                B.S. in Computer Science from the University of Tennessee at Knoxville
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                            <p class="text-muted">Malibu, California</p>
+
+                            <hr>
+
+                            <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                            <p class="text-muted">
+                                <span class="tag tag-danger">UI Design</span>
+                                <span class="tag tag-success">Coding</span>
+                                <span class="tag tag-info">Javascript</span>
+                                <span class="tag tag-warning">PHP</span>
+                                <span class="tag tag-primary">Node.js</span>
+                            </p>
+
+                            <hr>
+
+                            <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+                <!-- /.col -->
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="content">
+                                <div class="active tab-pane" id="activity">
+                                    <!-- Post -->
+                                    <div class="post">
+                                        @foreach (var opp in Model.oppList)
+                                        {
+                                                <div class="card m-b-30">
+                                                    <div class="card-body py-5">
+                                                        <div class="row">
+                                                            <div class="col-lg-3 text-center">
+                                                                <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
+                                                                <div class="button-list mt-4 mb-3">
+                                                                    <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
+                                                                    @*                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>View Details</button>
+                                                                *@
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-9">
+                                                                <h4>@opp.OpportunityTitle</h4>
+                                                                <span class="text-truncate me-3"><i class="fa fa-map-marker-alt"></i>@opp.SiteAddress</span>
+                                                                <hr class="dashed">
+
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-borderless mb-0">
+                                                                        <tbody>
+                                                                            @*<tr>
+                                                                        <th scope="row" class="p-1">Description:</th>
+                                                                        <div>*@
+                                                                            <span class="text-truncate me-3">@*<i class="fa fa-map-marker-alt text-primary me-2"></i>*@@opp.Description</span>
+                                                                            @*</div>
+                                                                        </tr>*@
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                @*<div class="button-list mt-4 mb-3">
+                                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>Message</button>
+                                                            </div>*@
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                        }
+                                    </div>
+                                    <!-- /.post -->
+                                </div>
+                                <!-- /.tab-pane -->
+                            </div>
+                            <!-- /.tab-content -->
+                        </div><!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div><!-- /.container-fluid -->
+        </div>
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
 
 

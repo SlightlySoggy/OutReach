@@ -60,7 +60,12 @@
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+    
+    <!--Captcha-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
+    <!--Login with Google-->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
 </head>
 
@@ -81,10 +86,10 @@
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a class="nav-item nav-link active" asp-area="" asp-page="/Content/index">Home</a>
-                 
-                <a class="nav-item nav-link" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a> 
-                
-                <partial name="_LoginPartial"/>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a>
+
+                <partial name="_LoginPartial" />
 
             </div>
 
@@ -174,8 +179,6 @@
         </div>
     </div>
     <!-- Footer End -->
-
-
     <!-- Template Javascript -->
     <script src="~/js/main.js"></script>
 
@@ -233,6 +236,8 @@
     <!-- Page specific script -->
     <script>
         $(function () {
+
+
             //Initialize Select2 Elements
             $('.select2').select2()
 
@@ -363,7 +368,7 @@
         document.querySelector("#actions .cancel").onclick = function () {
             myDropzone.removeAllFiles(true)
         }
-                  // DropzoneJS Demo Code End
+                          // DropzoneJS Demo Code End
     </script>
 
     <!-- AdminLTE dashboard demo (This is only for demo purposes) -->

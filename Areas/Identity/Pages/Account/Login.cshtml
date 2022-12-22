@@ -8,12 +8,6 @@
 }
 
 
-@*Customize asp.net core login and registration using identity:  https://bluerhinolabs.medium.com/customize-login-page-on-asp-net-core-web-application-73cc9574da32
-    https://www.yogihosting.com/aspnet-core-identity-authentication/*@
-
-
-@*<h1>@ViewData["Title"]</h1>*@
-
 <section>
     <div class="container py-5 h-75">
         <div class="row d-flex justify-content-center align-items-center h-100">
@@ -93,6 +87,21 @@
                                             <!-- Simple link -->
                                             <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
                                         </div>
+                                    </div>
+
+                                    <!-- Login with Google -->
+                                    <div id="g_id_onload"
+                                         data-client_id="593949499849-6gi40pcj4df4eh9aklpk8fbuepq216l4.apps.googleusercontent.com"
+                                         data-login_uri="https://outreachingworld.com"
+                                         data-auto_prompt="false">
+                                    </div>
+                                    <div class="g_id_signin"
+                                         data-type="standard"
+                                         data-size="large"
+                                         data-theme="outline"
+                                         data-text="sign_in_with"
+                                         data-shape="rectangular"
+                                         data-logo_alignment="left">
                                     </div>
 
                                     <!-- Submit button -->
