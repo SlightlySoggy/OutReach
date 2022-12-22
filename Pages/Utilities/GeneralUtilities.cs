@@ -256,9 +256,13 @@ namespace Outreach.Pages.Utilities
             List<Project> listPro = new List<Project>();
             string sql = "";
 
-            if (statusId.Trim() != "")
+            if (statusId.Trim() != "" && statusId.Trim() != "-1") 
             {
                 sql = "select P.Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Project p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where ProjectTaskStatusId = " + statusId + " order by ProjectName";
+            }
+            else if (statusId.Trim() == "-1")
+            { // get planed and in progress projects list
+                sql = "select P.Id,ProjectName,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Project p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where ProjectTaskStatusId in (1,2) order by ProjectName";
             }
             else
             { // get all project
@@ -938,6 +942,163 @@ namespace Outreach.Pages.Utilities
             }
 
             return userlist;
+        }
+
+
+
+
+        public List<Task> GetTaskListByNameSearch(string NameSearch = "")
+        { // retrive Task data by partial of name 
+
+            List<Task> listPro = new List<Task>();
+            string sql = "";
+
+            if (NameSearch.Trim() != "")
+            {
+                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where TaskName like  '%" + NameSearch + "%' order by TaskName ";
+            }
+            else
+            { // get all Task
+                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId order by TaskName ";
+            }
+
+            listPro = GetTaskListBySQLQuery(sql);
+
+            return listPro;
+        }
+
+        public List<Task> GetTaskListByStatusId(string statusId = "")
+        { // retrive Task data by status ID
+            List<Task> listPro = new List<Task>();
+            string sql = "";
+
+            if (statusId.Trim() != "")
+            {
+                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where ProjectTaskStatusId = " + statusId + " order by TaskName";
+            }
+            else
+            { // get all Task
+                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId  order by TaskName ";
+            }
+
+            listPro = GetTaskListBySQLQuery(sql);
+
+            return listPro;
+        }
+
+        public List<Task> GetTaskListBySQLQuery(string sql)
+        { // retrive Task data by given sql query
+
+            List<Task> listPro = new List<Task>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                Task p = new Task();
+
+                                p.Id = reader.GetInt32(0).ToString();
+                                if (reader["Name"].GetType() != typeof(DBNull))
+                                {
+                                    p.Name = reader["Name"].ToString();
+                                }
+
+                                if (reader["ProjectId"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectId = reader["ProjectId"].ToString();
+                                } 
+
+                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedOrgId = reader["CreatedOrgId"].ToString();
+                                }
+
+                                if (reader["Description"].GetType() != typeof(DBNull))
+                                {
+                                    p.Description = reader["Description"].ToString();
+                                }
+
+                                if (reader["EstimatedBudget"].GetType() != typeof(DBNull))
+                                {
+                                    p.EstimatedBudget = reader["EstimatedBudget"].ToString();
+                                }
+
+                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
+                                {
+                                    p.ActualSpent = reader["ActualSpent"].ToString();
+                                }
+
+
+                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
+                                {
+                                    p.ActualSpent = reader["ActualSpent"].ToString();
+                                }
+
+
+                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedOrgId = reader.GetInt32(5).ToString();
+                                }
+
+                                if (reader["CreatedDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedDate = reader.GetDateTime(6).ToString();
+                                }
+
+                                if (reader["CreatedUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedUserId = reader.GetInt32(7).ToString();
+                                } 
+
+                                if (reader["StartDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.StartDate = reader.GetDateTime(8).ToString();
+                                }
+
+                                if (reader["DueDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.DueDate = reader.GetDateTime(9).ToString();
+                                }
+
+                                if (reader["CompletionDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CompletionDate = reader.GetDateTime(10).ToString();
+                                }
+
+                                if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectTaskStatusId = reader.GetInt32(11).ToString();
+                                }
+
+                                if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
+                                }
+
+
+                                listPro.Add(p);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listPro;
         }
 
 

@@ -1,0 +1,243 @@
+﻿@page "/TasksLight"
+@model Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskLight.TasksLightModel
+@{
+    Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
+}
+
+<form method="post" id="Form1" name="Form1">
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Tasks</h1>
+                    <div class="form-group">
+                         <label for="inputTaskStatus">Under Poject (Planed & In Progress):</label>
+                        <div class="form-group">
+                            <select class="select2bs4" data-placeholder="" style="width: 100%;" id="inputProject" name="inputProject">
+                                <option value="-1" selected>-----------</option>
+                                @foreach (var st in Model.ProjectList)
+                                {
+                                    if (@st.Id == @Request.Query["ProjectId"])
+                                    {
+                                        <option value="@st.Id" selected>@st.ProjectName</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@st.Id">@st.ProjectName</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item active">Tasks</li>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+        <button id="linkCreate" name="linkCreate" onclick="CheckifProjectIsSelected();" asp-page="#">
+            <i class="fas fa-pencil-alt"></i>
+            Create
+        </button>
+
+ @*       <a class="btn btn-danger btn-sm" onclick="ConfirmDelete('@pro.Id');" href="#">
+            <i class="fas fa-trash"></i>
+            Delete
+        </a>*@
+
+
+        <!-- Main content -->
+    <section class="content">
+
+      <!-- Default box -->
+      <div class="card">
+        <div class="card-header">
+                    @*<h3 class="card-title">Tasks</h3> *@
+
+
+
+          <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+              <i class="fas fa-minus"></i>
+            </button>
+            <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <table class="table table-striped Tasks">
+              <thead>
+                  <tr>
+                      <th style="width: 1%">
+                          #
+                      </th>
+                      <th style="width: 20%">
+                          Task Name
+                      </th>
+                      <th style="width: 30%">
+                          Team Members
+                      </th>
+                      <th>
+                          Task Progress
+                      </th>
+                      <th style="width: 8%" class="text-center">
+                          Status
+                      </th>
+                      <th style="width: 20%">
+                      </th>
+                  </tr>
+              </thead>
+              <tbody> 
+
+                    @foreach (var pro in Model.TaskList)
+                    {
+
+                            <tr>
+                                <td>
+                                    #
+                                </td>
+                                <td> 
+                                        @pro.Name 
+                                    <br />
+                                    <small>
+                                            @pro.CreatedDate
+                                    </small>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar3.png">
+                                        </li>
+                                        <li class="list-inline-item">
+                                            <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
+                                        </li>
+                                    </ul>
+                                </td>
+                                <td class="Task_progress">
+                                    <div class="progress progress-sm">
+                                        <div class="progress-bar bg-green" role="progressbar" aria-valuenow="57" aria-valuemin="0" aria-valuemax="100" style="width: 57%">
+                                        </div>
+                                    </div>01
+                                    <small>
+                                        57% Complete
+                                    </small>
+                                </td>
+                                <td class="Task-state">
+                                    <span class="badge badge-success">@pro.ProjectTaskStatus</span>
+                                </td>
+                                <td class="Task-actions text-right">
+@*                                    <a class="btn btn-primary btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Tasks/TaskDetail/TasksDetailLight">
+                                        <i class="fas fa-folder">
+                                        </i>
+                                        View
+                                    </a>*@
+                                    <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Tasks/TasksEditLight" asp-route-TaskId="@pro.Id" >
+                                        <i class="fas fa-pencil-alt">
+                                        </i>
+                                        Edit
+                                    </a>
+                                    <a class="btn btn-danger btn-sm" onclick="ConfirmDelete('@pro.Id');" href="#">
+                                        <i class="fas fa-trash"></i>
+                                        Delete
+                                    </a> 
+
+                                </td>
+                            </tr>
+
+                            
+                            <input type="hidden" id="hid_DeleteTaskid" name="hid_DeleteTaskid" value="">
+                             
+                    }
+
+
+
+              </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+ </form>
+
+<script>
+    function ConfirmDelete(id) {
+        if (confirm("Are you sure you want to delete?")) {
+            //alert(id);
+            document.getElementById("hid_DeleteTaskid").value = id;
+            //alert(document.getElementById("hid_DeleteTaskid").value);
+            document.Form1.submit();
+
+        }
+        else {
+            //alert("false");
+            return false;
+        }
+    }
+
+    
+    function CheckifProjectIsSelected() {
+        currenturl = window.location.href ;
+        var url = currenturl.replace("TasksLight", "TasksEditLight");
+        //alert(url);
+
+            //alert(document.getElementById("inputProject").value);
+            //Content/Tools / Tasks / TasksEditLight
+
+        if (document.getElementById("inputProject").value == "-1")
+        {
+            alert("Please select a project before create task.");
+            return false;
+        }
+        else
+        {
+            url = url + "?ProjectId=" + document.getElementById("inputProject").value;
+            alert(url);
+            //window.location.href = url;
+            //window.location.replace(url);
+            
+            window.location.href = "http://www.stackoverflow.com";
+            
+            
+
+        }
+
+
+
+
+        //if (confirm("Are you sure you want to delete?")) {
+        //    //alert(id);
+        //    //alert(document.getElementById("hid_DeleteTaskid").value);
+        //    //document.Form1.submit();
+
+        //}
+        //else {
+        //    //alert("false");
+        //    return false;
+        //}
+    }
+
+</script>
+
