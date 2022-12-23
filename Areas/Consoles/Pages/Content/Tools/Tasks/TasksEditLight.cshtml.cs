@@ -5,10 +5,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using NuGet.Packaging.Signing;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
+using Project = Outreach.Pages.Utilities.Project;
 using Task = Outreach.Pages.Utilities.Task;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
@@ -59,7 +61,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             user_id = ut.GetLoginUserIntIDbyGUID(user.Id);
             StatusList = ut.GetProjTaskStatusList();
 
-            List<LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
+
+            TaskInfo.CreatedUserId = user_id.ToString();
+
+            List <LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
             LoginUserList = ut.GetLoginUserList("");
 
             //user_id = Convert.ToInt32(user.User_Id);
@@ -72,21 +77,24 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             if (orgInfo == null)
             {
 
-            } 
-
-            if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
-            { // set project with query string
-                TaskInfo.ProjectId = Request.Query["ProjectId"];   
-            } 
-            else
-            { // select a project first
-                Response.Redirect("ProjectsLight");
-                //return Page();
-            }
-
+            }  
 
             if (string.IsNullOrWhiteSpace(Request.Query["TaskId"]))
             { // create a brand new Task 
+
+
+                if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
+                { // set project with query string
+                    TaskInfo.ProjectId = Request.Query["ProjectId"];
+                    Project p = new Project(TaskInfo.ProjectId);
+                    TaskInfo.ProjectName = p.ProjectName;
+                }
+                else
+                { // select a project first
+                    Response.Redirect("TasksLight");
+                    //Response.Redirect("ProjectsLight"); 
+                }
+
                 TaskInfo.CreatedOrgId = org_id.ToString();
                 TaskInfo.CreatedUserId = user_id.ToString();
                 return Page();
@@ -99,6 +107,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 Task op = new Task(TaskId);
                 TaskInfo = op;
+
 
                 TaskManagerUserList = ut.ResetProjectTaskUserList(LoginUserList, op.TaskManagerUserIds);
 
@@ -115,7 +124,8 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         public void OnPost()
         {
             string result = "";
-             
+
+            TaskInfo.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
             TaskInfo.Name = Request.Form["inputName"];
             TaskInfo.Description = Request.Form["inputDescription"];
             TaskInfo.EstimatedBudget = Request.Form["inputEstimatedBudget"];
@@ -160,15 +170,15 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
                 {
                     // if member changed, then delete all old selection and add new selected users again
 
-                    result = ut.DeleteAllProjectTaskUser(existingTask.Id, "", "true");                     
+                    result = ut.DeleteAllProjectTaskUser("", existingTask.Id, "true");                     
 
                     foreach (string uid in newUserLeadlist)
                     {
                         if (ut.IsNumeric(uid))
                         { // save Task level lead user
                             ProjectTaskUser ptu = new ProjectTaskUser();
+                            ptu.ProjectId = "";
                             ptu.TaskId = existingTask.Id;
-                            ptu.TaskId = "";
                             ptu.UserId = uid;
                             ptu.IsLead = "1"; //leader
                             ptu.Save();
@@ -184,15 +194,15 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
                 {
                     // if member changed, then delete all old selection and add new selected users again
 
-                    result = ut.DeleteAllProjectTaskUser(existingTask.Id, "", "false");
+                    result = ut.DeleteAllProjectTaskUser("", existingTask.Id,"false");
 
                     foreach (string uid in newMemberlist)
                     {
                         if (ut.IsNumeric(uid))
                         { // save Task level lead user
                             ProjectTaskUser ptu = new ProjectTaskUser();
+                            ptu.ProjectId = "";
                             ptu.TaskId = existingTask.Id;
-                            ptu.TaskId = "";
                             ptu.UserId = uid;
                             ptu.IsLead = ""; //regulare member
                             ptu.Save();

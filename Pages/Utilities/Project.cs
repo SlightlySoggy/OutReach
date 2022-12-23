@@ -89,15 +89,44 @@ namespace Outreach.Pages.Utilities
                                     ActualSpent = reader["ActualSpent"].ToString();
                                 }
 
-                                CreatedOrgId = reader.GetInt32(5).ToString();
-                                CreatedDate = reader.GetDateTime(6).ToString();
-                                CreatedUserId = reader.GetInt32(7).ToString();
-                                //ProjectManagerUserId = reader.GetInt32(8).ToString();
-                                StartDate = reader.GetDateTime(8).ToString();
-                                DueDate = reader.GetDateTime(9).ToString();
-                                CompletionDate = reader.GetDateTime(10).ToString();
-                                ProjectTaskStatusId = reader.GetInt32(11).ToString();
-                                ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
+                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
+                                {
+                                    CreatedOrgId = reader["CreatedOrgId"].ToString();
+                                }
+
+                                if (reader["CreatedDate"].GetType() != typeof(DBNull))
+                                {
+                                    CreatedDate = ut.EmptyDateConvert(reader["CreatedDate"].ToString());
+                                }
+
+                                if (reader["CreatedUserId"].GetType() != typeof(DBNull))
+                                {
+                                    CreatedUserId = reader["CreatedUserId"].ToString();
+                                }
+
+                                if (reader["StartDate"].GetType() != typeof(DBNull))
+                                {
+                                    StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
+                                }
+
+                                if (reader["DueDate"].GetType() != typeof(DBNull))
+                                {
+                                    DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
+                                }
+
+                                if (reader["CompletionDate"].GetType() != typeof(DBNull))
+                                {
+                                    CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
+                                }
+                                if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
+                                {
+                                    ProjectTaskStatusId = reader["ProjectTaskStatusId"].ToString();
+                                }
+
+                                if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
+                                {
+                                    ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
+                                }
 
                                 ProjectManagerUserIds = ut.GetProjectorTaskUserList(projectId, "", "true");
                                 ProjectMemberUserIds  = ut.GetProjectorTaskUserList(projectId, "", "false");

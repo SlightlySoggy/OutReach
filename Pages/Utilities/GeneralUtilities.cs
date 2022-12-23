@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Outreach.Pages.Utilities
 {
@@ -277,6 +278,7 @@ namespace Outreach.Pages.Utilities
     public List<Project> GetProjectListBySQLQuery(string sql)
         { // retrive Project data by given sql query
 
+            GeneralUtilities ut = new GeneralUtilities();
             List<Project> listPro = new List<Project>();
 
             try
@@ -297,6 +299,7 @@ namespace Outreach.Pages.Utilities
                                 Project p = new Project();
 
                                 p.Id = reader.GetInt32(0).ToString();
+
                                 if (reader["ProjectName"].GetType() != typeof(DBNull))
                                 {
                                     p.ProjectName = reader["ProjectName"].ToString();
@@ -317,51 +320,38 @@ namespace Outreach.Pages.Utilities
                                     p.ActualSpent = reader["ActualSpent"].ToString();
                                 }
 
-
-                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
-                                {
-                                    p.ActualSpent = reader["ActualSpent"].ToString();
-                                }
-
-
                                 if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedOrgId = reader.GetInt32(5).ToString();
+                                    p.CreatedOrgId = reader["CreatedOrgId"].ToString();
                                 }
 
                                 if (reader["CreatedDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedDate = reader.GetDateTime(6).ToString();
+                                    p.CreatedDate = ut.EmptyDateConvert(reader["CreatedDate"].ToString());
                                 }
 
                                 if (reader["CreatedUserId"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedUserId = reader.GetInt32(7).ToString();
+                                    p.CreatedUserId = reader["CreatedUserId"].ToString();
                                 }
-
-                                //if (reader["ProjectManagerUserId"].GetType() != typeof(DBNull))
-                                //{
-                                //    p.ProjectManagerUserId = reader.GetInt32(8).ToString();
-                                //}
 
                                 if (reader["StartDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.StartDate = reader.GetDateTime(8).ToString();
+                                    p.StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
                                 }
 
                                 if (reader["DueDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.DueDate = reader.GetDateTime(9).ToString();
+                                    p.DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
                                 }
 
                                 if (reader["CompletionDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CompletionDate = reader.GetDateTime(10).ToString();
+                                    p.CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
                                 }
-
                                 if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
                                 {
-                                    p.ProjectTaskStatusId = reader.GetInt32(11).ToString();
+                                    p.ProjectTaskStatusId = reader["ProjectTaskStatusId"].ToString();
                                 }
 
                                 if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
@@ -586,10 +576,13 @@ namespace Outreach.Pages.Utilities
                             while (reader.Read()) 
                             {
                                 ProjectTaskUser userinfo = new ProjectTaskUser();
-                                userinfo.Id = reader.GetInt32(0).ToString();
-                                userinfo.ProjectId = reader.GetInt32(1).ToString();
+                                userinfo.Id = reader.GetInt32(0).ToString(); 
                                 userinfo.UserId = reader.GetInt32(3).ToString();
 
+                                if (reader["ProjectId"].GetType() != typeof(DBNull))
+                                {// task level user
+                                    userinfo.ProjectId = reader["ProjectId"].ToString();
+                                }
                                 if (reader["TaskId"].GetType() != typeof(DBNull))
                                 {// task level user
                                     userinfo.TaskId = reader["TaskId"].ToString();
@@ -746,7 +739,8 @@ namespace Outreach.Pages.Utilities
         { // mark if user is selected
             Boolean match = false;
 
-            if (ptuserlist != null && newuidlist != null)
+            //if (ptuserlist != null && newuidlist != null)
+            if (ptuserlist.Count > 0 && newuidlist.Count > 0 && ptuserlist.Count != newuidlist.Count)
             {
                 List<string> ori_uidlist = new List<string>();
                 ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
@@ -758,7 +752,8 @@ namespace Outreach.Pages.Utilities
         { // mark if user is selected
             Boolean match = false;
 
-            if (ptuserlist != null && newuidlist != null)
+            //if (ptuserlist != null && newuidlist != null) 
+            if (ptuserlist.Count > 0 && newuidlist.Count > 0 && ptuserlist.Count != newuidlist.Count)
             {
                 List<string> ori_uidlist = new List<string>();
                 ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
@@ -955,11 +950,11 @@ namespace Outreach.Pages.Utilities
 
             if (NameSearch.Trim() != "")
             {
-                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where TaskName like  '%" + NameSearch + "%' order by TaskName ";
+                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.Name like  '%" + NameSearch + "%' order by t.Name ";
             }
             else
             { // get all Task
-                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId order by TaskName ";
+                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId order by t.Name ";
             }
 
             listPro = GetTaskListBySQLQuery(sql);
@@ -974,11 +969,11 @@ namespace Outreach.Pages.Utilities
 
             if (statusId.Trim() != "")
             {
-                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where ProjectTaskStatusId = " + statusId + " order by TaskName";
+                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.ProjectTaskStatusId = " + statusId + " order by t.Name";
             }
             else
             { // get all Task
-                sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId  order by TaskName ";
+                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId   order by t.Name ";
             }
 
             listPro = GetTaskListBySQLQuery(sql);
@@ -991,6 +986,7 @@ namespace Outreach.Pages.Utilities
 
             List<Task> listPro = new List<Task>();
 
+            GeneralUtilities ut = new GeneralUtilities();
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -1008,20 +1004,31 @@ namespace Outreach.Pages.Utilities
 
                                 Task p = new Task();
 
-                                p.Id = reader.GetInt32(0).ToString();
-                                if (reader["Name"].GetType() != typeof(DBNull))
+                                p.Id = reader.GetInt32(0).ToString(); 
+                                if (reader["Id"].GetType() != typeof(DBNull))
                                 {
-                                    p.Name = reader["Name"].ToString();
+                                    p.Id = reader["Id"].ToString();
                                 }
+
+                                if (reader["ProjectName"].GetType() != typeof(DBNull))
+                                {
+                                    p.ProjectName = reader["ProjectName"].ToString();
+                                }
+
 
                                 if (reader["ProjectId"].GetType() != typeof(DBNull))
                                 {
                                     p.ProjectId = reader["ProjectId"].ToString();
-                                } 
+                                }
 
                                 if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
                                 {
                                     p.CreatedOrgId = reader["CreatedOrgId"].ToString();
+                                }
+
+                                if (reader["Name"].GetType() != typeof(DBNull))
+                                {
+                                    p.Name = reader["Name"].ToString();
                                 }
 
                                 if (reader["Description"].GetType() != typeof(DBNull))
@@ -1038,47 +1045,36 @@ namespace Outreach.Pages.Utilities
                                 {
                                     p.ActualSpent = reader["ActualSpent"].ToString();
                                 }
-
-
-                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
-                                {
-                                    p.ActualSpent = reader["ActualSpent"].ToString();
-                                }
-
-
-                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
-                                {
-                                    p.CreatedOrgId = reader.GetInt32(5).ToString();
-                                }
+                                ////////////////////////////////////////////
 
                                 if (reader["CreatedDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedDate = reader.GetDateTime(6).ToString();
+                                    p.CreatedDate = ut.EmptyDateConvert(reader["CreatedDate"].ToString());
                                 }
 
                                 if (reader["CreatedUserId"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedUserId = reader.GetInt32(7).ToString();
-                                } 
+                                    p.CreatedUserId = reader["CreatedUserId"].ToString();
+                                }
 
                                 if (reader["StartDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.StartDate = reader.GetDateTime(8).ToString();
+                                    p.StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
                                 }
 
                                 if (reader["DueDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.DueDate = reader.GetDateTime(9).ToString();
+                                    p.DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
                                 }
 
                                 if (reader["CompletionDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CompletionDate = reader.GetDateTime(10).ToString();
+                                    p.CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
                                 }
 
                                 if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
                                 {
-                                    p.ProjectTaskStatusId = reader.GetInt32(11).ToString();
+                                    p.ProjectTaskStatusId = reader["ProjectTaskStatusId"].ToString();
                                 }
 
                                 if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
@@ -1086,6 +1082,9 @@ namespace Outreach.Pages.Utilities
                                     p.ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
                                 }
 
+
+                                //p.TaskManagerUserIds = ut.GetProjectorTaskUserList("", TaskId, "true");
+                                //p.TaskMemberUserIds = ut.GetProjectorTaskUserList("", TaskId, "false");
 
                                 listPro.Add(p);
                             }
@@ -1099,6 +1098,20 @@ namespace Outreach.Pages.Utilities
             }
 
             return listPro;
+        }
+
+        public string EmptyDateConvert(string inputdate)
+        {// when database return date like "1/1/1900 12:00:00 AM" then convert it to ""
+
+            string result = "";
+
+            if (inputdate != "1/1/1900 12:00:00 AM")
+                result = inputdate;
+            else
+                result = "";
+
+            return result;
+
         }
 
 

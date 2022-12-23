@@ -18,7 +18,7 @@
                          <label for="inputTaskStatus">Under Poject (Planed & In Progress):</label>
                         <div class="form-group">
                             <select class="select2bs4" data-placeholder="" style="width: 100%;" id="inputProject" name="inputProject">
-                                <option value="-1" selected>-----------</option>
+                                    <option value="-1"  >-----------------------------</option>
                                 @foreach (var st in Model.ProjectList)
                                 {
                                     if (@st.Id == @Request.Query["ProjectId"])
@@ -45,10 +45,10 @@
       </div><!-- /.container-fluid -->
     </section>
 
-        <button id="linkCreate" name="linkCreate" onclick="CheckifProjectIsSelected();" asp-page="#">
+        <a id="linkCreate" name="linkCreate"  onclick="CheckifProjectIsSelected();" asp-page="#">
             <i class="fas fa-pencil-alt"></i>
             Create
-        </button>
+        </a>
 
  @*       <a class="btn btn-danger btn-sm" onclick="ConfirmDelete('@pro.Id');" href="#">
             <i class="fas fa-trash"></i>
@@ -85,6 +85,9 @@
                       <th style="width: 20%">
                           Task Name
                       </th>
+                      <th style="width: 20%">
+                          Project
+                      </th>
                       <th style="width: 30%">
                           Team Members
                       </th>
@@ -113,6 +116,9 @@
                                     <small>
                                             @pro.CreatedDate
                                     </small>
+                                </td>
+                                <td> 
+                                        @pro.ProjectName  
                                 </td>
                                 <td>
                                     <ul class="list-inline">
@@ -199,8 +205,9 @@
 
     
     function CheckifProjectIsSelected() {
-        currenturl = window.location.href ;
+        currenturl = window.location.href;
         var url = currenturl.replace("TasksLight", "TasksEditLight");
+        var url = url.replace("#", "");
         //alert(url);
 
             //alert(document.getElementById("inputProject").value);
@@ -209,34 +216,18 @@
         if (document.getElementById("inputProject").value == "-1")
         {
             alert("Please select a project before create task.");
+            document.getElementById("linkCreate").href = "#"; 
+            //alert(document.getElementById("linkCreate").href);
             return false;
         }
         else
         {
             url = url + "?ProjectId=" + document.getElementById("inputProject").value;
-            alert(url);
-            //window.location.href = url;
-            //window.location.replace(url);
-            
-            window.location.href = "http://www.stackoverflow.com";
-            
-            
-
+            //alert(url);
+            document.getElementById("linkCreate").href = url; 
         }
 
-
-
-
-        //if (confirm("Are you sure you want to delete?")) {
-        //    //alert(id);
-        //    //alert(document.getElementById("hid_DeleteTaskid").value);
-        //    //document.Form1.submit();
-
-        //}
-        //else {
-        //    //alert("false");
-        //    return false;
-        //}
+         
     }
 
 </script>

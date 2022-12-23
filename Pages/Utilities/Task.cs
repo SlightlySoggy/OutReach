@@ -10,6 +10,7 @@ namespace Outreach.Pages.Utilities
     {
         public string Id;
         public string ProjectId;
+        public string ProjectName;
         public string CreatedOrgId;
         public string Name;
         public string Description;
@@ -29,6 +30,7 @@ namespace Outreach.Pages.Utilities
         {
             Id = "";
             ProjectId = "";
+            ProjectName = "";
             CreatedOrgId = "";
             Name = "";
             Description = "";
@@ -58,7 +60,7 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
 //                    if (TaskId.Trim() != "")
-                    sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where P.Id='" + TaskId + "'";
+                    sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.Id='" + TaskId + "'";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -77,7 +79,12 @@ namespace Outreach.Pages.Utilities
                                 if (reader["ProjectId"].GetType() != typeof(DBNull))
                                 {
                                     ProjectId = reader["ProjectId"].ToString();
-                                } 
+                                }
+
+                                if (reader["ProjectName"].GetType() != typeof(DBNull))
+                                {
+                                    ProjectName = reader["ProjectName"].ToString();
+                                }
 
                                 if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
                                 {
@@ -117,17 +124,17 @@ namespace Outreach.Pages.Utilities
 
                                 if (reader["StartDate"].GetType() != typeof(DBNull))
                                 {
-                                    StartDate = reader["StartDate"].ToString();
+                                    StartDate =  ut.EmptyDateConvert(reader["StartDate"].ToString());
                                 }
 
                                 if (reader["DueDate"].GetType() != typeof(DBNull))
                                 {
-                                    DueDate = reader["DueDate"].ToString();
+                                    DueDate =  ut.EmptyDateConvert(reader["DueDate"].ToString());
                                 }
 
                                 if (reader["CompletionDate"].GetType() != typeof(DBNull))
                                 {
-                                    CompletionDate = reader["CompletionDate"].ToString();
+                                    CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
                                 }
 
                                 if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
