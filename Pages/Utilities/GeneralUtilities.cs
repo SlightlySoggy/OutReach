@@ -663,7 +663,7 @@ namespace Outreach.Pages.Utilities
             return result;
         }
 
-        public string DeleteAllDepartmentUser(string Dept_Id = "", string IsLead = "")
+        public string DeleteAllTeamUser(string Dept_Id = "", string IsLead = "")
         { //  
 
             string result = "";
@@ -672,11 +672,11 @@ namespace Outreach.Pages.Utilities
             string sql = " ";
              
             if (IsLead.Trim().ToLower() == "true")
-                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + "' and isnull(IsLead,0) = 1 ";
+                sql = "Delete TeamUser where TeamId='" + Dept_Id + "' and isnull(IsLead,0) = 1 ";
             else if (IsLead.Trim().ToLower() == "false")
-                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + "' and isnull(IsLead,0) = 0 ";
+                sql = "Delete TeamUser where TeamId='" + Dept_Id + "' and isnull(IsLead,0) = 0 ";
             else // (IsLead.Trim() == "")
-                sql = "Delete DepartmentUser where DepartmentId='" + Dept_Id + " ";
+                sql = "Delete TeamUser where TeamId='" + Dept_Id + " ";
 
 
             result = DeleteTableDataBySQL(sql);
@@ -710,7 +710,7 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public List<LoginUserInfo> ResetDepartmentUserList(List<LoginUserInfo> originalloginUserlist, List<DepartmentUser> ptuserlist)
+        public List<LoginUserInfo> ResetTeamUserList(List<LoginUserInfo> originalloginUserlist, List<TeamUser> ptuserlist)
         { // mark if user is selected
             List<LoginUserInfo> finalloginUserlist = new List<LoginUserInfo>();
 
@@ -721,7 +721,7 @@ namespace Outreach.Pages.Utilities
 
             if (ptuserlist != null && ptuserlist.Count > 0)
             {
-                foreach (DepartmentUser ptu in ptuserlist)
+                foreach (TeamUser ptu in ptuserlist)
                 {
                     foreach (LoginUserInfo userinfo in finalloginUserlist)
                     {
@@ -748,7 +748,7 @@ namespace Outreach.Pages.Utilities
             }
             return match;
         }
-        public Boolean IsDepartmentMemberChanged(List<DepartmentUser> ptuserlist, List<string> newuidlist)
+        public Boolean IsTeamMemberChanged(List<TeamUser> ptuserlist, List<string> newuidlist)
         { // mark if user is selected
             Boolean match = false;
 
@@ -787,31 +787,31 @@ namespace Outreach.Pages.Utilities
          
 
 
-        public List<Department> GetDepartmentListByNameSearch(string NameSearch = "")
-        { // retrive Team/Department info by part of its name 
+        public List<Team> GetTeamListByNameSearch(string NameSearch = "")
+        { // retrive Team/Team info by part of its name 
 
-            List<Department> listPro = new List<Department>();
+            List<Team> listPro = new List<Team>();
             string sql = "";
 
             if (NameSearch.Trim() != "")
             {
-                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Department with(nolock) where statusid=1 and Name like  '%" + NameSearch + "%' order by Name ";
+                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where statusid=1 and Name like  '%" + NameSearch + "%' order by Name ";
             }
             else
-            { // get all active Team/Department
-                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Department with(nolock) where statusid=1  order by Name ";
+            { // get all active Team/Team
+                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where statusid=1  order by Name ";
             }
 
-            listPro = GetDepartmentListBySQLQuery(sql);
+            listPro = GetTeamListBySQLQuery(sql);
 
             return listPro;
         }
 
 
-        public List<Department> GetDepartmentListBySQLQuery(string sql)
+        public List<Team> GetTeamListBySQLQuery(string sql)
         { // retrive Project data by given sql query
 
-            List<Department> listPro = new List<Department>();
+            List<Team> listPro = new List<Team>();
 
             try
             {
@@ -828,7 +828,7 @@ namespace Outreach.Pages.Utilities
                             while (reader.Read())
                             {
 
-                                Department p = new Department();
+                                Team p = new Team();
 
                                 p.Id = reader.GetInt32(0).ToString();
                                 if (reader["Name"].GetType() != typeof(DBNull))
@@ -877,30 +877,30 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public List<DepartmentUser> GetDepartmentUserList(string DepartmentId = "", string IsLead = "")
+        public List<TeamUser> GetTeamUserList(string TeamId = "", string IsLead = "")
         { // retrive login user by org ID in the future, now just list all
 
-            List<DepartmentUser> userlist = new List<DepartmentUser>();
+            List<TeamUser> userlist = new List<TeamUser>();
 
             string sql = "";
 
-              // get all Department level users  
+              // get all Team level users  
             if (IsLead.Trim().ToLower() == "true")
-                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' and isnull(IsLead,0) = 1 order by Id";
+                sql = "select Id,TeamId,UserId,IsLead from TeamUser with(nolock) where TeamId='" + TeamId + "' and isnull(IsLead,0) = 1 order by Id";
             else if (IsLead.Trim().ToLower() == "false")
-                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' and isnull(IsLead,0) = 0 order by Id";
+                sql = "select Id,TeamId,UserId,IsLead from TeamUser with(nolock) where TeamId='" + TeamId + "' and isnull(IsLead,0) = 0 order by Id";
             else // (IsLead.Trim() == "")
-                sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where DepartmentId='" + DepartmentId + "' order by Id";
+                sql = "select Id,TeamId,UserId,IsLead from TeamUser with(nolock) where TeamId='" + TeamId + "' order by Id";
           
 
-            userlist = GetDepartmentUserListbySQL(sql);
+            userlist = GetTeamUserListbySQL(sql);
 
             return userlist;
         }
 
-        public List<DepartmentUser> GetDepartmentUserListbySQL(string sql)
-        { // retrive DepartmentTask_User data by DepartmentTask_User ID
-            List<DepartmentUser> userlist = new List<DepartmentUser>();
+        public List<TeamUser> GetTeamUserListbySQL(string sql)
+        { // retrive TeamTask_User data by TeamTask_User ID
+            List<TeamUser> userlist = new List<TeamUser>();
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -915,9 +915,9 @@ namespace Outreach.Pages.Utilities
                         {
                             while (reader.Read())
                             {
-                                DepartmentUser userinfo = new DepartmentUser();
+                                TeamUser userinfo = new TeamUser();
                                 userinfo.Id = reader.GetInt32(0).ToString();
-                                userinfo.DepartmentId = reader.GetInt32(1).ToString();
+                                userinfo.TeamId = reader.GetInt32(1).ToString();
                                 userinfo.UserId = reader.GetInt32(2).ToString();
 
                                 if (reader["IsLead"].GetType() != typeof(DBNull))

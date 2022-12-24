@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace Outreach.Pages.Utilities
 {
-    public class Department
+    public class Team
     {
         public string Id;
         public string Name;
@@ -15,9 +15,11 @@ namespace Outreach.Pages.Utilities
         public string CreatedDate;
         public string CreatedUserId;
         public string StatusId;
-        public List<DepartmentUser> DepartmentManagerUserIds;
-        public List<DepartmentUser> DepartmentMemberUserIds;
-        public Department()
+        public string EstimatedBudget;
+        public string ActualSpent;
+        public List<TeamUser> TeamManagerUserIds;
+        public List<TeamUser> TeamMemberUserIds;
+        public Team()
         {
             Id = "";
             Name = "";
@@ -26,11 +28,13 @@ namespace Outreach.Pages.Utilities
             CreatedDate = "";
             CreatedUserId = "";
             StatusId = "";
-            DepartmentManagerUserIds = new List<DepartmentUser>();
-            DepartmentMemberUserIds = new List<DepartmentUser>();
+            EstimatedBudget = "";
+            ActualSpent = "";
+            TeamManagerUserIds = new List<TeamUser>();
+            TeamMemberUserIds = new List<TeamUser>();
 
         }
-        public Department(string Dept_id)
+        public Team(string Dept_id)
         { // retrive Organization data by Organization ID
             try
             {
@@ -41,7 +45,7 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Department with(nolock) where Id=" + Dept_id;
+                    string sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where Id=" + Dept_id;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -80,8 +84,8 @@ namespace Outreach.Pages.Utilities
                                     StatusId = reader["StatusId"].ToString();
                                 }
 
-                                DepartmentManagerUserIds = ut.GetDepartmentUserList(Dept_id,  "true");
-                                DepartmentMemberUserIds = ut.GetDepartmentUserList(Dept_id, "false");
+                                TeamManagerUserIds = ut.GetTeamUserList(Dept_id,  "true");
+                                TeamMemberUserIds = ut.GetTeamUserList(Dept_id, "false");
 
                                 // listOrgs.Add(Org);
                             }
@@ -114,14 +118,14 @@ namespace Outreach.Pages.Utilities
 
                     if (this.Id == "" || this.Id == "0")
                     {
-                        sql = "INSERT INTO Department " +
+                        sql = "INSERT INTO Team " +
                                       "(Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId) VALUES " +
                                       "(@Name,@Description,@OrganizationId,@CreatedDate,@CreatedUserId,@StatusId);" +
                                       "Select newID=MAX(id) FROM Project";
                     }
                     else
                     {
-                        sql = "Update Department " +
+                        sql = "Update Team " +
                                "set Name = @Name," +
                                    "Description = @Description," +
                                    "OrganizationId = @OrganizationId," + 
@@ -168,7 +172,7 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Update Department Set atusId=3 WHERE id=@id";
+                    String sql = "Update Team Set atusId=3 WHERE id=@id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         command.Parameters.AddWithValue("@id", DeptId);

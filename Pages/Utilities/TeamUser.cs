@@ -8,22 +8,22 @@ using System.Threading.Tasks;
 
 namespace Outreach.Pages.Utilities
 {
-    public class DepartmentUser
+    public class TeamUser
     {
         public string Id;
-        public string DepartmentId; 
+        public string TeamId; 
         public string UserId;
         public string IsLead;
 
-        public DepartmentUser()
+        public TeamUser()
         {
             Id = "";
-            DepartmentId = ""; 
+            TeamId = ""; 
             UserId = "";
             IsLead = "";
         }
-        public DepartmentUser(string DepartmentUserId)
-        { // retrive DepartmentTask_User data by DepartmentTask_User ID
+        public TeamUser(string TeamUserId)
+        { // retrive TeamTask_User data by TeamTask_User ID
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -33,8 +33,8 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (DepartmentUserId.Trim() != "")
-                        sql = "select Id,DepartmentId,UserId,IsLead from DepartmentUser with(nolock) where Id='" + DepartmentUserId + "' order by Id";
+                    if (TeamUserId.Trim() != "")
+                        sql = "select Id,TeamId,UserId,IsLead from TeamUser with(nolock) where Id='" + TeamUserId + "' order by Id";
  
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -45,7 +45,7 @@ namespace Outreach.Pages.Utilities
                             {
 
                                 Id = reader.GetInt32(0).ToString();
-                                DepartmentId = reader.GetInt32(1).ToString();
+                                TeamId = reader.GetInt32(1).ToString();
                                 UserId = reader.GetInt32(3).ToString();
 
                                 if (reader["IsLead"].GetType() != typeof(DBNull))
@@ -66,9 +66,9 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public string Save() // int Id, string DepartmentTask_UserName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int DepartmentTask_UserTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Save() // int Id, string TeamTask_UserName, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int TeamTask_UserTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
-            //save the new DepartmentTask_User into the database 
+            //save the new TeamTask_User into the database 
 
             string result = "ok";
             int newProdID = 0;
@@ -80,15 +80,15 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO DepartmentUser " +
-                                  "(DepartmentId,  UserId,IsLead) VALUES " +
-                                  "(@DepartmentId,  @UserId,@IsLead);" +
-                                  "Select newID=MAX(id) FROM DepartmentUser"; 
+                    string sql = "INSERT INTO TeamUser " +
+                                  "(TeamId,  UserId,IsLead) VALUES " +
+                                  "(@TeamId,  @UserId,@IsLead);" +
+                                  "Select newID=MAX(id) FROM TeamUser"; 
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
                         cmd.Parameters.AddWithValue("@UserId", this.UserId); 
-                        cmd.Parameters.AddWithValue("@DepartmentId", this.DepartmentId);
+                        cmd.Parameters.AddWithValue("@TeamId", this.TeamId);
 
                         if (this.IsLead != "")
                         { // task levle user
@@ -112,9 +112,9 @@ namespace Outreach.Pages.Utilities
 
          
 
-        public string Delete(string DepartmentTask_UserId)
+        public string Delete(string TeamTask_UserId)
         { 
-            //we should not call this method especially when status is reference by other Department or task
+            //we should not call this method especially when status is reference by other Team or task
 
             string result = "ok";
 
@@ -127,10 +127,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Delete DepartmentUser WHERE id=@id"; 
+                    String sql = "Delete TeamUser WHERE id=@id"; 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", DepartmentTask_UserId);
+                        command.Parameters.AddWithValue("@id", TeamTask_UserId);
 
                         command.ExecuteNonQuery();
                     }

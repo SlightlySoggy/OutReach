@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Outreach.Pages.Utilities;
 using System.Data;
 
-namespace Outreach.Areas.Consoles.Pages.Content.Tools.Departments.DepartmentLight
+namespace Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamLight
 {
-    public class DepartmentsLightModel : PageModel
+    public class TeamsLightModel : PageModel
     {
 
-        public List<Department> DepartmentList { get; set; }
+        public List<Team> TeamList { get; set; }
         //public PTStatus PTStatus = new PTStatus(tagid);
         public string defaultsearchtext = "";
         public void OnGet()
         {
             GeneralUtilities ut = new GeneralUtilities();
-            Department pro = new Department();
+            Team pro = new Team();
             string txtSearch = ""; 
 
             if (!string.IsNullOrWhiteSpace(Request.Query["Searchkeyword"])) //if (Request.Query["Searchkeyword"] != "" && Request.Query["Searchkeyword"].Count != 0) //if (Request.Query["Searchkeyword"] != null && Request.Query["Searchkeyword"].ToString() != "")
@@ -24,27 +24,27 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Departments.DepartmentLigh
                 defaultsearchtext = txtSearch;
             }
 
-            DepartmentList = ut.GetDepartmentListByNameSearch(txtSearch); //get Departments name contain search word or get all 
+            TeamList = ut.GetTeamListByNameSearch(txtSearch); //get Teams name contain search word or get all 
         }
 
         public void OnPost()
         {
             // https://www.learnrazorpages.com/razor-pages/handler-methods
             string result = "";
-            Department pro = new Department();
+            Team pro = new Team();
 
             try
             {
-                if (!string.IsNullOrWhiteSpace(Request.Form["hid_DeleteDepartmentid"]))
+                if (!string.IsNullOrWhiteSpace(Request.Form["hid_DeleteTeamid"]))
                 {
-                    result = pro.Delete(Request.Form["hid_DeleteDepartmentid"]);
+                    result = pro.Delete(Request.Form["hid_DeleteTeamid"]);
                 }
 
                 if (result == "ok")
                 {
                     GeneralUtilities ut = new GeneralUtilities();
-                    DepartmentList = ut.GetDepartmentListByNameSearch(""); //get all planned Departments
-                    //Response.Redirect("DepartmentsLight");
+                    TeamList = ut.GetTeamListByNameSearch(""); //get all planned Teams
+                    //Response.Redirect("TeamsLight");
                 }
 
             }

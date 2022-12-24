@@ -1,5 +1,5 @@
-﻿@page "/Team_Department/TeamLight"
-@model Outreach.Areas.Consoles.Pages.Content.Tools.Departments.DepartmentLight.DepartmentsLightModel
+﻿@page "/Team/TeamLight"
+@model Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamLight.TeamsLightModel
 @{
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
@@ -13,19 +13,19 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Departments/Teams</h1>
+            <h1>TeamS</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Departments</li>
+              <li class="breadcrumb-item active">Teams</li>
             </ol>
           </div>
         </div>
       </div><!-- /.container-fluid -->
     </section>
 
-        <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Departments/DepartmentEdit/DepartmentsEditLight" >
+        <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Teams/TeamEdit/TeamsEditLight" >
             <i class="fas fa-pencil-alt"></i>
             Create
         </a>
@@ -36,7 +36,7 @@
       <!-- Default box -->
       <div class="card">
         <div class="card-header">
-                    <h3 class="card-title">Department/Team</h3>
+                    <h3 class="card-title">Team/Team</h3>
 
           <div class="card-tools">
             <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -48,7 +48,7 @@
           </div>
         </div>
         <div class="card-body p-0">
-          <table class="table table-striped Departments">
+          <table class="table table-striped Teams">
               <thead>
                   <tr>
                       <th style="width: 1%">
@@ -69,7 +69,7 @@
               </thead>
               <tbody> 
 
-                    @foreach (var pro in Model.DepartmentList)
+                    @foreach (var pro in Model.TeamList)
                     {
 
                             <tr>
@@ -100,11 +100,11 @@
                                         </ul>
                                 </td>
 
-                                <td class="Department-actions text-right">
+                                <td class="Team-actions text-right">
                                 </td> 
 
-                                <td class="Department-actions text-right"> 
-                                    <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Profile/Team_Department/TeamEditLight" asp-route-DepartmentId="@pro.Id" >
+                                <td class="Team-actions text-right"> 
+                                    <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamEditLight" asp-route-TeamId="@pro.Id" >
                                         <i class="fas fa-pencil-alt">
                                         </i>
                                         Edit
@@ -118,7 +118,7 @@
                             </tr>
 
                             
-                            <input type="hidden" id="hid_DeleteDepartmentid" name="hid_DeleteDepartmentid" value="">
+                            <input type="hidden" id="hid_DeleteTeamid" name="hid_DeleteTeamid" value="">
                              
                     }
 
@@ -142,8 +142,8 @@
     function ConfirmDelete(id) {
         if (confirm("Are you sure you want to delete?")) {
             //alert(id);
-            document.getElementById("hid_DeleteDepartmentid").value = id;
-            //alert(document.getElementById("hid_DeleteDepartmentid").value);
+            document.getElementById("hid_DeleteTeamid").value = id;
+            //alert(document.getElementById("hid_DeleteTeamid").value);
             document.Form1.submit();
 
         }
