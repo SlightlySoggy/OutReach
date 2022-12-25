@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using NuGet.Packaging.Signing;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
@@ -29,6 +30,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<JobdetailModel> _logger;
 
+        public string TaskBelongTo ="";
 
         public int org_id = 2;
         public int user_id = 0;
@@ -83,19 +85,30 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             { // create a brand new Task 
 
 
-                if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
+                if (!string.IsNullOrWhiteSpace(Request.Query["OrganizationId"]))
+                { // set OrganizationId with query string
+                    TaskInfo.TaskLinkage.OrganizationId = Request.Query["OrganizationId"];
+                    Organization org = new Organization(Request.Query["OrganizationId"]);
+                    TaskBelongTo = "Organization (" + org.Name + ")";
+                }
+                else if (!string.IsNullOrWhiteSpace(Request.Query["TeamId"]))
+                { // set TeamId with query string
+                    TaskInfo.TaskLinkage.TeamId = Request.Query["TeamId"];
+                    Team t = new Team(Request.Query["ProjectId"]);
+                    TaskBelongTo = "Team (" + t.Name + ")";
+                }
+                else if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
                 { // set project with query string
                     TaskInfo.TaskLinkage.ProjectId = Request.Query["ProjectId"];
-                    Project p = new Project(TaskInfo.TaskLinkage.ProjectId);
-                    TaskInfo.TaskLinkage.ProjectName = p.ProjectName;
+                    Project pr = new Project(Request.Query["ProjectId"]);
+                    TaskBelongTo = "Project (" + pr.ProjectName + ")";
                 }
                 else
-                { // select a project first
-                    Response.Redirect("TasksLight");
+                { // remind client to create task from a parent group: Organization, Team, Project
+                    //Response.Redirect("TasksLight");
                     //Response.Redirect("ProjectsLight"); 
                 }
-
-                TaskInfo.TaskLinkage.OrganizationId = org_id.ToString();
+                 
                 TaskInfo.CreatedUserId = user_id.ToString();
                 return Page();
             }
@@ -107,6 +120,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 Task op = new Task(TaskId);
                 TaskInfo = op;
+                TaskBelongTo = op.TaskLinkage.BelongTo;
 
 
                 TaskManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.TaskManagerUserIds);
@@ -124,8 +138,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         public void OnPost()
         {
             string result = "";
-
-            TaskInfo.TaskLinkage.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
+             
             TaskInfo.Name = Request.Form["inputName"];
             TaskInfo.Description = Request.Form["inputDescription"]; 
             TaskInfo.StartDate = Request.Form["inputStartDate"];
@@ -145,10 +158,16 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             { //special for new Task 
                 TaskInfo.CreatedDate = DateTime.Now.ToString();
                 TaskInfo.CreatedUserId = Request.Form["hid_userId"];
-                //TaskInfo.TaskManagerUserId = Request.Form["hid_userId"]; 
 
+                TaskInfo.TaskLinkage.OrganizationId = Request.Form["hid_CurrentOrganizationId"]; //must has a projectid
+                TaskInfo.TaskLinkage.TeamId = Request.Form["hid_CurrentTeamId"]; //must has a projectid
+                TaskInfo.TaskLinkage.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
 
-                result = TaskInfo.Save(); // Insert a new Task
+                if (TaskInfo.TaskLinkage.OrganizationId != "" || TaskInfo.TaskLinkage.ProjectId != "" || TaskInfo.TaskLinkage.TeamId == "")
+                { // task must and only link to one of the higher group: Organization,Project, Team
+                    result = TaskInfo.Save(); // Insert a new Task
+                }
+
 
 
             }
@@ -203,5 +222,4 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         }
     }
 
-}
-
+} 

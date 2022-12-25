@@ -135,7 +135,7 @@ namespace Outreach.Pages.Utilities
             //save the new Task into the database
 
             string result = "ok";
-            int newProdID = 0;
+            int newTaskID = 0;
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -176,10 +176,16 @@ namespace Outreach.Pages.Utilities
                         cmd.Parameters.AddWithValue("@StartDate", this.StartDate);
                         cmd.Parameters.AddWithValue("@DueDate", this.DueDate);
                         cmd.Parameters.AddWithValue("@CompletionDate", this.CompletionDate); 
-                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId);  
+                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId);
                         //cmd.ExecuteNonQuery();
-                        newProdID = (Int32)cmd.ExecuteScalar();
+                        newTaskID = (Int32)cmd.ExecuteScalar();
                          
+                        if (this.Id == "" && newTaskID != 0)
+                        {
+                            this.TaskLinkage.TaskId = newTaskID.ToString();
+                            this.TaskLinkage.Save();
+                        }
+
                     }
                 }
             }

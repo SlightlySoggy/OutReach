@@ -593,85 +593,7 @@ namespace Outreach.Pages.Utilities
 
             return userlist;
         }
-
-    public List<ProjectTaskUser> GetProjectorTaskUserList(string ProjectId = "", string TaskId = "", string IsLead = "")
-        { // retrive login user by org ID in the future, now just list all
-
-            List<ProjectTaskUser> userlist = new List<ProjectTaskUser>(); 
-            
-            string sql = "";
-
-            if (TaskId.Trim() != "")
-            {// get all task level users
-                if (IsLead.Trim().ToLower() == "true")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 1 order by Id";
-                else if(IsLead.Trim().ToLower() == "false")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 0 order by Id";
-                else // (IsLead.Trim() == "")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' order by Id"; 
-            }
-            else
-            { // get all project level users  
-                if (IsLead.Trim().ToLower() == "true")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 1 order by Id";
-                else if (IsLead.Trim().ToLower() == "false")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 0 order by Id";
-                else // (IsLead.Trim() == "")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' order by Id";
-            }
-
-            userlist = GetProjectorTaskUserListbySQL(sql);
-
-            return userlist;
-        }
-
-        public List<ProjectTaskUser> GetProjectorTaskUserListbySQL(string sql)
-        { // retrive ProjectTask_User data by ProjectTask_User ID
-            List<ProjectTaskUser> userlist = new List<ProjectTaskUser>();
-            try
-            {
-                var builder = WebApplication.CreateBuilder();
-                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open(); 
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read()) 
-                            {
-                                ProjectTaskUser userinfo = new ProjectTaskUser();
-                                userinfo.Id = reader.GetInt32(0).ToString(); 
-                                userinfo.UserId = reader.GetInt32(3).ToString();
-
-                                if (reader["ProjectId"].GetType() != typeof(DBNull))
-                                {// task level user
-                                    userinfo.ProjectId = reader["ProjectId"].ToString();
-                                }
-                                //if (reader["TaskId"].GetType() != typeof(DBNull))
-                                //{// task level user
-                                //    userinfo.TaskId = reader["TaskId"].ToString();
-                                //}
-                                if (reader["IsLead"].GetType() != typeof(DBNull))
-                                {// task level user
-                                    userinfo.IsLead = reader["IsLead"].ToString();
-                                }
-
-                                userlist.Add(userinfo);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message.ToString());
-            }
-
-            return userlist;
-        }
+         
 
 
         public string DeleteAllUserLinkage(string ProjectId = "", string TaskId = "", string IsLead = "")
@@ -1209,7 +1131,7 @@ namespace Outreach.Pages.Utilities
                                     if (reader["OrganizationName"].GetType() != typeof(DBNull))
                                     {
                                         t.TaskLinkage.OrganizationName = reader["OrganizationName"].ToString();
-                                        t.TaskLinkage.LinkTo = "Organization: " + t.TaskLinkage.OrganizationName;
+                                        t.TaskLinkage.BelongTo = "Organization: " + t.TaskLinkage.OrganizationName;
                                     }
                                 }
                                 else if (reader["TeamId"].GetType() != typeof(DBNull))
@@ -1218,7 +1140,7 @@ namespace Outreach.Pages.Utilities
                                     if (reader["TeamName"].GetType() != typeof(DBNull))
                                     {
                                         t.TaskLinkage.TeamName = reader["TeamName"].ToString();
-                                        t.TaskLinkage.LinkTo = "Team: " + t.TaskLinkage.TeamName;
+                                        t.TaskLinkage.BelongTo = "Team: " + t.TaskLinkage.TeamName;
                                     }
                                 }
                                 else if (reader["ProjectId"].GetType() != typeof(DBNull))
@@ -1227,7 +1149,7 @@ namespace Outreach.Pages.Utilities
                                     if (reader["ProjectName"].GetType() != typeof(DBNull))
                                     {
                                         t.TaskLinkage.ProjectName = reader["ProjectName"].ToString();
-                                        t.TaskLinkage.LinkTo = "Project: " + t.TaskLinkage.ProjectName;
+                                        t.TaskLinkage.BelongTo = "Project: " + t.TaskLinkage.ProjectName;
                                     }
                                 }
 

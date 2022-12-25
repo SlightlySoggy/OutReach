@@ -17,7 +17,7 @@ namespace Outreach.Pages.Utilities
         public string TeamName;
         public string ProjectId;
         public string ProjectName;
-        public string LinkTo;
+        public string BelongTo;
 
         public TaskLinkage()
         { 
@@ -28,7 +28,7 @@ namespace Outreach.Pages.Utilities
             TeamName = "";
             ProjectId = "";
             ProjectName = "";
-            LinkTo = "";
+            BelongTo = "";
         }
         public TaskLinkage(string taskId)
         { // retrive TeamTask_User data by TeamTask_User ID
@@ -44,8 +44,8 @@ namespace Outreach.Pages.Utilities
                     if (taskId.Trim() != "")
                         sql = "select tl.TaskId,tl.OrganizationId,tl.TeamId,tl.ProjectId,OrganizationName=o.name, p.ProjectName,TeamName=t.name from TaskLinkage tl with(nolock) " +
                             " left join Organization o on o.Id = tl.OrganizationId " +
-                            " left join Project p on p.Id = tl.ProjectId " +
                             " left join Team t on t.Id = tl.TeamId " +
+                            " left join Project p on p.Id = tl.ProjectId " +
                             " where TaskId='" + taskId + "'  ";
  
                     using (SqlCommand command = new SqlCommand(sql, connection))
@@ -58,31 +58,31 @@ namespace Outreach.Pages.Utilities
 
                                 TaskId = taskId;
 
-                                if (reader["OrganizationId"].GetType() != typeof(DBNull))
+                                if (reader["OrganizationId"].GetType() != typeof(DBNull) && reader["OrganizationId"].ToString() !="0")
                                 {// Organization level task
                                     OrganizationId = reader["OrganizationId"].ToString();
                                     if (reader["OrganizationName"].GetType() != typeof(DBNull))
                                     {
                                         OrganizationName = reader["OrganizationName"].ToString();
-                                        LinkTo = "Organization: " + OrganizationName;
+                                        BelongTo = "Organization (" + OrganizationName + ")";
                                     }
                                 }
-                                else if (reader["TeamId"].GetType() != typeof(DBNull))
+                                else if (reader["TeamId"].GetType() != typeof(DBNull) && reader["TeamId"].ToString() != "0")
                                 {// Team  level task
                                     TeamId = reader["TeamId"].ToString();
                                     if (reader["TeamName"].GetType() != typeof(DBNull))
                                     {
                                         TeamName = reader["TeamName"].ToString();
-                                        LinkTo = "Team: " + TeamName;
+                                        BelongTo = "Team (" + TeamName + ")";
                                     }
                                 }
-                                else if (reader["ProjectId"].GetType() != typeof(DBNull))
+                                else if (reader["ProjectId"].GetType() != typeof(DBNull) && reader["ProjectId"].ToString() != "0")
                                 {// Project level task
                                     ProjectId = reader["ProjectId"].ToString();
                                     if (reader["ProjectName"].GetType() != typeof(DBNull))
                                     {
                                         ProjectName = reader["ProjectName"].ToString();
-                                        LinkTo = "Project: " + ProjectName;
+                                        BelongTo = "Project (" + ProjectName + ")";
                                     }
                                 }
                                  
@@ -131,16 +131,9 @@ namespace Outreach.Pages.Utilities
                     {
                         cmd.Parameters.AddWithValue("@TaskId", this.TaskId);
                         cmd.Parameters.AddWithValue("@OrganizationId", this.OrganizationId);
-                        cmd.Parameters.AddWithValue("@TeamId", this.TaskId);
-                        cmd.Parameters.AddWithValue("@ProjectId", this.TaskId); 
+                        cmd.Parameters.AddWithValue("@TeamId", this.TeamId);
+                        cmd.Parameters.AddWithValue("@ProjectId", this.ProjectId);  
 
-                        if (this.TeamId != "")
-                        { // task levle user
-                            cmd.Parameters.AddWithValue("@TeamId", this.TeamId);
-                        }
-                        else
-                            cmd.Parameters.AddWithValue("@TeamId", DBNull.Value);
-                         
                         //cmd.ExecuteNonQuery();
                         newProdID = (Int32)cmd.ExecuteScalar();
                          

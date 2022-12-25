@@ -62,7 +62,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="inputName">Link To:</label>@Model.TaskInfo.TaskLinkage.LinkTo
+                                <label for="inputName">Belong To: &nbsp;</label>@Model.TaskBelongTo
                             </div>
 
                             <div class="form-group">
@@ -238,6 +238,8 @@
 
             
             <input type="hidden" id="hid_CurrentTaskid" name="hid_CurrentTaskid" value="@Request.Query["TaskId"]">
+            <input type="hidden" id="hid_CurrentProjectId" name="hid_CurrentOrganizationId" value="@Model.TaskInfo.TaskLinkage.OrganizationId">
+            <input type="hidden" id="hid_CurrentProjectId" name="hid_CurrentTeamId" value="@Model.TaskInfo.TaskLinkage.TeamId">
             <input type="hidden" id="hid_CurrentProjectId" name="hid_CurrentProjectId" value="@Model.TaskInfo.TaskLinkage.ProjectId">
 
 
