@@ -2,50 +2,45 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Reflection.PortableExecutable;
+using System.Threading.Tasks;
 
 
 namespace Outreach.Pages.Utilities
 {
     public class Task
     {
-        public string Id;
-        public string ProjectId;
-        public string CreatedOrgId;
+        public string Id; 
         public string Name;
-        public string Description;
-        public string EstimatedBudget;
-        public string ActualSpent;
+        public string Description; 
         public string CreatedDate;
         public string CreatedUserId;
-        public List<ProjectTaskUser> TaskManagerUserIds;
-        public List<ProjectTaskUser> TaskMemberUserIds;
+        public List<UserLinkage> TaskManagerUserIds;
+        public List<UserLinkage> TaskMemberUserIds;
         public string StartDate;
         public string DueDate;
         public string CompletionDate; 
         public string ProjectTaskStatusId;
-        public string ProjectTaskStatus;
+        public string ProjectTaskStatus; 
+        public TaskLinkage TaskLinkage;
 
         public Task()
         {
-            Id = "";
-            ProjectId = "";
-            CreatedOrgId = "";
+            Id = ""; 
             Name = "";
-            Description = "";
-            EstimatedBudget = "";
-            ActualSpent = "";
+            Description = ""; 
             CreatedDate = "";
             CreatedUserId = "";
-            TaskManagerUserIds = new List<ProjectTaskUser>();
-            TaskMemberUserIds  = new List<ProjectTaskUser>();
+            TaskManagerUserIds = new List<UserLinkage>();
+            TaskMemberUserIds  = new List<UserLinkage>();
             StartDate = "";
             DueDate = "";
             CompletionDate = "";
             ProjectTaskStatusId = "1";//default status is planned 1
             ProjectTaskStatus = ""; // the status name
+            TaskLinkage = new TaskLinkage();
 
         }
-        public Task(string TaskId)
+        public Task(string taskId)
         { // retrive Task data by Task ID
             try
             {
@@ -58,30 +53,18 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
 //                    if (TaskId.Trim() != "")
-                    sql = "select P.Id,ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task p with(nolock) left join ProjectTaskStatus S on S.Id=P.ProjectTaskStatusId where P.Id='" + TaskId + "'";
+                    sql = "select t.Id,t.Name,t.Description,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName from Task t with(nolock) left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.Id='" + taskId + "'";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
-                            while (reader.Read())
-
-                            {
-
+                            while (reader.Read()) 
+                            { 
                                 Id = reader.GetInt32(0).ToString();
                                 if (reader["Id"].GetType() != typeof(DBNull))
                                 {
                                     Id = reader["Id"].ToString();
-                                }
-
-                                if (reader["ProjectId"].GetType() != typeof(DBNull))
-                                {
-                                    ProjectId = reader["ProjectId"].ToString();
-                                } 
-
-                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
-                                {
-                                    CreatedOrgId = reader["CreatedOrgId"].ToString();
                                 }
 
                                 if (reader["Name"].GetType() != typeof(DBNull))
@@ -93,17 +76,6 @@ namespace Outreach.Pages.Utilities
                                 {
                                     Description = reader["Description"].ToString();
                                 }
-
-                                if (reader["EstimatedBudget"].GetType() != typeof(DBNull))
-                                {
-                                    EstimatedBudget = reader["EstimatedBudget"].ToString();
-                                }
-
-                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
-                                {
-                                    ActualSpent = reader["ActualSpent"].ToString();
-                                }
-                                ////////////////////////////////////////////
 
                                 if (reader["CreatedDate"].GetType() != typeof(DBNull))
                                 {
@@ -117,17 +89,17 @@ namespace Outreach.Pages.Utilities
 
                                 if (reader["StartDate"].GetType() != typeof(DBNull))
                                 {
-                                    StartDate = reader["StartDate"].ToString();
+                                    StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
                                 }
 
                                 if (reader["DueDate"].GetType() != typeof(DBNull))
                                 {
-                                    DueDate = reader["DueDate"].ToString();
+                                    DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
                                 }
 
                                 if (reader["CompletionDate"].GetType() != typeof(DBNull))
                                 {
-                                    CompletionDate = reader["CompletionDate"].ToString();
+                                    CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
                                 }
 
                                 if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
@@ -138,11 +110,14 @@ namespace Outreach.Pages.Utilities
                                 if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
                                 {
                                     ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
-                                } 
+                                }
 
-                                TaskManagerUserIds = ut.GetProjectorTaskUserList("", TaskId, "true");
-                                TaskMemberUserIds  = ut.GetProjectorTaskUserList("", TaskId, "false");
-                                // listOrgs.Add(Org);
+                                TaskManagerUserIds = ut.GetLinkedUserList("4", taskId, "true");
+                                TaskMemberUserIds  = ut.GetLinkedUserList("4", taskId, "false");
+
+
+                                TaskLinkage = new TaskLinkage(taskId);  
+
                             }
                         }
                     }
@@ -155,12 +130,12 @@ namespace Outreach.Pages.Utilities
 
         }
 
-        public string Save() // int Id, string Name, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Save() // int Id, string Name, string Description, string EstimatedBudget, string ActualSpent, int OrganizationId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
             //save the new Task into the database
 
             string result = "ok";
-            int newProdID = 0;
+            int newTaskID = 0;
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -174,21 +149,17 @@ namespace Outreach.Pages.Utilities
                     if (this.Id == "" || this.Id == "0")
                     {
                         sql = "INSERT INTO Task " +
-                                      "(ProjectId,Name,Description,EstimatedBudget,ActualSpent,CreatedOrgId,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId) VALUES " +
-                                      "(@ProjectId,@Name,@Description,@EstimatedBudget,@ActualSpent,@CreatedOrgId,@CreatedDate,@CreatedUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId);" +
+                                      "(Name,Description,CreatedDate,CreatedUserId,StartDate,DueDate,CompletionDate,ProjectTaskStatusId) VALUES " +
+                                      "(@Name,@Description,@CreatedDate,@CreatedUserId,@StartDate,@DueDate,@CompletionDate,@ProjectTaskStatusId);" +
                                       "Select newID=MAX(id) FROM Task"; 
                     }
                     else
                     {
                         sql = "Update Task " +
-                               "set ProjectId = @ProjectId, Name = @Name," +
-                                   "Description = @Description," +
-                                   "EstimatedBudget = @EstimatedBudget," +
-                                   "ActualSpent = @ActualSpent," +
-                                   "CreatedOrgId = @CreatedOrgId," +
+                               "set Name = @Name," +
+                                   "Description = @Description," + 
                                    "CreatedDate = @CreatedDate," +
-                                   "CreatedUserId = @CreatedUserId," +
-                                   //"TaskManagerUserId = @TaskManagerUserId," +
+                                   "CreatedUserId = @CreatedUserId," + 
                                    "StartDate = @StartDate," +
                                    "DueDate = @DueDate," +
                                    "CompletionDate = @CompletionDate," +
@@ -197,22 +168,24 @@ namespace Outreach.Pages.Utilities
                     }
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@ProjectId", this.ProjectId);
+                    { 
                         cmd.Parameters.AddWithValue("@Name", this.Name);
-                        cmd.Parameters.AddWithValue("@Description", this.Description);
-                        cmd.Parameters.AddWithValue("@EstimatedBudget", this.EstimatedBudget);
-                        cmd.Parameters.AddWithValue("@ActualSpent", this.ActualSpent);
-                        cmd.Parameters.AddWithValue("@CreatedOrgId", this.CreatedOrgId);
+                        cmd.Parameters.AddWithValue("@Description", this.Description); 
                         cmd.Parameters.AddWithValue("@CreatedDate", this.CreatedDate);
                         cmd.Parameters.AddWithValue("@CreatedUserId", this.CreatedUserId); 
                         cmd.Parameters.AddWithValue("@StartDate", this.StartDate);
                         cmd.Parameters.AddWithValue("@DueDate", this.DueDate);
                         cmd.Parameters.AddWithValue("@CompletionDate", this.CompletionDate); 
-                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId);  
+                        cmd.Parameters.AddWithValue("@ProjectTaskStatusId", this.ProjectTaskStatusId);
                         //cmd.ExecuteNonQuery();
-                        newProdID = (Int32)cmd.ExecuteScalar();
+                        newTaskID = (Int32)cmd.ExecuteScalar();
                          
+                        if (this.Id == "" && newTaskID != 0)
+                        {
+                            this.TaskLinkage.TaskId = newTaskID.ToString();
+                            this.TaskLinkage.Save();
+                        }
+
                     }
                 }
             }
@@ -225,7 +198,7 @@ namespace Outreach.Pages.Utilities
 
          
 
-        public string Delete(string TaskId) // int Id, string Name, string Description, string EstimatedBudget, string ActualSpent, int CreatedOrgId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
+        public string Delete(string TaskId) // int Id, string Name, string Description, string EstimatedBudget, string ActualSpent, int OrganizationId, string CreatedDate, int CreatedUserId, int ProjectTaskStatusId, string StartDate, string DueDate,CompletionDate, string Tags)
         {
             //save the new Task into the database
 

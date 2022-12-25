@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using NuGet.Packaging.Signing;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
@@ -89,11 +90,11 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 Project op = new Project(ProjectId);
                 projectInfo = op;
 
-                ProjectManagerUserList = ut.ResetProjectTaskUserList(LoginUserList, op.ProjectManagerUserIds);
+                ProjectManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.ProjectManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
                 LoginUserList = ut.GetLoginUserList("");
-                ProjectMemberList = ut.ResetProjectTaskUserList(LoginUserList, op.ProjectMemberUserIds);
+                ProjectMemberList = ut.ResetUserLinkageList(LoginUserList, op.ProjectMemberUserIds);
 
                  
     }
@@ -143,51 +144,22 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
 
                 GeneralUtilities ut = new GeneralUtilities(); 
                 Project existingProject = new Project(Request.Form["hid_CurrentProjectid"]);
-                List<string> newUserLeadlist = Request.Form["inputProjectLeader"].ToString().Split(',').ToList(); 
-
-                if (!ut.IsProjTaskMemberChanged(existingProject.ProjectManagerUserIds,newUserLeadlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
-
-                    result = ut.DeleteAllProjectTaskUser(existingProject.Id, "", "true");                     
-
-                    foreach (string uid in newUserLeadlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save project level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.ProjectId = existingProject.Id;
-                            ptu.TaskId = "";
-                            ptu.UserId = uid;
-                            ptu.IsLead = "1"; //leader
-                            ptu.Save();
-                        }                     
-                    }
-                }
+                List<string> newUserLeadlist = Request.Form["inputProjectLeader"].ToString().Split(',').ToList();
 
 
-                //2 update the project member selection for existing project  
+                result = ut.ProcessLinkedUsers(existingProject.ProjectManagerUserIds, newUserLeadlist, "3", projectInfo.Id, "1");
+
+
+                //2 update the Project member selection for existing Project  
                 List<string> newMemberlist = Request.Form["inputProjectMember"].ToString().Split(',').ToList();
 
-                if (!ut.IsProjTaskMemberChanged(existingProject.ProjectMemberUserIds, newMemberlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
+                //remove lead user from the member selection  
+                List<string> newMemberlist2 = new List<string>();
+                var differentMembers2 = newMemberlist.Where(p2 => newUserLeadlist.All(p => p2 != p)).ToList<string>();
+                differentMembers2.ForEach(u => newMemberlist2.Add(u));
 
-                    result = ut.DeleteAllProjectTaskUser(existingProject.Id, "", "false");
-
-                    foreach (string uid in newMemberlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save project level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.ProjectId = existingProject.Id;
-                            ptu.TaskId = "";
-                            ptu.UserId = uid;
-                            ptu.IsLead = ""; //regulare member
-                            ptu.Save();
-                        }
-                    }
-                }
+                result = ut.ProcessLinkedUsers(existingProject.ProjectMemberUserIds, newMemberlist2, "3", projectInfo.Id, "0");
+                 
 
 
                 // update existing project

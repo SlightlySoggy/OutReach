@@ -37,7 +37,7 @@ namespace Outreach.Pages.Utilities
                     string sql = "";
                     if (projectTaskUserId.Trim() != "")
                         sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where Id='" + projectTaskUserId + "' order by Id";
- 
+
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -85,7 +85,7 @@ namespace Outreach.Pages.Utilities
                     string sql = "INSERT INTO ProjectTaskUser " +
                                   "(ProjectId, TaskId, UserId,IsLead) VALUES " +
                                   "(@ProjectId, @TaskId, @UserId,@IsLead);" +
-                                  "Select newID=MAX(id) FROM ProjectTaskUser"; 
+                                  "Select newID=MAX(id) FROM ProjectTaskUser";
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
@@ -108,10 +108,10 @@ namespace Outreach.Pages.Utilities
                         }
                         else
                             cmd.Parameters.AddWithValue("@IsLead", DBNull.Value);
-                         
+
                         //cmd.ExecuteNonQuery();
                         newProdID = (Int32)cmd.ExecuteScalar();
-                         
+
                     }
                 }
             }
@@ -122,10 +122,10 @@ namespace Outreach.Pages.Utilities
             return result;
         }
 
-         
 
-        public string Delete(string ProjectTaskUserId)
-        { 
+
+        public string Delete()
+        {
             //we should not call this method especially when status is reference by other project or task
 
             string result = "ok";
@@ -139,10 +139,10 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
 
-                    String sql = "Delete ProjectTaskUser WHERE id=@id"; 
+                    String sql = "Delete ProjectTaskUser WHERE id=@id";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
-                        command.Parameters.AddWithValue("@id", ProjectTaskUserId);
+                        command.Parameters.AddWithValue("@id", this.Id);
 
                         command.ExecuteNonQuery();
                     }

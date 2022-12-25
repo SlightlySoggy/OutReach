@@ -4,11 +4,14 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using NuGet.Packaging.Signing;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
+using Project = Outreach.Pages.Utilities.Project;
 using Task = Outreach.Pages.Utilities.Task;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
@@ -27,6 +30,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<JobdetailModel> _logger;
 
+        public string TaskBelongTo ="";
 
         public int org_id = 2;
         public int user_id = 0;
@@ -59,7 +63,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             user_id = ut.GetLoginUserIntIDbyGUID(user.Id);
             StatusList = ut.GetProjTaskStatusList();
 
-            List<LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
+
+            TaskInfo.CreatedUserId = user_id.ToString();
+
+            List <LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
             LoginUserList = ut.GetLoginUserList("");
 
             //user_id = Convert.ToInt32(user.User_Id);
@@ -72,22 +79,36 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             if (orgInfo == null)
             {
 
-            } 
-
-            if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
-            { // set project with query string
-                TaskInfo.ProjectId = Request.Query["ProjectId"];   
-            } 
-            else
-            { // select a project first
-                Response.Redirect("ProjectsLight");
-                //return Page();
-            }
-
+            }  
 
             if (string.IsNullOrWhiteSpace(Request.Query["TaskId"]))
             { // create a brand new Task 
-                TaskInfo.CreatedOrgId = org_id.ToString();
+
+
+                if (!string.IsNullOrWhiteSpace(Request.Query["OrganizationId"]))
+                { // set OrganizationId with query string
+                    TaskInfo.TaskLinkage.OrganizationId = Request.Query["OrganizationId"];
+                    Organization org = new Organization(Request.Query["OrganizationId"]);
+                    TaskBelongTo = "Organization (" + org.Name + ")";
+                }
+                else if (!string.IsNullOrWhiteSpace(Request.Query["TeamId"]))
+                { // set TeamId with query string
+                    TaskInfo.TaskLinkage.TeamId = Request.Query["TeamId"];
+                    Team t = new Team(Request.Query["ProjectId"]);
+                    TaskBelongTo = "Team (" + t.Name + ")";
+                }
+                else if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
+                { // set project with query string
+                    TaskInfo.TaskLinkage.ProjectId = Request.Query["ProjectId"];
+                    Project pr = new Project(Request.Query["ProjectId"]);
+                    TaskBelongTo = "Project (" + pr.ProjectName + ")";
+                }
+                else
+                { // remind client to create task from a parent group: Organization, Team, Project
+                    //Response.Redirect("TasksLight");
+                    //Response.Redirect("ProjectsLight"); 
+                }
+                 
                 TaskInfo.CreatedUserId = user_id.ToString();
                 return Page();
             }
@@ -99,12 +120,14 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 Task op = new Task(TaskId);
                 TaskInfo = op;
+                TaskBelongTo = op.TaskLinkage.BelongTo;
 
-                TaskManagerUserList = ut.ResetProjectTaskUserList(LoginUserList, op.TaskManagerUserIds);
+
+                TaskManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.TaskManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
                 LoginUserList = ut.GetLoginUserList("");
-                TaskMemberList = ut.ResetProjectTaskUserList(LoginUserList, op.TaskMemberUserIds);
+                TaskMemberList = ut.ResetUserLinkageList(LoginUserList, op.TaskMemberUserIds);
 
                  
             }
@@ -117,10 +140,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             string result = "";
              
             TaskInfo.Name = Request.Form["inputName"];
-            TaskInfo.Description = Request.Form["inputDescription"];
-            TaskInfo.EstimatedBudget = Request.Form["inputEstimatedBudget"];
-            TaskInfo.ActualSpent = Request.Form["inputSpentBudget"];
-            //TaskInfo.DurationByDay = Request.Form["inputEstimatedDuration"];
+            TaskInfo.Description = Request.Form["inputDescription"]; 
             TaskInfo.StartDate = Request.Form["inputStartDate"];
             TaskInfo.DueDate = Request.Form["inputDueDate"];
             TaskInfo.CompletionDate = Request.Form["inputCompletionDate"];
@@ -135,14 +155,19 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
 
             if (string.IsNullOrWhiteSpace(Request.Form["hid_CurrentTaskid"]))
-            { //special for new Task
-                TaskInfo.CreatedOrgId = Request.Form["hid_orgid"];
+            { //special for new Task 
                 TaskInfo.CreatedDate = DateTime.Now.ToString();
                 TaskInfo.CreatedUserId = Request.Form["hid_userId"];
-                //TaskInfo.TaskManagerUserId = Request.Form["hid_userId"]; 
 
+                TaskInfo.TaskLinkage.OrganizationId = Request.Form["hid_CurrentOrganizationId"]; //must has a projectid
+                TaskInfo.TaskLinkage.TeamId = Request.Form["hid_CurrentTeamId"]; //must has a projectid
+                TaskInfo.TaskLinkage.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
 
-                result = TaskInfo.Save(); // Insert a new Task
+                if (TaskInfo.TaskLinkage.OrganizationId != "" || TaskInfo.TaskLinkage.ProjectId != "" || TaskInfo.TaskLinkage.TeamId == "")
+                { // task must and only link to one of the higher group: Organization,Project, Team
+                    result = TaskInfo.Save(); // Insert a new Task
+                }
+
 
 
             }
@@ -154,51 +179,20 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 GeneralUtilities ut = new GeneralUtilities(); 
                 Task existingTask = new Task(Request.Form["hid_CurrentTaskid"]);
-                List<string> newUserLeadlist = Request.Form["inputTaskLeader"].ToString().Split(',').ToList(); 
+                List<string> newUserLeadlist = Request.Form["inputTaskLeader"].ToString().Split(',').ToList();
 
-                if (!ut.IsProjTaskMemberChanged(existingTask.TaskManagerUserIds,newUserLeadlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
-
-                    result = ut.DeleteAllProjectTaskUser(existingTask.Id, "", "true");                     
-
-                    foreach (string uid in newUserLeadlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save Task level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.TaskId = existingTask.Id;
-                            ptu.TaskId = "";
-                            ptu.UserId = uid;
-                            ptu.IsLead = "1"; //leader
-                            ptu.Save();
-                        }                     
-                    }
-                }
+                result = ut.ProcessLinkedUsers(existingTask.TaskManagerUserIds, newUserLeadlist,"4", TaskInfo.Id, "1"); 
 
 
                 //2 update the Task member selection for existing Task  
                 List<string> newMemberlist = Request.Form["inputTaskMember"].ToString().Split(',').ToList();
 
-                if (!ut.IsProjTaskMemberChanged(existingTask.TaskMemberUserIds, newMemberlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
+                //remove lead user from the member selection  
+                List<string> newMemberlist2 = new List<string>();
+                var differentMembers2 = newMemberlist.Where(p2 => newUserLeadlist.All(p => p2 != p)).ToList<string>();
+                differentMembers2.ForEach(u => newMemberlist2.Add(u));
 
-                    result = ut.DeleteAllProjectTaskUser(existingTask.Id, "", "false");
-
-                    foreach (string uid in newMemberlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save Task level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.TaskId = existingTask.Id;
-                            ptu.TaskId = "";
-                            ptu.UserId = uid;
-                            ptu.IsLead = ""; //regulare member
-                            ptu.Save();
-                        }
-                    }
-                }
+                result = ut.ProcessLinkedUsers(existingTask.TaskMemberUserIds, newMemberlist2, "4", TaskInfo.Id, "0");
 
 
                 // update existing Task
@@ -228,5 +222,4 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         }
     }
 
-}
-
+} 
