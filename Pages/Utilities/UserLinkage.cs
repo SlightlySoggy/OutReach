@@ -8,9 +8,13 @@ using System.Threading.Tasks;
 
 namespace Outreach.Pages.Utilities
 {
-    public class TaskLinkage
-    { 
-        public string TaskId;
+    public class UserLinkage
+    {
+        public string Id;
+        public string UserId;
+        public string GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
+        public string LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
+        public string IsLead;        //"true" lead, "false" regular member
         public string OrganizationId;
         public string OrganizationName;
         public string TeamId;
@@ -19,9 +23,13 @@ namespace Outreach.Pages.Utilities
         public string ProjectName;
         public string LinkTo;
 
-        public TaskLinkage()
+        public UserLinkage()
         { 
-            TaskId = "";
+            Id = "";
+            UserId = "";
+            GroupTypeId = "";
+            LinkedGroupId = "";
+            IsLead = ""; 
             OrganizationId = "";
             OrganizationName = "";
             TeamId = "";
@@ -30,7 +38,7 @@ namespace Outreach.Pages.Utilities
             ProjectName = "";
             LinkTo = "";
         }
-        public TaskLinkage(string taskId)
+        public UserLinkage(string id)
         { // retrive TeamTask_User data by TeamTask_User ID
             try
             {
@@ -41,22 +49,24 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (taskId.Trim() != "")
-                        sql = "select tl.TaskId,tl.OrganizationId,tl.TeamId,tl.ProjectId,OrganizationName=o.name, p.ProjectName,TeamName=t.name from TaskLinkage tl with(nolock) " +
-                            " left join Organization o on o.Id = tl.OrganizationId " +
-                            " left join Project p on p.Id = tl.ProjectId " +
-                            " left join Team t on t.Id = tl.TeamId " +
-                            " where TaskId='" + taskId + "'  ";
- 
+                    if (Id.Trim() != "")
+
+                        sql = "select ul.Id,ul.UserId,ul.GroupTypeId,ul.LinkedGroupId,ul.IsLead,OrganizationId=o.Id,OrganizationName=o.name,ProjectId=p.Id,p.ProjectName,TeamId=t.ID,TeamName=t.name ,TaskId=tk.ID,TaskName=tk.name " +
+                            " from UserLinkage ul with(nolock) " +
+                            " left join Organization o on o.Id = ul.LinkedGroupId and ul.GroupTypeId =1 " +
+                            " left join Project p on p.Id = ul.LinkedGroupId  and ul.GroupTypeId =2 " +
+                            " left join Team t on t.Id = ul.LinkedGroupId and ul.GroupTypeId =3 " +
+                            " left join Task tk on tk.Id = ul.LinkedGroupId and ul.GroupTypeId =4 " +
+                            " where Id='" + id + "'  ";
+
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
                         {
                             while (reader.Read())
 
-                            {
-
-                                TaskId = taskId;
+                            { 
+                                Id = Id;
 
                                 if (reader["OrganizationId"].GetType() != typeof(DBNull))
                                 {// Organization level task
@@ -99,7 +109,7 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public string UpdateTaskLinkage()
+        public string UpdateUserLinkage()
         {
             string result = "ok";
 
@@ -110,7 +120,7 @@ namespace Outreach.Pages.Utilities
 
         public string Save()
         {
-            //save the new TaskLinkage into the database, One task can only link to one thing: Org, team or project
+            //save the new UserLinkage into the database, One task can only link to one thing: Org, team or project
 
             string result = "ok";
             int newProdID = 0;
@@ -122,25 +132,18 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO TaskLinkage " +
-                                  "(TaskId,OrganizationId,TeamId,ProjectId) VALUES " +
-                                  "(@TaskId,@OrganizationId,@TeamId,@ProjectId);" +
-                                  "Select newID=TaskId FROM TaskLinkage where TaskId='" + this.TaskId + "'"; 
+                    string sql = "INSERT INTO UserLinkage " +
+                                  "(UserId,GroupTypeId,LinkedGroupId,IsLead) VALUES " +
+                                  "(@UserId,@GroupTypeId,@LinkedGroupId,@IsLead);" +
+                                  "Select newID=MAX(id)  FROM UserLinkage  "; 
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
-                    {
-                        cmd.Parameters.AddWithValue("@TaskId", this.TaskId);
-                        cmd.Parameters.AddWithValue("@OrganizationId", this.OrganizationId);
-                        cmd.Parameters.AddWithValue("@TeamId", this.TaskId);
-                        cmd.Parameters.AddWithValue("@ProjectId", this.TaskId); 
-
-                        if (this.TeamId != "")
-                        { // task levle user
-                            cmd.Parameters.AddWithValue("@TeamId", this.TeamId);
-                        }
-                        else
-                            cmd.Parameters.AddWithValue("@TeamId", DBNull.Value);
-                         
+                    { 
+                        cmd.Parameters.AddWithValue("@UserId", this.UserId);
+                        cmd.Parameters.AddWithValue("@GroupTypeId", this.GroupTypeId);
+                        cmd.Parameters.AddWithValue("@LinkedGroupId", this.LinkedGroupId);
+                        cmd.Parameters.AddWithValue("@IsLead", this.IsLead); 
+                          
                         //cmd.ExecuteNonQuery();
                         newProdID = (Int32)cmd.ExecuteScalar();
                          
@@ -154,40 +157,43 @@ namespace Outreach.Pages.Utilities
             return result;
         }
 
-         
 
-        //public string Delete(string TeamTask_OrganizationId)
-        //{ 
-        //    //we should not call this method especially when status is reference by other Team or task
 
-        //    string result = "ok";
 
-        //    try
-        //    {
-        //        var builder = WebApplication.CreateBuilder();
-        //        var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+        public string Delete()
+        {
+            //we should not call this method especially when status is reference by other project or task
 
-        //        using (SqlConnection connection = new SqlConnection(connectionString))
-        //        {
-        //            connection.Open();
+            string result = "ok";
 
-        //            String sql = "Delete TaskLinkage WHERE id=@id"; 
-        //            using (SqlCommand command = new SqlCommand(sql, connection))
-        //            {
-        //                command.Parameters.AddWithValue("@id", TeamTask_OrganizationId);
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
 
-        //                command.ExecuteNonQuery();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result = "failed" + ex.Message;
-        //    }
-        //    return result;
-        //}
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    String sql = "Delete UserLinkage WHERE id=@id";
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        command.Parameters.AddWithValue("@id", this.Id);
+
+                        command.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result = "failed" + ex.Message;
+            }
+            return result;
+        }
     }
 
 
-
 }
+
+
+ 

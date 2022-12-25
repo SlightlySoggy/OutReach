@@ -85,9 +85,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 if (!string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
                 { // set project with query string
-                    TaskInfo.ProjectId = Request.Query["ProjectId"];
-                    Project p = new Project(TaskInfo.ProjectId);
-                    TaskInfo.ProjectName = p.ProjectName;
+                    TaskInfo.TaskLinkage.ProjectId = Request.Query["ProjectId"];
+                    Project p = new Project(TaskInfo.TaskLinkage.ProjectId);
+                    TaskInfo.TaskLinkage.ProjectName = p.ProjectName;
                 }
                 else
                 { // select a project first
@@ -95,7 +95,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
                     //Response.Redirect("ProjectsLight"); 
                 }
 
-                TaskInfo.CreatedOrgId = org_id.ToString();
+                TaskInfo.TaskLinkage.OrganizationId = org_id.ToString();
                 TaskInfo.CreatedUserId = user_id.ToString();
                 return Page();
             }
@@ -109,11 +109,11 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
                 TaskInfo = op;
 
 
-                TaskManagerUserList = ut.ResetProjectTaskUserList(LoginUserList, op.TaskManagerUserIds);
+                TaskManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.TaskManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
                 LoginUserList = ut.GetLoginUserList("");
-                TaskMemberList = ut.ResetProjectTaskUserList(LoginUserList, op.TaskMemberUserIds);
+                TaskMemberList = ut.ResetUserLinkageList(LoginUserList, op.TaskMemberUserIds);
 
                  
             }
@@ -125,12 +125,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
         {
             string result = "";
 
-            TaskInfo.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
+            TaskInfo.TaskLinkage.ProjectId = Request.Form["hid_CurrentProjectId"]; //must has a projectid
             TaskInfo.Name = Request.Form["inputName"];
-            TaskInfo.Description = Request.Form["inputDescription"];
-            TaskInfo.EstimatedBudget = Request.Form["inputEstimatedBudget"];
-            TaskInfo.ActualSpent = Request.Form["inputSpentBudget"];
-            //TaskInfo.DurationByDay = Request.Form["inputEstimatedDuration"];
+            TaskInfo.Description = Request.Form["inputDescription"]; 
             TaskInfo.StartDate = Request.Form["inputStartDate"];
             TaskInfo.DueDate = Request.Form["inputDueDate"];
             TaskInfo.CompletionDate = Request.Form["inputCompletionDate"];
@@ -145,8 +142,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
 
             if (string.IsNullOrWhiteSpace(Request.Form["hid_CurrentTaskid"]))
-            { //special for new Task
-                TaskInfo.CreatedOrgId = Request.Form["hid_orgid"];
+            { //special for new Task 
                 TaskInfo.CreatedDate = DateTime.Now.ToString();
                 TaskInfo.CreatedUserId = Request.Form["hid_userId"];
                 //TaskInfo.TaskManagerUserId = Request.Form["hid_userId"]; 
@@ -164,51 +160,20 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
                 GeneralUtilities ut = new GeneralUtilities(); 
                 Task existingTask = new Task(Request.Form["hid_CurrentTaskid"]);
-                List<string> newUserLeadlist = Request.Form["inputTaskLeader"].ToString().Split(',').ToList(); 
+                List<string> newUserLeadlist = Request.Form["inputTaskLeader"].ToString().Split(',').ToList();
 
-                if (!ut.IsProjTaskMemberChanged(existingTask.TaskManagerUserIds,newUserLeadlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
-
-                    result = ut.DeleteAllProjectTaskUser("", existingTask.Id, "true");                     
-
-                    foreach (string uid in newUserLeadlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save Task level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.ProjectId = "";
-                            ptu.TaskId = existingTask.Id;
-                            ptu.UserId = uid;
-                            ptu.IsLead = "1"; //leader
-                            ptu.Save();
-                        }                     
-                    }
-                }
+                result = ut.ProcessLinkedUsers(existingTask.TaskManagerUserIds, newUserLeadlist,"4", TaskInfo.Id, "1"); 
 
 
                 //2 update the Task member selection for existing Task  
                 List<string> newMemberlist = Request.Form["inputTaskMember"].ToString().Split(',').ToList();
 
-                if (!ut.IsProjTaskMemberChanged(existingTask.TaskMemberUserIds, newMemberlist))
-                {
-                    // if member changed, then delete all old selection and add new selected users again
+                //remove lead user from the member selection  
+                List<string> newMemberlist2 = new List<string>();
+                var differentMembers2 = newMemberlist.Where(p2 => newUserLeadlist.All(p => p2 != p)).ToList<string>();
+                differentMembers2.ForEach(u => newMemberlist2.Add(u));
 
-                    result = ut.DeleteAllProjectTaskUser("", existingTask.Id,"false");
-
-                    foreach (string uid in newMemberlist)
-                    {
-                        if (ut.IsNumeric(uid))
-                        { // save Task level lead user
-                            ProjectTaskUser ptu = new ProjectTaskUser();
-                            ptu.ProjectId = "";
-                            ptu.TaskId = existingTask.Id;
-                            ptu.UserId = uid;
-                            ptu.IsLead = ""; //regulare member
-                            ptu.Save();
-                        }
-                    }
-                }
+                result = ut.ProcessLinkedUsers(existingTask.TaskMemberUserIds, newMemberlist2, "4", TaskInfo.Id, "0");
 
 
                 // update existing Task

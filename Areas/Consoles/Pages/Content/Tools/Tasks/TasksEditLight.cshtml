@@ -49,9 +49,9 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
+@*                            <div class="form-group">
                                 <label for="inputName">Project Name: @Model.TaskInfo.ProjectName</label>
-                            </div>
+                            </div>*@
                             <div class="form-group">
                                 <label for="inputName">Task Name</label>
                                 <input type="text" id="inputName" class="form-control" placeholder="Enter the Task name..." name="inputName" value="@Model.TaskInfo.Name">
@@ -61,6 +61,9 @@
                                 <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Enter the description...">@Model.TaskInfo.Description</textarea>
                             </div>
 
+                            <div class="form-group">
+                                <label for="inputName">Link To:</label>@Model.TaskInfo.TaskLinkage.LinkTo
+                            </div>
 
                             <div class="form-group">
                                 <label for="inputTaskStatus">Status</label>
@@ -129,30 +132,8 @@
                                     <input type="text" id="inputCompletionDate" name="inputCompletionDate" value="@Model.TaskInfo.CompletionDate">
                                 </div>
                             </div>
+                             
 
-@*                            <div class="form-group">
-                                <label for="inputClientCompany">Client Company</label>
-                                <input type="text" id="inputClientCompany" class="form-control">
-                            </div>*@
-
-                            <div class="form-group">
-                                <label for="inputTaskLeader">Task Leader</label>
-                                <div class="form-group">
-                                    <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputTaskLeader" name="inputTaskLeader" >
-                                        @foreach (var st in Model.TaskManagerUserList)
-                                        {
-                                            if (@st.IsSelected == "selected")
-                                            {
-                                                <option value="@st.User_Id" selected>@st.firstName  @st.lastName</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@st.User_Id">@st.firstName  @st.lastName</option>
-                                            }
-                                        }
-                                    </select>
-                                </div>
-                            </div>
 
                         </div>
                         <!-- /.card-body -->
@@ -174,14 +155,14 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <div class="form-group">
+@*                            <div class="form-group">
                                 <label for="inputEstimatedBudget">Estimated budget</label>
                                 <input type="number" id="inputEstimatedBudget" class="form-control" placeholder="Enter the budget $..." name="inputEstimatedBudget" value="@Model.TaskInfo.EstimatedBudget">
                             </div>
                             <div class="form-group">
                                 <label for="inputSpentBudget">Total amount spent</label>
                                 <input type="number" id="inputSpentBudget" class="form-control" name="inputSpentBudget" value="@Model.TaskInfo.ActualSpent">
-                            </div>
+                            </div>*@
 @*                            <div class="form-group">
                                 <label for="inputEstimatedDuration">Estimated Duration by day</label>
                                 <input type="number" id="inputEstimatedDuration" class="form-control" name="inputEstimatedDuration" value="@Model.TaskInfo.DurationByDay">
@@ -193,7 +174,7 @@
 
                     <div class="card card-secondary">
                         <div class="card-header">
-                            <h3 class="card-title">Members</h3>
+                            <h3 class="card-title">Task Members</h3>
 
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -202,8 +183,28 @@
                             </div>
                         </div>
                         <div class="card-body">
+
                             <div class="form-group">
-                                <label>Multiple</label>
+                                <label for="inputTaskLeader">Leader (Multiple Selection)</label>
+                                <div class="form-group">
+                                    <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputTaskLeader" name="inputTaskLeader">
+                                        @foreach (var st in Model.TaskManagerUserList)
+                                        {
+                                            if (@st.IsSelected == "selected")
+                                            {
+                                                <option value="@st.User_Id" selected>@st.firstName  @st.lastName</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@st.User_Id">@st.firstName  @st.lastName</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Other Members (Multiple Selection)</label>
                                 <select class="select2bs4" multiple="multiple" data-placeholder="" style="width: 100%;" id="inputTaskMember" name="inputTaskMember">
                                     @foreach (var st in Model.TaskMemberList)
                                         {
@@ -230,14 +231,14 @@
                     <input type="submit" value="Save" class="btn btn-success float-right">
 
                     <input type="hidden" class="form-control" placeholder="" name="hid_oppId" value="@Model.TaskInfo.Id">
-                    <input type="hidden" class="form-control" placeholder="" name="hid_orgid" value="@Model.TaskInfo.CreatedOrgId">
+                    <input type="hidden" class="form-control" placeholder="" name="hid_orgid" value="@Model.TaskInfo.TaskLinkage.OrganizationId">
                     <input type="hidden" class="form-control" placeholder="" name="hid_userId" value="@Model.TaskInfo.CreatedUserId">
                 </div>
             </div>
 
             
             <input type="hidden" id="hid_CurrentTaskid" name="hid_CurrentTaskid" value="@Request.Query["TaskId"]">
-            <input type="hidden" id="hid_CurrentProjectId" name="hid_CurrentProjectId" value="@Model.TaskInfo.ProjectId">
+            <input type="hidden" id="hid_CurrentProjectId" name="hid_CurrentProjectId" value="@Model.TaskInfo.TaskLinkage.ProjectId">
 
 
             @*<div class="container-fluid">

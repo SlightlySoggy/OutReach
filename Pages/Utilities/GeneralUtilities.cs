@@ -526,8 +526,75 @@ namespace Outreach.Pages.Utilities
         }
 
 
+        public List<UserLinkage> GetLinkedUserList(string groupTypeId, string linkedGroupId, string isLead = "")
+        { // return all userIds who link to specified linkedGroupId 
+          // GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
+          // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
 
-        public List<ProjectTaskUser> GetProjectorTaskUserList(string ProjectId = "", string TaskId = "", string IsLead = "")
+
+            List<UserLinkage> userlist = new List<UserLinkage>();
+
+            string sql = "";
+
+            if (isLead.Trim().ToLower() == "true" || isLead.Trim().ToLower() == "1")
+                sql = "select Id,UserId,IsLead from UserLinkage with(nolock) where GroupTypeId='" + groupTypeId + "' and LinkedGroupId = '" + linkedGroupId + "' and  isnull(IsLead,0) = 1 order by Id";
+            else if (isLead.Trim().ToLower() == "false" || isLead.Trim().ToLower() == "0")
+                sql = "select Id,UserId,IsLead from UserLinkage with(nolock) where GroupTypeId='" + groupTypeId + "' and LinkedGroupId = '" + linkedGroupId + "' and  isnull(IsLead,0) = 0 order by Id";
+
+ 
+            userlist = GetLinkedUserListbySQL(sql);
+
+            return userlist;
+        }
+
+        public List<UserLinkage> GetLinkedUserListbySQL(string sql)
+        { // retrive ProjectTask_User data by ProjectTask_User ID
+            List<UserLinkage> userlist = new List<UserLinkage>();
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        { 
+                            while (reader.Read())
+                            {
+                                UserLinkage ul = new UserLinkage();
+                                if (reader["Id"].GetType() != typeof(DBNull))
+                                {
+                                    ul.Id = reader["Id"].ToString();
+                                }
+                                if (reader["UserId"].GetType() != typeof(DBNull))
+                                {
+                                    ul.UserId = reader["UserId"].ToString();
+                                }
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
+                                {
+                                    ul.IsLead = reader["IsLead"].ToString(); 
+                                }
+
+                                // other infor do not needed at this point 
+
+                                userlist.Add(ul);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return userlist;
+        }
+
+    public List<ProjectTaskUser> GetProjectorTaskUserList(string ProjectId = "", string TaskId = "", string IsLead = "")
         { // retrive login user by org ID in the future, now just list all
 
             List<ProjectTaskUser> userlist = new List<ProjectTaskUser>(); 
@@ -537,20 +604,20 @@ namespace Outreach.Pages.Utilities
             if (TaskId.Trim() != "")
             {// get all task level users
                 if (IsLead.Trim().ToLower() == "true")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 1 order by Id";
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 1 order by Id";
                 else if(IsLead.Trim().ToLower() == "false")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 0 order by Id";
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' and isnull(IsLead,0) = 0 order by Id";
                 else // (IsLead.Trim() == "")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where TaskId='" + TaskId + "' order by Id"; 
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where TaskId='" + TaskId + "' order by Id"; 
             }
             else
             { // get all project level users  
                 if (IsLead.Trim().ToLower() == "true")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 1 order by Id";
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 1 order by Id";
                 else if (IsLead.Trim().ToLower() == "false")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 0 order by Id";
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 0 order by Id";
                 else // (IsLead.Trim() == "")
-                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from ProjectTaskUser with(nolock) where ProjectId='" + ProjectId + "' order by Id";
+                    sql = "select Id,ProjectId,TaskId,UserId,IsLead from UserLinkage with(nolock) where ProjectId='" + ProjectId + "' order by Id";
             }
 
             userlist = GetProjectorTaskUserListbySQL(sql);
@@ -583,10 +650,10 @@ namespace Outreach.Pages.Utilities
                                 {// task level user
                                     userinfo.ProjectId = reader["ProjectId"].ToString();
                                 }
-                                if (reader["TaskId"].GetType() != typeof(DBNull))
-                                {// task level user
-                                    userinfo.TaskId = reader["TaskId"].ToString();
-                                }
+                                //if (reader["TaskId"].GetType() != typeof(DBNull))
+                                //{// task level user
+                                //    userinfo.TaskId = reader["TaskId"].ToString();
+                                //}
                                 if (reader["IsLead"].GetType() != typeof(DBNull))
                                 {// task level user
                                     userinfo.IsLead = reader["IsLead"].ToString();
@@ -607,30 +674,30 @@ namespace Outreach.Pages.Utilities
         }
 
 
-        public string DeleteAllProjectTaskUser(string ProjectId = "", string TaskId = "", string IsLead = "")
+        public string DeleteAllUserLinkage(string ProjectId = "", string TaskId = "", string IsLead = "")
         {  
             string result = "";
-            List<ProjectTaskUser> userlist = new List<ProjectTaskUser>();
+            List<UserLinkage> userlist = new List<UserLinkage>();
 
             string sql = "";
 
             if (TaskId.Trim() != "")
             {// get all task level users
                 if (IsLead.Trim().ToLower() == "true")
-                    sql = "Delete ProjectTaskUser where TaskId='" + TaskId + "' and isnull(IsLead,0) = 1 ";
+                    sql = "Delete UserLinkage where TaskId='" + TaskId + "' and isnull(IsLead,0) = 1 ";
                 else if (IsLead.Trim().ToLower() == "false")
-                    sql = "Delete ProjectTaskUser where TaskId='" + TaskId + "' and isnull(IsLead,0) = 0 ";
+                    sql = "Delete UserLinkage where TaskId='" + TaskId + "' and isnull(IsLead,0) = 0 ";
                 else // (IsLead.Trim() == "")
-                    sql = "Delete ProjectTaskUser where TaskId='" + TaskId + "' ";
+                    sql = "Delete UserLinkage where TaskId='" + TaskId + "' ";
             }
             else
             { // get all project level users  
                 if (IsLead.Trim().ToLower() == "true")
-                    sql = "Delete ProjectTaskUser where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 1 ";
+                    sql = "Delete UserLinkage where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 1 ";
                 else if (IsLead.Trim().ToLower() == "false")
-                    sql = "Delete ProjectTaskUser where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 0 ";
+                    sql = "Delete UserLinkage where ProjectId='" + ProjectId + "' and isnull(IsLead,0) = 0 ";
                 else // (IsLead.Trim() == "")
-                    sql = "Delete ProjectTaskUser where ProjectId='" + ProjectId + "' "; 
+                    sql = "Delete UserLinkage where ProjectId='" + ProjectId + "' "; 
             }
 
             result = DeleteTableDataBySQL(sql);
@@ -667,7 +734,7 @@ namespace Outreach.Pages.Utilities
         { //  
 
             string result = "";
-            List<ProjectTaskUser> userlist = new List<ProjectTaskUser>();
+            List<UserLinkage> userlist = new List<UserLinkage>();
 
             string sql = " ";
              
@@ -684,7 +751,7 @@ namespace Outreach.Pages.Utilities
             return result;
         } 
 
-        public List<LoginUserInfo> ResetProjectTaskUserList(List<LoginUserInfo> originalloginUserlist, List<ProjectTaskUser> ptuserlist)
+        public List<LoginUserInfo> ResetUserLinkageList(List<LoginUserInfo> originalloginUserlist, List<UserLinkage> UserList)
         { // mark if user is selected
             List<LoginUserInfo> finalloginUserlist = new List<LoginUserInfo>();
 
@@ -693,13 +760,13 @@ namespace Outreach.Pages.Utilities
             //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist
 
 
-            if (ptuserlist != null && ptuserlist.Count > 0)
+            if (UserList != null && UserList.Count > 0)
             {
-                foreach (ProjectTaskUser ptu in ptuserlist)
+                foreach (UserLinkage uid in UserList)
                 {
                     foreach (LoginUserInfo userinfo in finalloginUserlist)
                     {
-                        if (ptu.UserId == userinfo.User_Id)
+                        if (uid.UserId == userinfo.User_Id)
                         {
                             userinfo.IsSelected = "selected";
                         }
@@ -735,18 +802,74 @@ namespace Outreach.Pages.Utilities
             return finalloginUserlist;
         }
 
-        public Boolean IsProjTaskMemberChanged(List<ProjectTaskUser> ptuserlist, List<string> newuidlist)
-        { // mark if user is selected
-            Boolean match = false;
+        public Boolean IsProjTaskMemberChanged(List<UserLinkage> ptuserlist, List<string> newuidlist)
+        { // check if member selection has changed
+            Boolean ifchanged = false;
 
             //if (ptuserlist != null && newuidlist != null)
             if (ptuserlist.Count > 0 && newuidlist.Count > 0 && ptuserlist.Count != newuidlist.Count)
-            {
+            {//if two list has different count, they are definitely changed.
                 List<string> ori_uidlist = new List<string>();
                 ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
-                match = CompareTwoList(ori_uidlist, newuidlist);
+                ifchanged = CompareTwoList(ori_uidlist, newuidlist);
             }
-            return match;
+            return ifchanged;
+        }
+
+        public string ProcessLinkedUsers(List<UserLinkage> ptuserlist, List<string> newuidlist, string groupTypeId, string linkedGroupId, string isLead = "")
+        { // Delete the members from UserLinkage if they are not in the newuidlist, add new member if 
+          // GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
+          // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
+
+        string result = "ok";
+            List<string> memberTobeDeletedIds = new List<string>(); //return the Id list of member need to be deleted.
+            List<string> memberTobeAddedIds = new List<string>(); //return the Id list of member need to be deleted.
+             
+            if (ptuserlist.Count > 0 && newuidlist.Count == 0)
+            {//delete all, no new member
+                ptuserlist.ForEach(u => memberTobeDeletedIds.Add(u.UserId));
+            }
+            else if (ptuserlist.Count == 0 && newuidlist.Count > 0)
+            {//all new members
+                memberTobeAddedIds = newuidlist;
+            }
+            else  
+            { 
+                var differentMembers1 = ptuserlist.Where(p => newuidlist.All(p2 => p2 != p.UserId)).ToList<UserLinkage>();
+                differentMembers1.ForEach(u => memberTobeDeletedIds.Add(u.Id));
+
+                var differentMembers2 = newuidlist.Where(p2 => ptuserlist.All(p => p2 != p.UserId)).ToList<string>();
+                differentMembers2.ForEach(u => memberTobeAddedIds.Add(u)); 
+            } 
+
+            if (memberTobeDeletedIds.Count > 0)
+            {  
+                foreach (string id in memberTobeDeletedIds)
+                {
+                    if (IsNumeric(id))
+                    { // save Task level lead user
+                        UserLinkage ptu = new UserLinkage();
+                        ptu.Id = id;
+                        result = ptu.Delete(); 
+                    }
+                }
+            }
+
+
+            foreach (string uid in memberTobeAddedIds)
+            { //add new members
+                if (IsNumeric(uid))
+                { // save Task level lead user
+                    UserLinkage ptu = new UserLinkage(); 
+                    ptu.UserId = uid;
+                    ptu.GroupTypeId = groupTypeId;
+                    ptu.LinkedGroupId = linkedGroupId;
+                    ptu.IsLead = isLead; //regulare member
+                    result = ptu.Save();
+                }
+            }
+
+            return result;
         }
         public Boolean IsTeamMemberChanged(List<TeamUser> ptuserlist, List<string> newuidlist)
         { // mark if user is selected
@@ -945,40 +1068,53 @@ namespace Outreach.Pages.Utilities
         public List<Task> GetTaskListByNameSearch(string NameSearch = "")
         { // retrive Task data by partial of name 
 
-            List<Task> listPro = new List<Task>();
-            string sql = "";
-
+            List<Task> listTask= new List<Task>();
+            string sql = " select t.Id,t.Name,t.Description,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,tl.OrganizationId,tl.TeamId,tl.ProjectId,OrganizationName=o.name, p.ProjectName,TeamName=tm.name " +
+                         " from Task t with(nolock) " +
+                         " left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId  " +
+                         " left join TaskLinkage tl on tl.taskId=t.Id " +
+                         " left join Organization o on o.Id = tl.OrganizationId " +
+                         " left join Project p on p.Id = tl.ProjectId " +
+                         " left join Team tm on tm.Id = tl.TeamId ";
             if (NameSearch.Trim() != "")
             {
-                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.Name like  '%" + NameSearch + "%' order by t.Name ";
+                sql = sql  +  " where t.Name like  '%" + NameSearch + "%'  ";
             }
             else
-            { // get all Task
-                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId order by t.Name ";
+            { // get all Task;  // dangours to return all task
             }
 
-            listPro = GetTaskListBySQLQuery(sql);
+            sql = sql + "  order by t.Name ";
 
-            return listPro;
+            listTask = GetTaskListBySQLQuery(sql);
+
+            return listTask;
         }
 
         public List<Task> GetTaskListByStatusId(string statusId = "")
         { // retrive Task data by status ID
-            List<Task> listPro = new List<Task>();
-            string sql = "";
+            List<Task> listTask = new List<Task>();
+            string sql = " select t.Id,t.Name,t.Description,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,tl.taskId,tl.OrganizationId,tl.TeamId,tl.ProjectId,OrganizationName=o.name, p.ProjectName,TeamName=tm.name " +
+                         " from Task t with(nolock) " +
+                         " left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId  " +
+                         " left join TaskLinkage tl on tl.taskId=t.Id " +
+                         " left join Organization o on o.Id = tl.OrganizationId " +
+                         " left join Project p on p.Id = tl.ProjectId " +
+                         " left join Team tm on tm.Id = tl.TeamId ";
 
             if (statusId.Trim() != "")
             {
-                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId where t.ProjectTaskStatusId = " + statusId + " order by t.Name";
+                sql = sql + " where t.ProjectTaskStatusId = '" + statusId + "'  ";
             }
             else
-            { // get all Task
-                sql = "select t.Id,t.ProjectId,t.Name,t.Description,t.EstimatedBudget,t.ActualSpent,t.CreatedOrgId,t.CreatedDate,t.CreatedUserId,t.StartDate,t.DueDate,t.CompletionDate,t.ProjectTaskStatusId,ProjectTaskStatus=S.StatusName,p.ProjectName from Task t with(nolock) left join Project p on P.Id=t.ProjectId left join ProjectTaskStatus S on S.Id=t.ProjectTaskStatusId   order by t.Name ";
+            { // get all Task;  // dangours to return all task
             }
 
-            listPro = GetTaskListBySQLQuery(sql);
+            sql = sql + "  order by t.Name ";
 
-            return listPro;
+            listTask = GetTaskListBySQLQuery(sql);
+
+            return listTask; 
         }
 
         public List<Task> GetTaskListBySQLQuery(string sql)
@@ -1002,91 +1138,100 @@ namespace Outreach.Pages.Utilities
                             while (reader.Read())
                             {
 
-                                Task p = new Task();
+                                Task t= new Task();
 
-                                p.Id = reader.GetInt32(0).ToString(); 
+                                t.Id = reader.GetInt32(0).ToString();
                                 if (reader["Id"].GetType() != typeof(DBNull))
                                 {
-                                    p.Id = reader["Id"].ToString();
-                                }
-
-                                if (reader["ProjectName"].GetType() != typeof(DBNull))
-                                {
-                                    p.ProjectName = reader["ProjectName"].ToString();
-                                }
-
-
-                                if (reader["ProjectId"].GetType() != typeof(DBNull))
-                                {
-                                    p.ProjectId = reader["ProjectId"].ToString();
-                                }
-
-                                if (reader["CreatedOrgId"].GetType() != typeof(DBNull))
-                                {
-                                    p.CreatedOrgId = reader["CreatedOrgId"].ToString();
+                                    t.Id = reader["Id"].ToString();
                                 }
 
                                 if (reader["Name"].GetType() != typeof(DBNull))
                                 {
-                                    p.Name = reader["Name"].ToString();
+                                    t.Name = reader["Name"].ToString();
                                 }
 
                                 if (reader["Description"].GetType() != typeof(DBNull))
                                 {
-                                    p.Description = reader["Description"].ToString();
+                                    t.Description = reader["Description"].ToString();
                                 }
-
-                                if (reader["EstimatedBudget"].GetType() != typeof(DBNull))
-                                {
-                                    p.EstimatedBudget = reader["EstimatedBudget"].ToString();
-                                }
-
-                                if (reader["ActualSpent"].GetType() != typeof(DBNull))
-                                {
-                                    p.ActualSpent = reader["ActualSpent"].ToString();
-                                }
-                                ////////////////////////////////////////////
 
                                 if (reader["CreatedDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedDate = ut.EmptyDateConvert(reader["CreatedDate"].ToString());
+                                    t.CreatedDate = reader["CreatedDate"].ToString();
                                 }
 
                                 if (reader["CreatedUserId"].GetType() != typeof(DBNull))
                                 {
-                                    p.CreatedUserId = reader["CreatedUserId"].ToString();
+                                    t.CreatedUserId = reader["CreatedUserId"].ToString();
                                 }
 
                                 if (reader["StartDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
+                                    t.StartDate = ut.EmptyDateConvert(reader["StartDate"].ToString());
                                 }
 
                                 if (reader["DueDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
+                                    t.DueDate = ut.EmptyDateConvert(reader["DueDate"].ToString());
                                 }
 
                                 if (reader["CompletionDate"].GetType() != typeof(DBNull))
                                 {
-                                    p.CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
+                                    t.CompletionDate = ut.EmptyDateConvert(reader["CompletionDate"].ToString());
                                 }
 
                                 if (reader["ProjectTaskStatusId"].GetType() != typeof(DBNull))
                                 {
-                                    p.ProjectTaskStatusId = reader["ProjectTaskStatusId"].ToString();
+                                    t.ProjectTaskStatusId = reader["ProjectTaskStatusId"].ToString();
                                 }
 
                                 if (reader["ProjectTaskStatus"].GetType() != typeof(DBNull))
                                 {
-                                    p.ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
+                                    t.ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
                                 }
-
 
                                 //p.TaskManagerUserIds = ut.GetProjectorTaskUserList("", TaskId, "true");
                                 //p.TaskMemberUserIds = ut.GetProjectorTaskUserList("", TaskId, "false");
 
-                                listPro.Add(p);
+                                // Linkage : 
+                                t.TaskLinkage = new TaskLinkage();
+
+
+                                if (reader["taskId"].GetType() != typeof(DBNull))
+                                {
+                                    t.TaskLinkage.TaskId = reader["taskId"].ToString();
+                                }
+
+                                if (reader["OrganizationId"].GetType() != typeof(DBNull))
+                                {// Organization level task
+                                    t.TaskLinkage.OrganizationId = reader["OrganizationId"].ToString();
+                                    if (reader["OrganizationName"].GetType() != typeof(DBNull))
+                                    {
+                                        t.TaskLinkage.OrganizationName = reader["OrganizationName"].ToString();
+                                        t.TaskLinkage.LinkTo = "Organization: " + t.TaskLinkage.OrganizationName;
+                                    }
+                                }
+                                else if (reader["TeamId"].GetType() != typeof(DBNull))
+                                {// Team  level task
+                                    t.TaskLinkage.TeamId = reader["TeamId"].ToString();
+                                    if (reader["TeamName"].GetType() != typeof(DBNull))
+                                    {
+                                        t.TaskLinkage.TeamName = reader["TeamName"].ToString();
+                                        t.TaskLinkage.LinkTo = "Team: " + t.TaskLinkage.TeamName;
+                                    }
+                                }
+                                else if (reader["ProjectId"].GetType() != typeof(DBNull))
+                                {// Project level task
+                                    t.TaskLinkage.ProjectId = reader["ProjectId"].ToString();
+                                    if (reader["ProjectName"].GetType() != typeof(DBNull))
+                                    {
+                                        t.TaskLinkage.ProjectName = reader["ProjectName"].ToString();
+                                        t.TaskLinkage.LinkTo = "Project: " + t.TaskLinkage.ProjectName;
+                                    }
+                                }
+
+                                listPro.Add(t);
                             }
                         }
                     }

@@ -16,8 +16,8 @@ namespace Outreach.Pages.Utilities
         public string CreatedOrgId;
         public string CreatedDate;
         public string CreatedUserId;
-        public List<ProjectTaskUser> ProjectManagerUserIds;
-        public List<ProjectTaskUser> ProjectMemberUserIds;
+        public List<UserLinkage> ProjectManagerUserIds;
+        public List<UserLinkage> ProjectMemberUserIds;
         public string StartDate;
         public string DueDate;
         public string CompletionDate; 
@@ -35,8 +35,8 @@ namespace Outreach.Pages.Utilities
             CreatedOrgId = "";
             CreatedDate = "";
             CreatedUserId = "";
-            ProjectManagerUserIds = new List<ProjectTaskUser>();
-            ProjectMemberUserIds  = new List<ProjectTaskUser>();
+            ProjectManagerUserIds = new List<UserLinkage>();
+            ProjectMemberUserIds  = new List<UserLinkage>();
             StartDate = "";
             DueDate = "";
             CompletionDate = "";
@@ -127,9 +127,9 @@ namespace Outreach.Pages.Utilities
                                 {
                                     ProjectTaskStatus = reader["ProjectTaskStatus"].ToString();
                                 }
-
-                                ProjectManagerUserIds = ut.GetProjectorTaskUserList(projectId, "", "true");
-                                ProjectMemberUserIds  = ut.GetProjectorTaskUserList(projectId, "", "false");
+                                 
+                                ProjectManagerUserIds = ut.GetLinkedUserList("3", projectId, "true");
+                                ProjectMemberUserIds = ut.GetLinkedUserList("3", projectId, "false");
                                 // listOrgs.Add(Org);
                             }
                         }
