@@ -17,8 +17,7 @@
     <!-- overlayScrollbars -->
     <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
 
-    <!-- summernote -->
-    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+
 
     <!-- daterange picker -->
     <link rel="stylesheet" href="../../plugins/daterangepicker/daterangepicker.css">
@@ -37,9 +36,14 @@
     <link rel="stylesheet" href="../../plugins/bs-stepper/css/bs-stepper.min.css">
     <!-- dropzonejs -->
     <link rel="stylesheet" href="../../plugins/dropzone/min/dropzone.min.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+    <!-- SimpleMDE -->
+    <link rel="stylesheet" href="../../plugins/simplemde/simplemde.min.css">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="../../dist/css/adminlte.min.css">
+
     
     
 
@@ -204,16 +208,6 @@
 
             <!-- Sidebar -->
             <div class="sidebar">
-                <!-- Sidebar user panel (optional) -->
-
-                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-                    <div class="image">
-                        <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-                    </div>
-                    <div class="info">
-                        <a class="d-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">Alexander Pierce</a>
-                    </div>
-                </div>
 
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
@@ -355,6 +349,17 @@
 
                         <!--PROJECT MEMBER/LEADER ONLY VIEW PLEASE-->
                         <li class="nav-header"><b>WORK</b></li>
+
+                        <!-- Sidebar user panel (optional) -->
+
+                        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                            <div class="image">
+                                <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                            </div>
+                            <div class="info">
+                                <a class="d-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">Alexander Pierce</a>
+                            </div>
+                        </div>
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -615,6 +620,10 @@
                 format: 'L'
             });
 
+            
+            // Summernote
+            $('#summernote').summernote()
+
             //Date and time picker
             $('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
 
@@ -673,6 +682,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             window.stepper = new Stepper(document.querySelector('.bs-stepper'))
         })
+
 
         // DropzoneJS Demo Code Start
         Dropzone.autoDiscover = false

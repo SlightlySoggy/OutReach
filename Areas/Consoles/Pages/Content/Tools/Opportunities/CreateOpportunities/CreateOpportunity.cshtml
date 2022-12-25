@@ -4,110 +4,457 @@
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
 
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 
+<!-- summernote -->
+<link rel="stylesheet" href="../../plugins/summernote/summernote-bs4.min.css">
+<!-- SimpleMDE -->
+<link rel="stylesheet" href="../../plugins/simplemde/simplemde.min.css">
 
-    <!-- Google Font: Source Sans Pro -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="dist/css/adminlte.min.css">
-
-        <!-- Content Wrapper. Contains page content -->
-        <div class="content-wrapper">
-            <!-- Content Header (Page header) -->
-            <div class="content-header">
-                <div class="container-fluid">
-                    <div class="row mb-2">
-                        <div class="col-sm-6">
-                            <h1 class="m-0">Starter Page</h1>
-                        </div><!-- /.col -->
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                                <li class="breadcrumb-item active">Starter Page</li>
-                            </ol>
-                        </div><!-- /.col -->
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Create/Edit Opportunity</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Create/Edit Opportunity</li>
+                    </ol>
+                </div>
             </div>
-            <!-- /.content-header -->
-            <!-- Main content -->
-            <div class="content">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
+        </div><!-- /.container-fluid -->
+    </section>
 
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's
-                                        content.
-                                    </p>
+    <!-- Main content -->
+    <section class="content">
 
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
+        <!-- Default box -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"></h3>
+
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                        <div class="row">
+                            <div class="col-12">
+
+                                <card>
+                                    <div class="row d-flex justify-content-center">
+                                        <div class="col-10">
+
+                                            <div class="card-body p-5">
+
+                                                <!-- Pills content -->
+                                                <div class="tab-content">
+                                                    <div class="tab-pane fade show active">
+                                                        <form id="account" method="post">
+
+                                                            <div class="mb-3">
+                                                                <h6>Opportunity Name:</h6>
+                                                                <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+                                                            </div>
+                                                            <br />
+
+                                                            <div class="mb-3">
+                                                                <h6>Inperson or online?</h6>
+                                                                <div class="form-group">
+                                                                    <select class="form-control select2bs4" style="width: 100%;">
+                                                                        <option selected="selected">Inperson</option>
+                                                                        <option>Online</option>
+                                                                    </select>
+                                                                    <p>We will ask for either address or any required links later in the form</p>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+
+                                                            <div class="mb-3">
+                                                                <h6>One time or reoccuring?</h6>
+                                                                <div class="form-group">
+                                                                    <select class="form-control select2bs4" style="width: 100%;">
+                                                                        <option selected="selected">One time</option>
+                                                                        <option>Reoccuring</option>
+                                                                    </select>
+                                                                    <p>We will ask for either date and time or date range later in the form</p>
+                                                                </div>
+                                                            </div>
+                                                            <br />
+
+                                                            <div class="mb-3">
+                                                                <h6>Description:</h6>
+                                                                <textarea class="form-control" id="summernote" rows="5" name="oppdesc">
+                                                                Place <em>some</em> <u>text</u> <strong>here</strong>
+                                                                </textarea>
+                                                                <p>This is what people will rely on when viewing your opportunity. You can always change this later!</p>
+                                                            </div>
+
+@*                                                            <div class="mb-3">
+                                                                <h6>Timeframe:</h6>
+                                                                <div class="input-group">
+                                                                    <div class="input-group-prepend">
+                                                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                                                    </div>
+                                                                    <input type="text" class="form-control float-right" id="reservationtime">
+                                                                </div>
+                                                                <p>What date and time does your first opportunity start and last one end</p>
+                                                            </div>*@
+
+                                                            <div class="justify-content-center">
+                                                                <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
+                                                            </div>
+                                                            <br />
+
+                                                            <!-- Submit button -->
+                                                            <button type="submit" class="btn btn-primary btn-block mb-4">submit</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </card>
+                            
                             </div>
-
-                            <div class="card card-primary card-outline">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's
-                                        content.
-                                    </p>
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
-                                </div>
-                            </div><!-- /.card -->
                         </div>
-                        <!-- /.col-md-6 -->
-                        <div class="col-lg-6">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5 class="m-0">Featured</h5>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-
-                            <div class="card card-primary card-outline">
-                                <div class="card-header">
-                                    <h5 class="m-0">Featured</h5>
-                                </div>
-                                <div class="card-body">
-                                    <h6 class="card-title">Special title treatment</h6>
-
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- /.col-md-6 -->
                     </div>
-                    <!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div>
-            <!-- /.content -->
-        </div>
-        <!-- /.content-wrapper -->
+                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
+                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
+                        <p class="text-muted">
+                            This feature is still in developement, please report any bugs you find using our contact page! If there are persistent issues contact Maxwell Li directly
+                        </p>
+                        <br>
+                        <div class="text-muted">
+                            <p class="text-sm">
+                                Client Company
+                                <b class="d-block">Deveint Inc</b>
+                            </p>
+                            <p class="text-sm">
+                                Project Leader
+                                <b class="d-block">Tony Chicken</b>
+                            </p>
+                        </div>
 
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <script src="plugins/jquery/jquery.min.js"></script>
-    <!-- Bootstrap 4 -->
-    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <!-- AdminLTE App -->
-    <script src="dist/js/adminlte.min.js"></script>
+                        <h5 class="mt-5 text-muted">Project files</h5>
+                        <ul class="list-unstyled">
+                            <li>
+                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Functional-requirements.docx</a>
+                            </li>
+                            <li>
+                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-pdf"></i> UAT.pdf</a>
+                            </li>
+                            <li>
+                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-envelope"></i> Email-from-flatbal.mln</a>
+                            </li>
+                            <li>
+                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-image "></i> Logo.png</a>
+                            </li>
+                            <li>
+                                <a href="" class="btn-link text-secondary"><i class="far fa-fw fa-file-word"></i> Contract-10_12_2014.docx</a>
+                            </li>
+                        </ul>
+                        <div class="text-center mt-5 mb-3">
+                            <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<!-- Content Wrapper. Contains page content -->
+
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Advanced Form</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Advanced Form</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            
+            <div class="row">
+
+                <!-- /.col (left) -->
+                <div class="col-md-6">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Date picker</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Date -->
+                            <div class="form-group">
+                                <label>Date:</label>
+                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate" />
+                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Date and time -->
+                            <div class="form-group">
+                                <label>Date and time:</label>
+                                <div class="input-group date" id="reservationdatetime" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdatetime" />
+                                    <div class="input-group-append" data-target="#reservationdatetime" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.form group -->
+                            <!-- Date range -->
+                            <div class="form-group">
+                                <label>Date range:</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="far fa-calendar-alt"></i>
+                                        </span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="reservation">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <!-- /.form group -->
+                            <!-- Date and time range -->
+                            <div class="form-group">
+                                <label>Date and time range:</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                    </div>
+                                    <input type="text" class="form-control float-right" id="reservationtime">
+                                </div>
+                                <!-- /.input group -->
+                            </div>
+                            <!-- /.form group -->
+                            <!-- Date and time range -->
+                            <div class="form-group">
+                                <label>Date range button:</label>
+
+                                <div class="input-group">
+                                    <button type="button" class="btn btn-default float-right" id="daterange-btn">
+                                        <i class="far fa-calendar-alt"></i> Date range picker
+                                        <i class="fas fa-caret-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <!-- /.form group -->
+                        </div>
+                        <div class="card-footer">
+                            Visit <a href="https://getdatepicker.com/5-4/">tempusdominus </a> for more examples and information about
+                            the plugin.
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                   
+                </div>
+                <!-- /.col (right) -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    
+                    
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">bs-stepper</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="bs-stepper">
+                                <div class="bs-stepper-header" role="tablist">
+                                    <!-- your steps here -->
+                                    <div class="step" data-target="#logins-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="logins-part" id="logins-part-trigger">
+                                            <span class="bs-stepper-circle">1</span>
+                                            <span class="bs-stepper-label">Logins</span>
+                                        </button>
+                                    </div>
+                                    <div class="line"></div>
+                                    <div class="step" data-target="#information-part">
+                                        <button type="button" class="step-trigger" role="tab" aria-controls="information-part" id="information-part-trigger">
+                                            <span class="bs-stepper-circle">2</span>
+                                            <span class="bs-stepper-label">Various information</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="bs-stepper-content">
+                                    <!-- your steps content here -->
+                                    <div id="logins-part1" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                        </div>
+                                        <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                    </div>
+
+                                    <!-- your steps content here -->
+                                    <div id="logins-part2" class="content" role="tabpanel" aria-labelledby="logins-part-trigger">
+                                        <div class="form-group">
+                                            <label for="exampleInputEmail1">Email address</label>
+                                            <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="exampleInputPassword1">Password</label>
+                                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                        </div>
+                                        <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                    </div>
+
+
+                                    <div id="information-part" class="content" role="tabpanel" aria-labelledby="information-part-trigger">
+                                        <div class="form-group">
+                                            <label for="exampleInputFile">File input</label>
+                                            <div class="input-group">
+                                                <div class="custom-file">
+                                                    <input type="file" class="custom-file-input" id="exampleInputFile">
+                                                    <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                                                </div>
+                                                <div class="input-group-append">
+                                                    <span class="input-group-text">Upload</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            Visit <a href="https://github.com/Johann-S/bs-stepper/#how-to-use-it">bs-stepper documentation</a> for more examples and information about the plugin.
+                        </div>
+                    </div>
+                    <!-- /.card -->
+
+
+
+                </div>
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-default">
+                        <div class="card-header">
+                            <h3 class="card-title">Dropzone.js <small><em>jQuery File Upload</em> like look</small></h3>
+                        </div>
+                        <div class="card-body">
+                            <div id="actions" class="row">
+                                <div class="col-lg-6">
+                                    <div class="btn-group w-100">
+                                        <span class="btn btn-success col fileinput-button">
+                                            <i class="fas fa-plus"></i>
+                                            <span>Add files</span>
+                                        </span>
+                                        <button type="submit" class="btn btn-primary col start">
+                                            <i class="fas fa-upload"></i>
+                                            <span>Start upload</span>
+                                        </button>
+                                        <button type="reset" class="btn btn-warning col cancel">
+                                            <i class="fas fa-times-circle"></i>
+                                            <span>Cancel upload</span>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 d-flex align-items-center">
+                                    <div class="fileupload-process w-100">
+                                        <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table table-striped files" id="previews">
+                                <div id="template" class="row mt-2">
+                                    <div class="col-auto">
+                                        <span class="preview"><img src="data:," alt="" data-dz-thumbnail /></span>
+                                    </div>
+                                    <div class="col d-flex align-items-center">
+                                        <p class="mb-0">
+                                            <span class="lead" data-dz-name></span>
+                                            (<span data-dz-size></span>)
+                                        </p>
+                                        <strong class="error text-danger" data-dz-errormessage></strong>
+                                    </div>
+                                    <div class="col-4 d-flex align-items-center">
+                                        <div class="progress progress-striped active w-100" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar progress-bar-success" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-auto d-flex align-items-center">
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary start">
+                                                <i class="fas fa-upload"></i>
+                                                <span>Start</span>
+                                            </button>
+                                            <button data-dz-remove class="btn btn-warning cancel">
+                                                <i class="fas fa-times-circle"></i>
+                                                <span>Cancel</span>
+                                            </button>
+                                            <button data-dz-remove class="btn btn-danger delete">
+                                                <i class="fas fa-trash"></i>
+                                                <span>Delete</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer">
+                            Visit <a href="https://www.dropzonejs.com">dropzone.js documentation</a> for more examples and information about the plugin.
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                </div>
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
 
