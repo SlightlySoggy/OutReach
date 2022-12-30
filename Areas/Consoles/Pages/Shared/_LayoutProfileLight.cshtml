@@ -211,6 +211,16 @@
 
                 <!-- SidebarSearch Form -->
                 <div class="form-inline">
+
+                    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                        <div class="image">
+                            <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                        </div>
+                        <div class="info">
+                            <a class="d-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">Alexander Pierce</a>
+                        </div>
+                    </div>
+
                     <div class="input-group" data-widget="sidebar-search">
                         <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
                         <div class="input-group-append">
@@ -295,10 +305,31 @@
                                         <p>Home</p>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">
-                                        <i class="fa fa-solid fa-user nav-icon"></i>
-                                        <p>Profile</p>
+
+                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
+                                        <i class="fa fa-solid fa-clock nav-icon"></i>
+                                        <p>
+                                            Scheduling
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
+                                        <i class="fa-solid fa-bell nav-icon"></i>
+                                        <p>
+                                            Inbox
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
+                                        <i class="fa-solid fa-check nav-icon"></i>
+                                        <p>
+                                            Goals
+                                        </p>
                                     </a>
                                 </li>
 
@@ -335,14 +366,14 @@
                                     </a>*@
                                 </li>
 
-                                <li>
+@*                                <li>
                                     <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
                                         <i class="fa fa-solid fa-clock nav-icon"></i>
                                         <p>
                                             Scheduling
                                         </p>
                                     </a>
-                                </li>
+                                </li>*@
                             </ul>
                         </li>
 
@@ -360,6 +391,37 @@
                                 <a class="d-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">Alexander Pierce</a>
                             </div>
                         </div>
+
+                        <!--ORGANIZATION MEMBER/LEADER ONLY VIEW PLEASE-->
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <p>
+                                    Organization
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/OrganizationDetails/OrgDetails">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Organization Details</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/Dashboard/Dashboardorg">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Opportunity Dashboard</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/OrganizationSettings/OrganizationSettings">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Organization Settings</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!--ORGANIZATION MEMBER/LEADER ONLY VIEW PLEASE-->
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">
@@ -424,36 +486,7 @@
 
 
 
-                        <!--ORGANIZATION MEMBER/LEADER ONLY VIEW PLEASE-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Organization
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/OrganizationDetails/OrgDetails">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Organization Details</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/Dashboard/Dashboardorg">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Opportunity Dashboard</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Organization/OrganizationSettings/OrganizationSettings">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Organization Settings</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <!--ORGANIZATION MEMBER/LEADER ONLY VIEW PLEASE-->
+                      
 
                         <li class="nav-item">
                             <a href="#" class="nav-link">

@@ -29,7 +29,7 @@
 <body class="bg-white">
 
     <!-- Navbar Start -->
-    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+    <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
         <a class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5" asp-area="" asp-page="/HomePages/index">
             <h1 class="m-0 text-primary">OutReached</h1>
         </a>
@@ -38,19 +38,46 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
+                <a class="nav-item nav-link active" asp-area="" asp-page="/Content/index">Home</a>
 
-                <a class="nav-item nav-link" asp-area="" asp-page="/Homepages/index"> Home</a>
+                <a class="nav-item nav-link" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a>
 
-                <a class="nav-item nav-link" asp-area="" asp-page="/Content/about"> About</a>
-
-                <a class="nav-item nav-link" asp-area="" asp-page="/Content/contact">Contact</a>
+                <partial name="_LoginPartial" />
 
             </div>
-            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="" asp-page="/Opportunities/job-list">View Opportunities<i class="fa fa-arrow-right ms-3"></i></a>
 
+
+
+            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="Identity" asp-page="/RegisterOrg/Index">Register Organization<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
+
+
+    <div class="navbar navbar-expand-lg navbar-light bg-white">
+        <!-- Container wrapper -->
+        <div class="container justify-content-center justify-content-md-between">
+            <!-- Left links -->
+            <ul class="navbar-nav flex-row">
+
+                <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block">
+                    <a class="nav-item nav-link" asp-area="" asp-page="/Homepages/index"> Home</a>
+                </li>
+                <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block">
+                    <a class="nav-item nav-link" asp-area="" asp-page="/Content/about"> About</a>
+                </li>
+                <li class="nav-item me-2 me-lg-0 d-none d-md-inline-block">
+                    <a class="nav-item nav-link" asp-area="" asp-page="/Content/contact">Contact</a>
+                </li>
+            </ul>
+            <!-- Left links -->
+
+            <button class="btn btn-outline-primary" data-mdb-ripple-color="dark" type="button">
+                Download app<i class="fas fa-download ms-2"></i>
+            </button>
+        </div>
+        <!-- Container wrapper -->
+    </div>
 
 
 
