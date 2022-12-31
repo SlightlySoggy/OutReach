@@ -11,6 +11,7 @@ using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
+using System.Security.Cryptography;
 using Project = Outreach.Pages.Utilities.Project;
 using Task = Outreach.Pages.Utilities.Task;
 
@@ -32,7 +33,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
         public string TaskBelongTo ="";
 
-        public int org_id = 2;
+        public string orgid = "";
         public int user_id = 0;
         public string errorMessage = "";
         public string successMessage = "";
@@ -66,8 +67,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
 
             TaskInfo.CreatedUserId = user_id.ToString();
 
-            List <LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
-            LoginUserList = ut.GetLoginUserList("");
+            List <LoginUserInfo> LoginUserList = new List<LoginUserInfo>(); 
+            LoginUserList = ut.GetLoginUserList("1", orgid, ""); // get all users belong to parent level (organization)
+
 
             //user_id = Convert.ToInt32(user.User_Id);
 
@@ -75,7 +77,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
             //PTStatus ptStatus = new PTStatus();
             //ListTag = PTStatus.GetReferencedTagsbyOpptunityId(""); // get all active Status
 
-            //orgInfo = GetOrganizationInfoByOrg_id();
+            //orgInfo = GetOrganizationInfoByorgid();
             if (orgInfo == null)
             {
 
@@ -126,7 +128,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Tasks.TaskEdit
                 TaskManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.TaskManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
-                LoginUserList = ut.GetLoginUserList("");
+                LoginUserList = ut.GetLoginUserList("1", orgid, ""); // get all users belong to parent level (organization)
                 TaskMemberList = ut.ResetUserLinkageList(LoginUserList, op.TaskMemberUserIds);
 
                  

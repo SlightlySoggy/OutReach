@@ -1,4 +1,4 @@
-﻿@page "/RegisterLoginOrg"
+﻿@page "/OrganizationIndex"
 @model Outreach.Areas.Identity.Pages.RegisterOrg.IndexModel
 @{
     Layout = "/Areas/Identity/Pages/Shared/_Layout_RegisterOrg.cshtml";
@@ -6,109 +6,178 @@
 
 
 
+<form method="post" id="Form1" name="Form1">
 
-<!-- Content Wrapper. Contains page content -->
-<div class="">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Register Organization</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Register Organization</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <!-- Default box -->
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title"></h3>
-
-                <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-12 col-md-12 col-lg-12 order-1 order-md-2">
-                        <h3 class="text-primary text-center"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
-                        <p class="text-muted text-center">
-                            This feature is still in developement, please report any bugs you find using our contact page!
-
-                            If there are persistent issues contact Maxwell Li directly
-                        </p>
-
-
-                        <div class="text-center mt-5 mb-3">
-                            <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
-                        </div>
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Organization List</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Organizations</li>
+                        </ol>
                     </div>
                 </div>
-            </div>
-            <!-- /.card-body -->
+            </div><!-- /.container-fluid -->
+        </section>
 
-            <card>
-                <div class="row d-flex justify-content-center">
-                    <div class="col-10">
+        <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="/Content/Tools/Organizations/OrganizationEdit/OrganizationsEditLight">
+            <i class="fas fa-pencil-alt"></i>
+            Create
+        </a>
 
-                        <div class="card-body p-5">
+        <!-- Main content -->
+        <section class="content">
 
-                            <!-- Pills content -->
-                            <div class="tab-content">
-                                <div class="tab-pane fade show active">
-                                    <form id="account" method="post">
+            <!-- Default box -->
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Organization/Organization</h3>
 
-                                        <div class="mb-3">
-                                            <h6>Organization Name:</h6>
-                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
-                                        </div>
-                                        <br />
-
-                                        <div class="mb-3">
-                                            <h6>Primary Email:</h6>
-                                            <input type="text" class="form-control" placeholder="We will contact this email to verify account registration" name="opptitle" value="">
-                                        </div>
-                                        <br />
-
-                                        <div class="mb-3">
-                                            <h6>Organization Description:</h6>
-                                            <textarea class="form-control" rows="5" placeholder="Tell us a bit about your organization..." name="oppdesc"></textarea>
-                                            <p>This is what people will see when viewing your organization profile. You can always change this later!</p>
-                                        </div>
-                                        <br />
-
-                                        <div class="justify-content-center">
-                                            <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
-                                        </div>
-                                        <br />
-
-                                        <!-- Submit button -->
-                                        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="card-tools">
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                            <i class="fas fa-times"></i>
+                        </button>
                     </div>
                 </div>
+                <div class="card-body p-0">
+                    <table class="table table-striped Organizations">
+                        <thead>
+                            <tr> 
+                                <th style="width: 20%">
+                                    Name
+                                </th>
+                                <th style="width: 30%">
+                                    Web URL
+                                </th>
+                                <th style="width: 30%">
+                                    General Email
+                                </th>
+                                <th style="width: 30%">
+                                    Phone
+                                </th>
+                                <th style="width: 30%">
+                                    Primary Contactor Email
+                                </th>
+                                <th style="width: 8%" class="text-center">
+                                    Address
+                                </th>
+                                <th style="width: 8%" class="text-center">
+                                    Status
+                                </th>
+                                <th style="width: 20%">
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-            </card>
-        </div>
-        <!-- /.card -->
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+                            @foreach (var org in Model.OrganizationList)
+                            {
+
+                                <tr> 
+                                    <td>
+                                        @org.Name
+                                        <br />
+                                        <small>&nbssp;
+                                            Logo
+                                        </small>
+                                    </td>
+@*                                    <td>
+                                        <ul class="list-inline">
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar.png">
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar2.png">
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar3.png">
+                                            </li>
+                                            <li class="list-inline-item">
+                                                <img alt="Avatar" class="table-avatar" src="../../dist/img/avatar4.png">
+                                            </li>
+                                        </ul>
+                                    </td>*@
+                                    
+                                    <td class="Organization-actions text-right">
+                                        @org.WebURL
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.Email
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.Phone
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.PrimaryContactUser.Email
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.Address
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.WebURL
+                                    </td>
+                                    <td class="Organization-actions text-right">
+                                        @org.Status
+                                    </td>
+
+                                    <td class="Organization-actions text-right">
+                                        <a class="btn btn-info btn-sm" asp-area="Consoles" asp-page="OrganizationEdit" asp-route-OrganizationId="@org.Id">
+                                            <i class="fas fa-pencil-alt">
+                                            </i>
+                                            Edit
+                                        </a>
+                                        <a class="btn btn-danger btn-sm" onclick="ConfirmDelete('@org.Id');" href="#">
+                                            <i class="fas fa-trash"></i>
+                                            Delete
+                                        </a>
+
+                                    </td>
+                                </tr>
+
+
+                                <input type="hidden" id="hid_DeleteOrganizationid" name="hid_DeleteOrganizationid" value="">
+
+                            }
+
+
+
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+</form>
+
+<script>
+    function ConfirmDelete(id) {
+        if (confirm("Are you sure you want to delete?")) {
+            //alert(id);
+            document.getElementById("hid_DeleteOrganizationid").value = id;
+            //alert(document.getElementById("hid_DeleteOrganizationid").value);
+            document.Form1.submit();
+
+        }
+        else {
+            //alert("false");
+            return false;
+        }
+    }
+</script>
+

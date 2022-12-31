@@ -10,6 +10,7 @@ using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
+using System.Security.Cryptography;
 using Project = Outreach.Pages.Utilities.Project;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
@@ -29,7 +30,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
         private readonly ILogger<JobdetailModel> _logger;
 
 
-        public int org_id = 2;
+        public string orgid = "";
         public int user_id = 0;
         public string errorMessage = "";
         public string successMessage = "";
@@ -61,7 +62,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
             StatusList = ut.GetProjTaskStatusList();
 
             List<LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
-            LoginUserList = ut.GetLoginUserList("");
+            LoginUserList = ut.GetLoginUserList("1", orgid, ""); // get all users belong to parent level (organization)
 
             //user_id = Convert.ToInt32(user.User_Id);
 
@@ -69,7 +70,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
             //PTStatus ptStatus = new PTStatus();
             //ListTag = PTStatus.GetReferencedTagsbyOpptunityId(""); // get all active Status
 
-            //orgInfo = GetOrganizationInfoByOrg_id();
+            //orgInfo = GetOrganizationInfoByorgid();
             if (orgInfo == null)
             {
 
@@ -77,7 +78,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
 
             if (string.IsNullOrWhiteSpace(Request.Query["ProjectId"]))
             { // create a brand new Project 
-                projectInfo.CreatedOrgId = org_id.ToString();
+                projectInfo.CreatedOrgId = orgid.ToString();
                 projectInfo.CreatedUserId = user_id.ToString();
                 return Page();
             }
@@ -93,11 +94,12 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Projects.ProjectEdit
                 ProjectManagerUserList = ut.ResetUserLinkageList(LoginUserList, op.ProjectManagerUserIds);
 
                 //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
-                LoginUserList = ut.GetLoginUserList("");
+                LoginUserList = ut.GetLoginUserList("1", orgid, ""); // get all users belong to parent level (organization)
+
                 ProjectMemberList = ut.ResetUserLinkageList(LoginUserList, op.ProjectMemberUserIds);
 
                  
-    }
+            }
 
             return Page();
 

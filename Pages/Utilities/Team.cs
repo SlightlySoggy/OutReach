@@ -15,6 +15,7 @@ namespace Outreach.Pages.Utilities
         public string CreatedDate;
         public string CreatedUserId;
         public string StatusId;
+        public string Status;
         public string EstimatedBudget;
         public string ActualSpent;
         public List<TeamUser> TeamManagerUserIds;
@@ -28,13 +29,14 @@ namespace Outreach.Pages.Utilities
             CreatedDate = "";
             CreatedUserId = "";
             StatusId = "";
+            Status = "";
             EstimatedBudget = "";
             ActualSpent = "";
             TeamManagerUserIds = new List<TeamUser>();
             TeamMemberUserIds = new List<TeamUser>();
 
         }
-        public Team(string Dept_id)
+        public Team(string teamId)
         { // retrive Organization data by Organization ID
             try
             {
@@ -45,7 +47,7 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where Id=" + Dept_id;
+                    string sql = "Select t.Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId ,Status=st.StatusName from Team t with(nolock)  left join StandardStatus st on st.Id = t.StatusId  where t.Id='" + teamId + "' ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -84,8 +86,13 @@ namespace Outreach.Pages.Utilities
                                     StatusId = reader["StatusId"].ToString();
                                 }
 
-                                TeamManagerUserIds = ut.GetTeamUserList(Dept_id,  "true");
-                                TeamMemberUserIds = ut.GetTeamUserList(Dept_id, "false");
+                                if (reader["Status"].GetType() != typeof(DBNull))
+                                {
+                                    Status = reader["Status"].ToString();
+                                }
+
+                                TeamManagerUserIds = ut.GetTeamUserList(teamId,  "true");
+                                TeamMemberUserIds = ut.GetTeamUserList(teamId, "false");
 
                                 // listOrgs.Add(Org);
                             }

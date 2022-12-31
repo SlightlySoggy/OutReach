@@ -6,6 +6,7 @@ using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
+using System.Net;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -468,65 +469,7 @@ namespace Outreach.Pages.Utilities
             return listStandardStatus;
         }
 
-        public List<LoginUserInfo> GetLoginUserList(string OrgId="")
-        { // retrive login user by org ID in the future, now just list all
-
-            List<LoginUserInfo> userlist= new List<LoginUserInfo>();
-
-            try
-            {
-                var builder = WebApplication.CreateBuilder();
-                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
-
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                {
-                    connection.Open();
-                    String sql = "SELECT User_Id,UserName,Email,Password='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) order by firstName, lastName";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
-                    {
-                        using (SqlDataReader reader = command.ExecuteReader())
-                        {
-                            while (reader.Read())
-                            {
-                                LoginUserInfo userinfo = new LoginUserInfo();
-                                userinfo.User_Id = reader.GetInt32(0).ToString();
-                                userinfo.UserName = reader.GetString(1);
-                                userinfo.Email = reader.GetString(2);
-                                userinfo.Password = reader.GetString(3);
-                                userinfo.Created_at = reader.GetString(4);
-
-
-                                if (reader["firstName"].GetType() != typeof(DBNull))
-                                {
-                                    userinfo.firstName = reader["firstName"].ToString();
-                                }
-
-                                if (reader["lastName"].GetType() != typeof(DBNull))
-                                {
-                                    userinfo.lastName = reader["lastName"].ToString();
-                                }
-
-                                if (reader["PhoneNumber"].GetType() != typeof(DBNull))
-                                {
-                                    userinfo.PhoneNumber = reader["PhoneNumber"].ToString();
-                                }
-                                  
-                                userlist.Add(userinfo);
-                            }
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Exception: " + ex.Message.ToString());
-            }
-
-            return userlist;
-        }
-
-
-        public List<UserLinkage> GetLinkedUserList(string groupTypeId, string linkedGroupId, string isLead = "")
+       public List<UserLinkage> GetLinkedUserList(string groupTypeId, string linkedGroupId, string isLead = "")
         { // return all userIds who link to specified linkedGroupId 
           // GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
           // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
@@ -652,7 +595,7 @@ namespace Outreach.Pages.Utilities
             return result;
         }
 
-        public string DeleteAllTeamUser(string Dept_Id = "", string IsLead = "")
+        public string DeleteAllTeamUser(string teamId = "", string IsLead = "")
         { //  
 
             string result = "";
@@ -661,11 +604,11 @@ namespace Outreach.Pages.Utilities
             string sql = " ";
              
             if (IsLead.Trim().ToLower() == "true")
-                sql = "Delete TeamUser where TeamId='" + Dept_Id + "' and isnull(IsLead,0) = 1 ";
+                sql = "Delete TeamUser where TeamId='" + teamId + "' and isnull(IsLead,0) = 1 ";
             else if (IsLead.Trim().ToLower() == "false")
-                sql = "Delete TeamUser where TeamId='" + Dept_Id + "' and isnull(IsLead,0) = 0 ";
+                sql = "Delete TeamUser where TeamId='" + teamId + "' and isnull(IsLead,0) = 0 ";
             else // (IsLead.Trim() == "")
-                sql = "Delete TeamUser where TeamId='" + Dept_Id + " ";
+                sql = "Delete TeamUser where TeamId='" + teamId + " ";
 
 
             result = DeleteTableDataBySQL(sql);
@@ -840,11 +783,11 @@ namespace Outreach.Pages.Utilities
 
             if (NameSearch.Trim() != "")
             {
-                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where statusid=1 and Name like  '%" + NameSearch + "%' order by Name ";
+                sql = "Select t.Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId ,Status=st.StatusName from Team t with(nolock)  left join StandardStatus st on st.Id = t.StatusId  where t.statusid=1 and t.Name like  '%" + NameSearch + "%' order by t.Name ";
             }
             else
             { // get all active Team/Team
-                sql = "Select Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId from Team with(nolock) where statusid=1  order by Name ";
+                sql = "Select t.Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId ,Status=st.StatusName from Team t with(nolock)  left join StandardStatus st on st.Id = t.StatusId  where t.statusid=1  order by t.Name ";
             }
 
             listPro = GetTeamListBySQLQuery(sql);
@@ -899,13 +842,17 @@ namespace Outreach.Pages.Utilities
                                 if (reader["CreatedUserId"].GetType() != typeof(DBNull))
                                 {
                                     p.CreatedUserId = reader["CreatedUserId"].ToString();
-                                } 
-                                 
+                                }
+
                                 if (reader["StatusId"].GetType() != typeof(DBNull))
                                 {
                                     p.StatusId = reader["StatusId"].ToString();
                                 }
-                                 
+                                if (reader["Status"].GetType() != typeof(DBNull))
+                                {
+                                    p.Status = reader["Status"].ToString();
+                                }
+
 
                                 listPro.Add(p);
                             }
@@ -1182,5 +1129,225 @@ namespace Outreach.Pages.Utilities
         }
 
 
-    }
+
+        public List<Organization> GetOrganizationListByNameSearch(string NameSearch = "")
+        { // retrive Organization info by part of its name 
+
+            List<Organization> listPro = new List<Organization>();
+            string sql = "";
+
+            if (NameSearch.Trim() != "")
+            {
+                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1 and o.Name like  '%" + NameSearch + "%' order by o.Name ";
+            }
+            else
+            { // get all active Organization
+
+                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1  order by o.Name ";
+            }
+
+            listPro = GetOrganizationListBySQLQuery(sql);
+
+            return listPro;
+        }
+
+
+        public List<Organization> GetOrganizationListBySQLQuery(string sql)
+        { // retrive Project data by given sql query
+
+            List<Organization> listPro = new List<Organization>();
+
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+
+                                Organization p = new Organization();
+
+                                p.Id = reader.GetInt32(0).ToString();
+
+                                if (reader["Name"].GetType() != typeof(DBNull))
+                                {
+                                    p.Name = reader["Name"].ToString();
+                                }
+
+                                if (reader["Description"].GetType() != typeof(DBNull))
+                                {
+                                    p.Description = reader["Description"].ToString();
+                                }
+
+                                if (reader["Address"].GetType() != typeof(DBNull))
+                                {
+                                    p.Address = reader["Address"].ToString();
+                                }
+
+                                if (reader["PrimaryContactUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.PrimaryContactUserId = reader["PrimaryContactUserId"].ToString();
+
+                                    p.PrimaryContactUser = new LoginUserInfo(p.PrimaryContactUserId);
+                                }
+
+                                if (reader["CreatedDate"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedDate = reader["CreatedDate"].ToString();
+                                }
+
+                                if (reader["CreatedUserId"].GetType() != typeof(DBNull))
+                                {
+                                    p.CreatedUserId = reader["CreatedUserId"].ToString();
+                                }
+
+                                if (reader["StatusId"].GetType() != typeof(DBNull))
+                                {
+                                    p.StatusId = reader["StatusId"].ToString();
+                                }
+
+                                if (reader["Status"].GetType() != typeof(DBNull))
+                                {
+                                    p.Status = reader["Status"].ToString();
+                                }
+
+                                if (reader["Phone"].GetType() != typeof(DBNull))
+                                {
+                                    p.Phone = reader["Phone"].ToString();
+                                }
+
+                                if (reader["Email"].GetType() != typeof(DBNull))
+                                {
+                                    p.Email = reader["Email"].ToString();
+                                }
+
+                                if (reader["WebURL"].GetType() != typeof(DBNull))
+                                {
+                                    p.WebURL = reader["WebURL"].ToString();
+                                }
+
+
+                                listPro.Add(p);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return listPro;
+        }
+
+
+        public List<LoginUserInfo> GetLoginUserList(string groupTypeId, string linkedGroupId, string isLead = "")
+        { // return all userIds who link to specified linkedGroupId 
+          // GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
+          // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
+
+
+            List<LoginUserInfo> userlist = new List<LoginUserInfo>();
+
+            string sql = "SELECT u.Id,u.User_Id,u.UserName,u.Email,Password='',Created_at=convert(varchar,Created_at),u.firstName, u.lastName,u.PhoneNumber " + 
+                         " FROM AspNetUsers U with(nolock) " +
+                         " Left join UserLinkage ul with(nolock) on ul.UserId = u.User_Id " + 
+                         " Where ul.LinkedGroupId = '" + linkedGroupId + "' and ul.GroupTypeId = '" + groupTypeId + "' ";
+
+            if (isLead.Trim().ToLower() == "true" || isLead.Trim().ToLower() == "1")
+                sql = sql + " and Isnull(ul.isLead,0) = 1 ";
+            else if (isLead.Trim().ToLower() == "false" || isLead.Trim().ToLower() == "0")
+                sql = sql + " and Isnull(ul.isLead,0) = 0 "; 
+
+            userlist = GetLoginUserListbySQL(sql);
+
+            return userlist;
+        }
+
+
+        public List<LoginUserInfo> GetLoginUserListbySQL(string sql = "")
+        {   // retrive login user by linkage
+            //GroupTypeId  : 1:Organization,2:Team,3:Project,4:Task
+            //LinkedGroupId: OrganizationId, TeamId, ProjectId, TaskId
+
+            List<LoginUserInfo> userlist = new List<LoginUserInfo>();
+            try
+            {
+                var builder = WebApplication.CreateBuilder();
+                var connectionString = builder.Configuration.GetConnectionString("MyAffDBConnection");
+
+                using (SqlConnection connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    {
+                        using (SqlDataReader reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                LoginUserInfo userinfo = new LoginUserInfo();
+
+                                if (reader["Id"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.Id = reader["Id"].ToString();
+                                }
+                                if (reader["User_Id"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.User_Id = reader["User_Id"].ToString();
+                                }
+                                if (reader["UserName"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.UserName = reader["UserName"].ToString();
+                                }
+
+                                if (reader["Email"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.Email = reader["Email"].ToString();
+                                }
+                                if (reader["Password"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.Password = reader["Password"].ToString();
+                                }
+                                if (reader["Created_at"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.Created_at = reader["Created_at"].ToString();
+                                }
+
+                                if (reader["firstName"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.firstName = reader["firstName"].ToString();
+                                }
+
+                                if (reader["lastName"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.lastName = reader["lastName"].ToString();
+                                }
+
+                                if (reader["PhoneNumber"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.PhoneNumber = reader["PhoneNumber"].ToString();
+                                }
+
+                                userlist.Add(userinfo);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception: " + ex.Message.ToString());
+            }
+
+            return userlist;
+        }
+    } 
 } 

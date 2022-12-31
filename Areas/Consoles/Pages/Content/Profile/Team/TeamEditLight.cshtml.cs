@@ -27,7 +27,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamEdit
         private readonly ILogger<JobdetailModel> _logger;
 
 
-        public int org_id = 2;
+        public string orgid = "0";
         public int user_id = 0;
         public string errorMessage = "";
         public string successMessage = "";
@@ -59,7 +59,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamEdit
             StatusList = ut.GetStandardStatusList();
 
             List<LoginUserInfo> LoginUserList = new List<LoginUserInfo>();
-            LoginUserList = ut.GetLoginUserList("");
+            LoginUserList = ut.GetLoginUserList("1", orgid,""); // get all users belong to parent level (organization)
 
             //user_id = Convert.ToInt32(user.User_Id);
 
@@ -67,15 +67,19 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamEdit
             //PTStatus ptStatus = new PTStatus();
             //ListTag = PTStatus.GetReferencedTagsbyOpptunityId(""); // get all active Status
 
-            //orgInfo = GetOrganizationInfoByOrg_id();
-            if (orgInfo == null)
+            //orgInfo = GetOrganizationInfoByorgid();
+            if (!string.IsNullOrWhiteSpace(Request.Query["OrgId"]))
             {
-
+                orgid = Request.Query["OrgId"];
+            }
+            else
+            {
+               // redirect to a page to specify the orgination first
             }
 
             if (string.IsNullOrWhiteSpace(Request.Query["TeamId"]))
             { // create a brand new Team 
-                TeamInfo.OrganizationId = org_id.ToString();
+                TeamInfo.OrganizationId = orgid.ToString();
                 TeamInfo.CreatedUserId = user_id.ToString();
                 return Page();
             }
@@ -90,8 +94,8 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Teams.TeamEdit
 
                 TeamManagerUserList = ut.ResetTeamUserList(LoginUserList, op.TeamManagerUserIds);
 
-                //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist 
-                LoginUserList = ut.GetLoginUserList("");
+                //since the originalloginUserlist will be changed along with finalloginUserlist, the next call should reload originalloginUserlist  
+                LoginUserList = ut.GetLoginUserList("1", orgid, ""); // get all users belong to parent level (organization)
                 TeamMemberList = ut.ResetTeamUserList(LoginUserList, op.TeamMemberUserIds);
 
                  
