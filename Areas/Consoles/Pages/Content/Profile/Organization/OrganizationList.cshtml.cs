@@ -10,7 +10,7 @@ using Outreach.Pages.Utilities;
 
 namespace Outreach.Areas.Identity.Pages.RegisterOrg
 {
-    public class IndexModel : PageModel
+    public class OrganizationListModel : PageModel
     {
         public Organization orgInfo = new Organization();
 
