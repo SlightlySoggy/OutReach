@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace Outreach.Areas.Identity.Pages.RegisterOrg
 {
-    public class OrganizationEditModel : PageModel
+    public class RegisterOrganizationModel : PageModel
     {
         public Organization orgInfo = new Organization();
 
@@ -24,7 +24,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         public string errorMessage = "";
         public string successMessage = "";
 
-        public OrganizationEditModel(UserManager<ApplicationUser> userManager,
+        public RegisterOrganizationModel(UserManager<ApplicationUser> userManager,
                               SignInManager<ApplicationUser> signInManager,
                               ILogger<JobdetailModel> logger)
         {
@@ -150,7 +150,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             }
             else if (result.Contains("failed") == false && string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrganizationid"]))
             {
-                Response.Redirect("OrganizationEditanization?Orgid=" + result); 
+                Response.Redirect("RegisterOrganization?Orgid=" + result); 
             }
             else
             {
