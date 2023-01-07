@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Outreach.Areas.Consoles.Pages.Content.UI
+namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 {
-    public class IndexLightModel : PageModel
+    public class OrgDetailsModel : PageModel
     {
         public void OnGet()
         {

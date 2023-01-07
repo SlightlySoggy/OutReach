@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Outreach.Areas.Consoles.Pages.Content.Profile.Organization.OrganizationDetails
+namespace Outreach.Areas.Consoles.Pages.Content.Profile.Team
 {
-    public class OrgDetailsModel : PageModel
+    public class TeamDetailModel : PageModel
     {
         public void OnGet()
         {
