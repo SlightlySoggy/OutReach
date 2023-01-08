@@ -8,7 +8,7 @@ using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
 
-namespace Outreach.Areas.Identity.Pages.RegisterOrganization
+namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
 {
     public class OrganizationListModel : PageModel
     {
