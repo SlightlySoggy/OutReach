@@ -2,12 +2,16 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.CodeAnalysis;
-using Microsoft.EntityFrameworkCore.Infrastructure;
-using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using Outreach.Data;
 using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
-using System.Security.Cryptography;
+using System.Drawing;
+
+using System.IO;
+using System.Data.SqlClient;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
+
 
 namespace Outreach.Areas.Identity.Pages.RegisterOrg
 {
@@ -19,6 +23,9 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<JobdetailModel> _logger;
 
+        
+        [BindProperty]
+        public IFormFile Upload { get; set; }
 
         public int user_id = 0;
         public string errorMessage = "";
@@ -31,6 +38,13 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+        }
+
+
+        public async Task<IActionResult> OnPostUploadfileAsync()
+        {
+            string a = "a";
+            return Page();
         }
 
 
@@ -79,9 +93,6 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             return Page();
 
         }
-
-
-
 
         public void OnPost()
         {
@@ -134,6 +145,11 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
 
 
                 // update existing Organization
+
+                //string imageUrl = SaveImageFile(ImgUpload, "images/new", 600, 600, "images");
+
+                //SaveFile(Attachment);
+
                 result = orgInfo.Save();
 
             }
@@ -158,6 +174,126 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             }
 
         }
+
+        //public IActionResult OnPostUploadFile(IFormFile postedFile, string OrgId)
+        //{
+        //}
+
+        public void OnPost2(IFormFile logofile, string OrgId)
+        { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
+
+            string fileName = Path.GetFileName(logofile.FileName);
+            string contentType = logofile.ContentType;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                logofile.CopyTo(ms);
+                var builder = WebApplication.CreateBuilder();
+                string constr = builder.Configuration.GetConnectionString("MyAffDBConnection");
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string query = "Update Organization set Logo=@Logo where Id=@OrgId";
+                    using (SqlCommand cmd = new SqlCommand(query))
+                    {
+                        cmd.Connection = con;
+                        cmd.Parameters.AddWithValue("@Logo", ms.ToArray());
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+            }
+
+            // return RedirectToPage("Index");
+        }
+
+        //private bool IsImage(HttpPostedFile file)
+        //{
+        //    if (file != null && Regex.IsMatch(file.ContentType, "image/\\S+") &&
+        //      file.ContentLength > 0)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        //public string SaveImageFile(File fu, string directoryPath, int MaxWidth, int MaxHeight, string prefixName)
+        //{
+        //    string serverPath = "", returnString = "";
+        //    if (fu.HasFile)
+        //    {
+        //        Byte[] bytes = fu.FileBytes;
+        //        //Int64 len = 0;
+        //        prefixName = "Testing" + prefixName;
+        //        //directoryPath = "Testing/";
+        //        System.IO.MemoryStream ms = new System.IO.MemoryStream(bytes);
+        //        System.Drawing.Image img = System.Drawing.Image.FromStream(ms);
+        //        string dipath = System.Web.HttpContext.Current.Server.MapPath("~/") + directoryPath;
+        //        DirectoryInfo di = new DirectoryInfo(dipath);
+        //        if (!(di.Exists))
+        //        {
+        //            di.Create();
+        //        }
+        //        HttpPostedFile file = fu.PostedFile;
+        //        DateTime oldTime = new DateTime(1970, 01, 01, 00, 00, 00);
+        //        DateTime currentTime = DateTime.Now;
+        //        TimeSpan structTimespan = currentTime - oldTime;
+        //        prefixName += ((long)structTimespan.TotalMilliseconds).ToString();
+        //        if (IsImage(file))
+        //        {
+        //            using (Bitmap bitmap = new Bitmap(file.InputStream, false))
+        //            {
+        //                serverPath = dipath + "//" + prefixName + fu.FileName.Substring(fu.FileName.IndexOf("."));
+        //                img.Save(serverPath);
+        //                returnString = "~/" + directoryPath + "//" + prefixName + fu.FileName.Substring(fu.FileName.IndexOf("."));
+        //            }
+        //        }
+        //    }
+        //    return returnString;
+        //}
+
+        //public void SaveFile()
+        //{
+        //    foreach (var file in Request.Form.Files)
+        //    {
+        //        Image img = new Image();
+        //        img.ImageTitle = file.FileName;
+
+        //        MemoryStream ms = new MemoryStream();
+        //        file.CopyTo(ms);
+        //        img.ImageData = ms.ToArray();
+
+        //        ms.Close();
+        //        ms.Dispose();
+
+        //        db.Images.Add(img);
+        //        db.SaveChanges();
+        //    } 
+        //}
+
+        // Save to file system
+        //public FileUploadState SaveFile(HttpPostedFileBase Attachment)
+        //{ 
+        //    if (Attachment != null)
+        //    {
+        //        try //attempt to save file to file system
+        //        {
+        //            var fileName = Path.GetFileName(Attachment.FileName);
+        //            //path as parameter can be changed to any desired valid path
+        //            var path = Path.Combine((@"C:\Images"), fileName);
+        //            Attachment.SaveAs(path);
+        //            return FileUploadState.Uploaded;
+        //        }
+        //        catch //implement your own error handling here 
+        //        {
+        //            //error handling
+        //            return FileUploadState.Failed;
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return FileUploadState.NoFileSelected;
+        //    }
+        //}
+
     }
 
 }

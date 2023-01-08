@@ -9,7 +9,7 @@ using Outreach.Pages.Opportunities;
 using Outreach.Pages.Utilities;
 using System.Security.Cryptography;
 
-namespace Outreach.Areas.Identity.Pages.RegisterOrg
+namespace Outreach.Areas.Identity.Pages.RegisterOrganization
 {
     public class RegisterOrganizationModel : PageModel
     {
