@@ -68,7 +68,7 @@
                             <!-- Pills content -->
                             <div class="tab-content">
                                 <div class="tab-pane fade show active">
-                                    <form id="account" method="post">
+                                    <form method="post" enctype="multipart/form-data">
 
                                         <div class="mb-3">
                                             <h6>Organization Name:</h6>
@@ -86,6 +86,15 @@
                                             <h6>Organization Description:</h6>
                                             <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Tell us a bit about your organization...">@Model.orgInfo.Description</textarea>
                                             <p>This is what people will see when viewing your organization profile. You can always change this later!</p>
+                                        </div>
+                                        <br />
+
+                                        <div class="mb-3">
+                                            <h6>Organization Logo:</h6>
+                                            @*<input type="file" id="file1" name="file1" multiple="multiple" />*@
+                                            @*<input type="file" asp-for="Upload" />*@
+                                            <input type="file" />
+                                            <input type="submit" value="Submit" asp-page-handler="Uploadfile" />
                                         </div>
                                         <br />
 
