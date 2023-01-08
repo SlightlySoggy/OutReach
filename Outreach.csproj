@@ -51,7 +51,6 @@
     <None Include="wwwroot\dist\css\adminlte.custom.css" />
     <None Include="wwwroot\dist\css\adminlte.css" />
     <None Include="wwwroot\dist\css\adminlte.css.map" />
-    <None Include="wwwroot\dist\css\adminlte.min.css" />
     <None Include="wwwroot\dist\css\adminlte.min.css.map" />
     <None Include="wwwroot\dist\css\alt\adminlte.components.css" />
     <None Include="wwwroot\dist\css\alt\adminlte.components.css.map" />

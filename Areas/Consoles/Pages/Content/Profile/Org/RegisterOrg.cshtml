@@ -1,42 +1,29 @@
-﻿@page "/Dashboardorg"
-@model Outreach.Areas.Consoles.Pages.Content.Profile.Organization.Dashboard.DashboardorgModel
+﻿@page "/RegisterOrg"
+@model Outreach.Areas.Identity.Pages.RegisterOrg.RegisterOrganizationModel
 @{
-    Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
+    Layout = "/Areas/Identity/Pages/Shared/_Layout_RegisterOrg.cshtml";
 }
 
-<!-- Ekko Lightbox -->
-<link rel="stylesheet" href="../plugins/ekko-lightbox/ekko-lightbox.css">
-<!-- overlayScrollbars -->
-<link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
-
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-dark">
-    <!-- Left navbar links -->
-
-    <ul class="navbar-nav">
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="//Content/Tools/Scheduling/Calendar/Calendarlight">Overview</a>
-        </li>
-        @*<li class="nav-item d-none d-sm-inline-block">
-        <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Todo/Todo">Todo</a>
-        </li>*@
-
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">Board</a>
-        </li>
-
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Calendar/Calendarlight">Calendar</a>
-        </li>
-
-        <li class="nav-item d-none d-sm-inline-block active">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">Dashboard</a>
-        </li>
-    </ul>
-</nav>
-
+ 
 <!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
+<div class="">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Register Organization</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Register Organization</li>
+                    </ol>
+                </div>
+            </div>
+        </div><!-- /.container-fluid -->
+    </section>
+
     <!-- Main content -->
     <section class="content">
         <!-- Default box -->
@@ -81,23 +68,23 @@
                             <!-- Pills content -->
                             <div class="tab-content">
                                 <div class="tab-pane fade show active">
-                                    <form id="account" method="post">
+                                    <form id="account" enctype="multipart/form-data" method="post">
 
                                         <div class="mb-3">
                                             <h6>Organization Name:</h6>
-                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+                                            <input type="text" class="form-control" placeholder="" name="inputName" value="@Model.orgInfo.Name">
                                         </div>
                                         <br />
 
                                         <div class="mb-3">
                                             <h6>Primary Email:</h6>
-                                            <input type="text" class="form-control" placeholder="We will contact this email to verify account registration" name="opptitle" value="">
+                                            <input type="text" class="form-control" placeholder="We will contact this email to verify account registration" name="inputEmail" value="@Model.orgInfo.Email">
                                         </div>
                                         <br />
 
                                         <div class="mb-3">
-                                            <h6>Organization Description:</h6>
-                                            <textarea class="form-control" rows="5" placeholder="Tell us a bit about your organization..." name="oppdesc"></textarea>
+                                            <h6>Organization Description:</h6> 
+                                            <textarea id="inputDescription" class="form-control" rows="4" name="inputDescription" placeholder="Tell us a bit about your organization...">@Model.orgInfo.Description</textarea>
                                             <p>This is what people will see when viewing your organization profile. You can always change this later!</p>
                                         </div>
                                         <br />
@@ -107,8 +94,16 @@
                                         </div>
                                         <br />
 
+                                        <div class="mb-3">
+                                            <h6>Upload File:</h6>
+                                            <input type="file" class="form-control" placeholder="Upload file" name="Uploadfile">
+                                        </div>
+
+                                        <input type="hidden" class="form-control" placeholder="" name="hid_CurrentOrgid" value="@Model.orgInfo.Id"> 
+                                        <input type="hidden" class="form-control" placeholder="" name="hid_userId" value="@Model.orgInfo.CreatedUserId">
+
                                         <!-- Submit button -->
-                                        <button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+                                        <button type="submit" class="btn btn-primary btn-block mb-4">Submit</button>
                                     </form>
                                 </div>
                             </div>
