@@ -111,9 +111,11 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             //        }
             //    }
             //}
-             
-            SaveUploadFile(postedFile, Request.Form["hid_CurrentOrgid"]);
-            return RedirectToPage("Index");
+
+            string result = "";
+            result = SaveUploadFile(postedFile, Request.Form["hid_CurrentOrgid"], Request.Form["hid_userId"]);
+
+            return RedirectToPage("OrgSettings");
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -202,7 +204,34 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         //{
         //}
 
-        public void SaveUploadFile(IFormFile logofile, string OrgId)
+        public string SaveUploadFile(IFormFile logofile, string OrgId, string UserId)
+        { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
+            string result = "ok";
+            string fileName = Path.GetFileName(logofile.FileName);
+            string contentType = logofile.ContentType;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                logofile.CopyTo(ms);
+
+                UploadFile uf = new UploadFile();
+                uf.Id = "";
+                uf.Name = fileName;
+                uf.Data = ms.ToArray();
+                uf.ContentType = contentType;
+                uf.GroupTypeId = "1";
+                uf.LinkedGroupId = OrgId;
+                uf.UploadUserId = UserId;
+                uf.UploadDate = DateTime.Now.ToString();
+
+                result = uf.Save();
+                 
+            }
+            
+            return result;
+        }
+
+
+        public void SaveUploadFile2(IFormFile logofile, string OrgId)
         { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
 
             string fileName = Path.GetFileName(logofile.FileName);

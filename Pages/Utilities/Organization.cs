@@ -21,7 +21,7 @@ namespace Outreach.Pages.Utilities
         public string Phone;
         public string Email;        // general email
         public string WebURL;
-        public string Logo;
+        public UploadFile Logo;
         public List<UserLinkage> ManagerUserIds;
         public List<UserLinkage> MemberUserIds;
         public Organization()
@@ -39,7 +39,7 @@ namespace Outreach.Pages.Utilities
             Phone = "";
             Email = "";
             WebURL = "";
-            Logo = "";
+            Logo = new UploadFile();
             ManagerUserIds = new List<UserLinkage>();
             MemberUserIds = new List<UserLinkage>();
 
@@ -54,7 +54,10 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.Id=" + OrgId;
+                    string sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Status=st.StatusName " +
+                        " ,LogoFileID = (Select top 1 ul.Id from UploadFile ul where ul.FileTypeId = 1 and ul.GroupTypeId = 1 and ul.LinkedGroupId = o.Id )" +
+                        " from Organization o with(nolock) " +
+                        " left join StandardStatus st on st.Id = o.StatusId where o.Id=" + OrgId;
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -121,7 +124,12 @@ namespace Outreach.Pages.Utilities
                                     WebURL = reader["WebURL"].ToString();
                                 }
 
-                                // listOrgs.Add(Org);
+                                if (reader["LogoFileID"].GetType() != typeof(DBNull))
+                                {
+                                    string LogoFileID = reader["LogoFileID"].ToString();
+                                    Logo = new UploadFile(LogoFileID);
+                                }
+                                  
                             }
                         }
                     }
@@ -170,8 +178,7 @@ namespace Outreach.Pages.Utilities
                                    "StatusId = @StatusId," +
                                    "Phone = @Phone," +
                                    "Email = @Email," +
-                                   "WebURL = @WebURL " +
-                                   //"Logo = @Logo " +
+                                   "WebURL = @WebURL " + 
                                 " where id = '" + this.Id + "' ; Select newID=" + this.Id + "";
                     }
 
@@ -187,7 +194,6 @@ namespace Outreach.Pages.Utilities
                         cmd.Parameters.AddWithValue("@Phone", this.Phone);
                         cmd.Parameters.AddWithValue("@Email", this.Email);
                         cmd.Parameters.AddWithValue("@WebURL", this.WebURL);
-                       // cmd.Parameters.AddWithValue("@Logo", this.Logo); 
                        // cmd.ExecuteNonQuery();
                         newTaskID = (Int32)cmd.ExecuteScalar();
 
