@@ -81,9 +81,18 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         }
 
 
+        public async Task<IActionResult> OnPostAsync()
+        {
+
+            return Page();
 
 
-        public void OnPost()
+        }
+
+
+
+
+        public void OnPost2()
         {
             string result = "";
 

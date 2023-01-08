@@ -234,6 +234,40 @@
 
                         <li class="nav-header"><b>PROFILE</b></li>
 
+                        <li class="nav-item menu-open">
+                            @*                            <a href="#" class="nav-link">
+                            <p>
+                            Personal
+                            <i class="right fas fa-angle-left"></i>
+                            </p>
+                            </a>*@
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Personal/Dashboard/Dashboardpersonal">
+                                        <i class="far fa-solid fa-house nav-icon"></i>
+                                        <p>Home</p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
+                                        <i class="fa fa-solid fa-clock nav-icon"></i>
+                                        <p>
+                                            Scheduling
+                                        </p>
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="">
+                                        <i class="fa-solid fa-bell nav-icon"></i>
+                                        <p>
+                                            Inbox
+                                        </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
 
 
                         <!--ADMIN ONLY VIEW PLEASE-->
@@ -284,83 +318,7 @@
                         </li>
                         <!--ADMIN ONLY VIEW PLEASE-->
 
-
-                        <li class="nav-item menu-open">
-                            @*                            <a href="#" class="nav-link">
-                            <p>
-                            Personal
-                            <i class="right fas fa-angle-left"></i>
-                            </p>
-                            </a>*@
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Personal/Dashboard/Dashboardpersonal">
-                                        <i class="far fa-solid fa-house nav-icon"></i>
-                                        <p>Home</p>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
-                                        <i class="fa fa-solid fa-clock nav-icon"></i>
-                                        <p>
-                                            Scheduling
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="">
-                                        <i class="fa-solid fa-bell nav-icon"></i>
-                                        <p>
-                                            Inbox
-                                        </p>
-                                    </a>
-                                </li>
-
-                                <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="">
-                                        <i class="fa-solid fa-check nav-icon"></i>
-                                        <p>
-                                            Goals
-                                        </p>
-                                    </a>
-                                </li>
-
-                            </ul>
-                        </li>
-
-
-                        <li class="nav-header"><b>TEAMS</b></li>
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Teams
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamLight">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Team/Team List</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/Dashboardorg">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Team/Team Dashboard</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/Settings">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Team/Team Settings</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
+                        <li class="nav-header"><b>ORGANIZATION</b></li>
 
                         <!-- TEAMS VIEW IN PROGRESS -->
                         <li class="list-group-item nav-item">
@@ -406,85 +364,6 @@
                             </ul>
                         </li>
                         <!-- TEAMS VIEW IN PROGRESS END -->
-
-
-
-                        <li class="nav-header"><b>MANAGEMENT</b></li>
-
-                        <!--ORGANIZATION MEMBER/LEADER ONLY VIEW PLEASE-->
-
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Projects
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Projects/Projects/ProjectsLight">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Projects</p>
-                                    </a>
-                                </li>
-
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Projects/ProjectEdit/ProjectsEditLight">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Project Edit</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Projects/ProjectDetail/ProjectsDetailLight">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Project Detail</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-                        <!--NEEDS TO BE ADDED-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    Opportunities
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>My Opportunities</p>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/CreateOpportunities/CreateOpportunity">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>Create Opportunity</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-
-
-                        <!--NEEDS TO BE ADDED-->
-                        <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <p>
-                                    General Settings
-                                    <i class="right fas fa-angle-left"></i>
-                                </p>
-                            </a>
-                            <ul class="nav nav-treeview">
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/GeneralSettings/UISettings/UISettings">
-                                        <i class="far fa-solid fa-gear nav-icon"></i>
-                                        <p>UI Settings</p>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
                     </ul>
                 </nav>
 
