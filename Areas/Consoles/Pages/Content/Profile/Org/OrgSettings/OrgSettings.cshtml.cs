@@ -11,6 +11,7 @@ using System.IO;
 using System.Data.SqlClient;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using System.Xml.Linq;
 
 
 namespace Outreach.Areas.Identity.Pages.RegisterOrg
@@ -38,13 +39,6 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
-        }
-
-
-        public async Task<IActionResult> OnPostUploadfileAsync()
-        {
-            string a = "a";
-            return Page();
         }
 
 
@@ -94,8 +88,36 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
 
         }
 
-        public void OnPost()
+        public IActionResult OnPostUploadFileAsync(IFormFile postedFile)
         {
+            //string fileName = Path.GetFileName(postedFile.FileName);
+            //string contentType = postedFile.ContentType;
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    postedFile.CopyTo(ms);
+            //    string constr = this.Configuration.GetConnectionString("MyConn");
+            //    using (SqlConnection con = new SqlConnection(constr))
+            //    {
+            //        string query = "INSERT INTO tblFiles VALUES (@Name, @ContentType, @Data)";
+            //        using (SqlCommand cmd = new SqlCommand(query))
+            //        {
+            //            cmd.Connection = con;
+            //            cmd.Parameters.AddWithValue("@Name", fileName);
+            //            cmd.Parameters.AddWithValue("@ContentType", contentType);
+            //            cmd.Parameters.AddWithValue("@Data", ms.ToArray());
+            //            con.Open();
+            //            cmd.ExecuteNonQuery();
+            //            con.Close();
+            //        }
+            //    }
+            //}
+             
+            SaveUploadFile(postedFile, Request.Form["hid_CurrentOrgid"]);
+            return RedirectToPage("Index");
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        { 
             string result = "";
 
             orgInfo.Name = Request.Form["inputName"];
@@ -172,6 +194,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             {
                 errorMessage = result;
             }
+            return Page();
 
         }
 
@@ -179,7 +202,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         //{
         //}
 
-        public void OnPost2(IFormFile logofile, string OrgId)
+        public void SaveUploadFile(IFormFile logofile, string OrgId)
         { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
 
             string fileName = Path.GetFileName(logofile.FileName);
@@ -196,6 +219,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
                     {
                         cmd.Connection = con;
                         cmd.Parameters.AddWithValue("@Logo", ms.ToArray());
+                        cmd.Parameters.AddWithValue("@OrgId", OrgId);
                         con.Open();
                         cmd.ExecuteNonQuery();
                         con.Close();
@@ -294,7 +318,40 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         //    }
         //}
 
+        //public IActionResult OnPostUpload(FileUpload fileUpload)
+        //{
+        //    Creating upload folder
+        //    if (!Directory.Exists(fullPath))
+        //    {
+        //        Directory.CreateDirectory(fullPath);
+        //    }
+        //    var formFile = fileUpload.FormFile;
+        //    var filePath = Path.Combine(fullPath, formFile.FileName);
+
+        //    using (var stream = System.IO.File.Create(filePath))
+        //    {
+        //        formFile.CopyToAsync(stream);
+        //    }
+
+        //    // Process uploaded files
+        //    // Don't rely on or trust the FileName property without validation.
+        //    ViewData["SuccessMessage"] = formFile.FileName.ToString() + " files uploaded!!";
+        //    return Page();
+        //}
+
+
+        //public class FileUpload
+        //{
+        //    [Required]
+        //    [Display(Name = "File")]
+        //    public IFormFile FormFile { get; set; }
+        //    public string SuccessMessage { get; set; }
+        //}
+
+
+
     }
+
 
 }
 

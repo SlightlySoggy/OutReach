@@ -82,18 +82,18 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
         }
 
 
-        public async Task<IActionResult> OnPostAsync()
-        {
+        //public async Task<IActionResult> OnPostAsync()
+        //{
 
-            return Page();
-
-
-        }
+        //    return Page();
 
 
+        //}
 
 
-        public void OnPost2()
+
+
+        public void OnPost()
         {
             string result = "";
 
