@@ -44,7 +44,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
+                    <div class="col-12 col-md-12 col-lg-12 order-2 order-md-1">
                         <div class="row">
 @*                            <div class="col-12 col-sm-4">
                                 <div class="info-box bg-light">
@@ -77,24 +77,28 @@
                                     <div class="row">
                                         <div class="col-md-10 offset-md-1">
                                             <div class="row">
-                                                <div class="col-6">
+                                                <div class="col-4">
                                                     <div class="form-group">
-                                                        <label>Result Type:</label>
-                                                        <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
-                                                            <option>Opportunities</option>
-                                                            <option>Organizations</option>
-                                                            <option>Users</option>
+@*                                                        <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
+
+*@                                                        <label>Result Type:</label>
+                                                        <select class="select2" style="width: 100%;">
+
+                                                            <option selected>Opportunities</option>
+@*                                                          <option>Organizations</option>
+                                                            <option>Users</option>*@
                                                         </select>
+
                                                     </div>
                                                 </div>
-                                                <div class="col-3">
+                                                <div class="col-5">
                                                     <div class="form-group">
                                                         <label>Tags:</label>
-                                                        <select class="select2" style="width: 100%;">
-                                                        @foreach (var tag in Model.ListTag)
-                                                        {
-                                                        <option>@tag.TagName</option>
-                                                        }
+                                                        <select class="select2" multiple="multiple" style="width: 100%;">
+                                                            @foreach (var tag in Model.ListTag)
+                                                            {
+                                                                <option>@tag.TagName</option>
+                                                            }
                                                         </select>
                                                     </div>
                                                 </div>
@@ -124,18 +128,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
-                        <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
-                        <p class="text-muted">This feature is still in developement, please report any bugs you find using our contact page!
-
-                            If there are persistent issues contact Maxwell Li directly
-                        </p>
-
-
-                        <div class="text-center mt-5 mb-3">
-                            <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
-                        </div>
-                    </div>
                 </div>
             </div>
             <!-- /.card-body -->
@@ -144,80 +136,9 @@
 
         <div class="container-fluid">
             <div class="row">
-                <div class="col-md-3">
-
-                    <!-- Profile Image -->
-                    <div class="card card-primary card-outline">
-                        <div class="card-body box-profile">
-                            <div class="text-center">
-                                <img class="profile-user-img img-fluid img-circle"
-                                     src="../../dist/img/user4-128x128.jpg"
-                                     alt="User profile picture">
-                            </div>
-
-                            <h3 class="profile-username text-center">Nina Mcintire</h3>
-
-                            <ul class="list-group list-group-unbordered mb-3">
-
-
-                                <li class="list-group-item">
-                                    <b>Followers</b> <a class="float-right">1,322</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Following</b> <a class="float-right">543</a>
-                                </li>
-                                <li class="list-group-item">
-                                    <b>Friends</b> <a class="float-right">13,287</a>
-                                </li>
-                            </ul>
-                            <a class="btn btn-primary btn-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight"><b>View Profile</b></a>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                    <!-- About Me Box -->
-                    <div class="card card-primary">
-                        <div class="card-header">
-                            <h3 class="card-title">About Me</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <strong><i class="fas fa-book mr-1"></i> Education</strong>
-
-                            <p class="text-muted">
-                                B.S. in Computer Science from the University of Tennessee at Knoxville
-                            </p>
-
-                            <hr>
-
-                            <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
-
-                            <p class="text-muted">Malibu, California</p>
-
-                            <hr>
-
-                            <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
-
-                            <p class="text-muted">
-                                <span class="tag tag-danger">UI Design</span>
-                                <span class="tag tag-success">Coding</span>
-                                <span class="tag tag-info">Javascript</span>
-                                <span class="tag tag-warning">PHP</span>
-                                <span class="tag tag-primary">Node.js</span>
-                            </p>
-
-                            <hr>
-
-                            <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
-
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
-                        </div>
-                        <!-- /.card-body -->
-                    </div>
-                    <!-- /.card -->
-                </div>
+                
                 <!-- /.col -->
-                <div class="col-md-9">
+                <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">
                             <div class="content">
@@ -230,7 +151,9 @@
                                                     <div class="card-body py-5">
                                                         <div class="row">
                                                             <div class="col-lg-3 text-center">
+
                                                                 <img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="img-fluid mb-3" alt="user" />
+
                                                                 <div class="button-list mt-4 mb-3">
                                                                     <a class="btn btn-primary" asp-area="" asp-page="/Opportunities/job-detail" asp-route-OppId="@opp.Id">View Details</a>
                                                                     @*                                            <button type="button" class="btn btn-primary-rgba"><i class="feather icon-message-square mr-2"></i>View Details</button>

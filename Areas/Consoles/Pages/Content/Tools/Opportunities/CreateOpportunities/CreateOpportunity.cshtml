@@ -52,85 +52,185 @@
                         <div class="row">
                             <div class="col-12">
 
-                                <card>
-                                    <div class="row d-flex justify-content-center">
-                                        <div class="col-10">
+                                <div class="card card-default">
+                                    <div class="card-body p-0">
+                                        <div class="bs-stepper">
 
-                                            <div class="card-body p-5">
 
-                                                <!-- Pills content -->
-                                                <div class="tab-content">
-                                                    <div class="tab-pane fade show active">
-                                                        <form id="account" method="post">
+                                            <div class="bs-stepper-header" role="tablist">
 
-                                                            <div class="mb-3">
-                                                                <h6>Opportunity Name:</h6>
-                                                                <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+
+                                                <div class="step" data-target="#intros-part">
+                                                    <button type="button" class="step-trigger" role="tab" aria-controls="intros-part" id="intros-part-trigger">
+                                                        <span class="bs-stepper-circle">1</span>
+                                                        <span class="bs-stepper-label">Introduction</span>
+                                                    </button>
+                                                </div>
+
+
+                                                <div class="line"></div>
+
+
+                                                <div class="step" data-target="#details-part">
+                                                    <button type="button" class="step-trigger" role="tab" aria-controls="details-part" id="details-part-trigger">
+                                                        <span class="bs-stepper-circle">2</span>
+                                                        <span class="bs-stepper-label">Information</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="bs-stepper-content">
+
+
+                                                <div id="intros-part" class="content" role="tabpanel" aria-labelledby="intros-part-trigger">
+
+
+                                                    <form id="account" method="post">
+
+                                                        <div class="mb-3">
+                                                            <h6>Opportunity Name:</h6>
+                                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+                                                        </div>
+                                                        <br />
+
+@*                                                        <div class="mb-3">
+                                                            <h6>Inperson or online?</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">Inperson</option>
+                                                                    <option>Online</option>
+                                                                </select>
+                                                                <p>We will ask for either address or any required links later in the form</p>
                                                             </div>
-                                                            <br />
+                                                        </div>
+                                                        <br />*@
 
-                                                            <div class="mb-3">
-                                                                <h6>Inperson or online?</h6>
-                                                                <div class="form-group">
-                                                                    <select class="form-control select2bs4" style="width: 100%;">
-                                                                        <option selected="selected">Inperson</option>
-                                                                        <option>Online</option>
-                                                                    </select>
-                                                                    <p>We will ask for either address or any required links later in the form</p>
-                                                                </div>
+                                                        <div class="mb-3">
+                                                            <h6>One time or reoccuring?</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">One time</option>
+                                                                    <option>Reoccuring</option>
+                                                                </select>
+                                                                <p>We will ask for either date and time or date range later in the form</p>
                                                             </div>
-                                                            <br />
+                                                        </div>
+                                                        <br />
 
-                                                            <div class="mb-3">
-                                                                <h6>One time or reoccuring?</h6>
-                                                                <div class="form-group">
-                                                                    <select class="form-control select2bs4" style="width: 100%;">
-                                                                        <option selected="selected">One time</option>
-                                                                        <option>Reoccuring</option>
-                                                                    </select>
-                                                                    <p>We will ask for either date and time or date range later in the form</p>
-                                                                </div>
-                                                            </div>
-                                                            <br />
-
-                                                            <div class="mb-3">
-                                                                <h6>Description:</h6>
-                                                                <textarea class="form-control" id="summernote" rows="5" name="oppdesc">
+                                                        <div class="mb-3">
+                                                            <h6>Description:</h6>
+                                                            <textarea class="form-control" id="summernote" rows="5" name="oppdesc">
                                                                 Place <em>some</em> <u>text</u> <strong>here</strong>
                                                                 </textarea>
-                                                                <p>This is what people will rely on when viewing your opportunity. You can always change this later!</p>
-                                                            </div>
+                                                            <p>This is what people will rely on when viewing your opportunity. You can always change this later!</p>
+                                                        </div>
 
-@*                                                            <div class="mb-3">
-                                                                <h6>Timeframe:</h6>
-                                                                <div class="input-group">
-                                                                    <div class="input-group-prepend">
-                                                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                                                    </div>
-                                                                    <input type="text" class="form-control float-right" id="reservationtime">
-                                                                </div>
-                                                                <p>What date and time does your first opportunity start and last one end</p>
-                                                            </div>*@
+                                                        @*                                                            <div class="mb-3">
+                                                        <h6>Timeframe:</h6>
+                                                        <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control float-right" id="reservationtime">
+                                                        </div>
+                                                        <p>What date and time does your first opportunity start and last one end</p>
+                                                        </div>
 
-                                                            <div class="justify-content-center">
-                                                                <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
-                                                            </div>
-                                                            <br />
+                                                        <div class="justify-content-center">
+                                                            <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
+                                                        </div>*@
+                                                        <br />
 
-                                                            <!-- Submit button -->
-                                                            <button type="submit" class="btn btn-primary btn-block mb-4">submit</button>
-                                                        </form>
-                                                    </div>
+                                                        <!-- Submit button -->
+                                                    </form>
+
+
+                                                    <button class="btn btn-primary" onclick="stepper.next()">Next</button>
                                                 </div>
+
+
+                                                <div id="details-part" class="content" role="tabpanel" aria-labelledby="details-part-trigger">
+
+
+                                                    <form id="account" method="post">
+
+                                                        <div class="mb-3">
+                                                            <h6>Address</h6>
+                                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>Inperson or online?</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">Inperson</option>
+                                                                    <option>Online</option>
+                                                                </select>
+                                                                <p>We will ask for either address or any required links later in the form</p>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>One time or reoccuring?</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">One time</option>
+                                                                    <option>Reoccuring</option>
+                                                                </select>
+                                                                <p>We will ask for either date and time or date range later in the form</p>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>Description:</h6>
+                                                            <textarea class="form-control" id="summernote" rows="5" name="oppdesc">
+                                                                Place <em>some</em> <u>text</u> <strong>here</strong>
+                                                                </textarea>
+                                                            <p>This is what people will rely on when viewing your opportunity. You can always change this later!</p>
+                                                        </div>
+
+                                                        @*                                                            <div class="mb-3">
+                                                        <h6>Timeframe:</h6>
+                                                        <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                                        </div>
+                                                        <input type="text" class="form-control float-right" id="reservationtime">
+                                                        </div>
+                                                        <p>What date and time does your first opportunity start and last one end</p>
+                                                        </div>
+
+                                                        <div class="justify-content-center">
+                                                        <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
+                                                        </div>*@
+                                                        <br />
+
+                                                        <!-- Submit button -->
+                                                    </form>
+
+
+                                                    <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
+                                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                                </div>
+
+
                                             </div>
                                         </div>
                                     </div>
-
-                                </card>
-                            
+                                </div>
                             </div>
                         </div>
                     </div>
+
+
+                    
+
+
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
                         <h3 class="text-primary"><i class="fas fa-paint-brush"></i> Outreach v3</h3>
                         <p class="text-muted">
