@@ -140,7 +140,7 @@ namespace Outreach.Pages.Utilities
             return listOpp;
 
         }
-        public List<Opportunity> SearchOpportunities(string searchtxt,string tagids="")
+        public List<Opportunity> SearchOpportunities(string searchtxt, string tagids = "", string orderby = "")
         { 
 
             List<Opportunity> listOpp = new List<Opportunity>();
@@ -155,12 +155,22 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "select Id,OpportunityTitle,Description,Responsibility,Requirement,CreatedOrgId,CreatedDate,CreatedUserId,StatusId,StartDate,EndDate,Schedule,StatusId,SiteAddress from Opportunity o with(nolock) where EndDate >= getdate()  and OpportunityTitle like '%" + searchtxt + "%'";
-                     
-                    if (tagids != "")
+
+                    if (tagids != null && tagids != "")
                     {
                         sql = sql + " and o.Id in (Select OpportunityId from OpportunityTag where TagId in (" + tagids + "))";
                     }
-                    sql = sql + " order by CreatedDate desc ";
+                    if (orderby == "title")
+                    {
+                        sql = sql + " order by OpportunityTitle ";
+                    }
+                    else if (orderby == "date")
+                    {
+                        sql = sql + " order by CreatedDate ";
+                    }
+                    else 
+                        sql = sql + " order by CreatedDate desc";
+
                     //string sql = "select Id,OpportunityTitle,Description,Responsibility,Requirement,CreatedOrgId,CreatedDate,CreatedUserId,StatusId,StartDate,EndDate,Schedule,StatusId,Tags,SiteAddress from Opportunity with(nolock) where ID = " + searchtxt;
                     //string sql = "select Id,OpportunityTitle,Description,Responsibility,Requirement,CreatedOrgId,CreatedDate,CreatedUserId,StatusId,StartDate,EndDate,Schedule,StatusId,Tags,SiteAddress from Opportunity with(nolock) where ID = '" + searchtxt + "'";
                     using (SqlCommand command = new SqlCommand(sql, connection))
