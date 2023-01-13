@@ -66,7 +66,7 @@
                     <a class="nav-link" asp-area="" asp-page="/HomePages/index">Home</a>
                 </li>
                 <li class="nav-item d-none d-sm-inline-block">
-                    <a href="#" class="nav-link">Contact</a>
+                    <a asp-area="" asp-page="/Content/contact" class="nav-link">Contact</a>
                 </li>
             </ul>
 
@@ -94,7 +94,9 @@
                     </div>
                 </li>
 
-                <!-- Messages Dropdown Menu -->
+                <!-- MESSAGES BUTTON -->
+
+                @*<!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
@@ -151,8 +153,10 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
-                </li>
-                <!-- Notifications Dropdown Menu -->
+                </li>*@
+
+
+                @*<!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -188,7 +192,7 @@
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
-                </li>
+                </li>*@
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -211,7 +215,7 @@
                             <img src="../../dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
                         </div>
                         <div class="info">
-                            <a class="d-block" asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight">Alexander Pierce</a>
+                            <a href="" class="d-block">Sample Name</a> @*asp-area="Consoles" asp-page="/Content/Profile/Personal/Profile/ProfileLight"*@
                         </div>
                     </div>
 
@@ -258,14 +262,14 @@
                                     </a>
                                 </li>
 
-                                <li>
+@*                                <li>
                                     <a class="nav-link" asp-area="Consoles" asp-page="">
                                         <i class="fa-solid fa-bell nav-icon"></i>
                                         <p>
                                             Inbox
                                         </p>
                                     </a>
-                                </li>
+                                </li>*@
                             </ul>
                         </li>
 
@@ -280,21 +284,21 @@
                             </a>
                             <ul class="nav nav-treeview">
                                 <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Administrator/Tags/Index">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Tags/Index">
                                         <i class="fa fa-solid fa-icons nav-icon"></i>
                                         <p>Tags</p>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Administrator/Role/Index">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Role/Index">
                                         <i class="fa fa-solid fa-users nav-icon"></i>
                                         <p>Roles</p>
                                     </a>
                                 </li>
 
                                 <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Administrator/Users/RegisteredUsers">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Users/RegisteredUsers">
                                         <i class="fa fa-solid fa-address-book nav-icon"></i>
                                         <p>Users</p>
                                     </a>
@@ -302,14 +306,14 @@
 
                                 <!--NEEDS TO BE ADDED-->
                                 <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Administrator/Contacts/Contacts">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Contacts/Contacts">
                                         <i class="fa fa-solid fa-inbox nav-icon"></i>
                                         <p>Contacts</p>
                                     </a>
                                 </li>
 
                                 <li class="nav-item">
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Administrator/Analytics/Analytics">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Analytics/Analytics">
                                         <i class="far fa-circle nav-icon"></i>
                                         <p>Analytics</p>
                                     </a>
@@ -323,7 +327,7 @@
                         <!-- TEAMS VIEW IN PROGRESS -->
                         <li class="list-group-item nav-item">
                             <span style="display: table-cell; padding: 0 8px; vertical-align: middle;">
-                                <a asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails">Nathan Ip </a>
+                                <a asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails">Org Name </a>
                             </span>
 
                             <span class="" style="display: table-cell; padding: 0 8px; vertical-align: middle;">
@@ -331,7 +335,7 @@
                                     <i class="fa-solid fa-ellipsis nav-icon"></i>
                                 </a>
                                 
-                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                @*<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                     <a href="#" class="dropdown-item">
                                         <!-- Message Start -->
                                         <div class="media">
@@ -347,9 +351,9 @@
                                         </div>
                                         <!-- Message End -->
                                     </a>
-                                </div>
+                                </div>*@
                             </span>
-
+@*
                             <span class="nav-link" style="display: table-cell; vertical-align: middle;">
                                 <i class="balls fas fa-angle-left nav-icon"></i>
                             </span>
@@ -361,7 +365,7 @@
                                         <p>MEDIA</p>
                                     </a>
                                 </li>
-                            </ul>
+                            </ul>*@
                         </li>
                         <!-- TEAMS VIEW IN PROGRESS END -->
                     </ul>

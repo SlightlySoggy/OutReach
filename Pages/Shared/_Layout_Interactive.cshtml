@@ -30,7 +30,7 @@
 
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5" asp-area="" asp-page="/HomePages/index">
+        <a class="navbar-brand d-flex align-items-center text-center py-0 px-4 px-lg-5" asp-area="" asp-page="/">
             <h1 class="m-0 text-primary">OutReached</h1>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -38,7 +38,9 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto p-4 p-lg-0">
-                <a class="nav-item nav-link active" asp-area="" asp-page="/Content/index">Home</a>
+                <a class="nav-item nav-link active" asp-area="" asp-page="/">Home</a>
+
+                <a class="nav-item nav-link" asp-area="" asp-page="/Content/contact">Contact</a>
 
                 <a class="nav-item nav-link" asp-area="" asp-page="/Opportunities/job-list">Opportunity List</a>
 
@@ -48,12 +50,12 @@
 
 
 
-            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="Consoles" asp-page="/Content/Profile/Organization/RegisterOrganization">Register Organization<i class="fa fa-arrow-right ms-3"></i></a>
+            <a class="btn btn-primary rounded-0 py-4 px-lg-5 d-none d-lg-block" asp-area="Consoles" asp-page="/Content/Profile/Org/RegisterOrg">Register Organization<i class="fa fa-arrow-right ms-3"></i></a>
         </div>
     </nav>
     <!-- Navbar End -->
 
-
+@*
     <div class="navbar navbar-expand-lg navbar-light bg-white">
         <!-- Container wrapper -->
         <div class="container justify-content-center justify-content-md-between">
@@ -77,11 +79,11 @@
             </button>
         </div>
         <!-- Container wrapper -->
-    </div>
+    </div>*@
 
 
 
-    <div id="container">
+    <div id="">
         <main role="main"> 
             @RenderBody()
         </main>

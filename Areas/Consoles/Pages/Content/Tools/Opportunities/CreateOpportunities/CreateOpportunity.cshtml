@@ -21,7 +21,7 @@
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a asp-area="" asp-page="/HomePages/index">Home</a></li>
                         <li class="breadcrumb-item active">Create/Edit Opportunity</li>
                     </ol>
                 </div>
@@ -95,84 +95,17 @@
                                                         </div>
                                                         <br />
 
-@*                                                        <div class="mb-3">
-                                                            <h6>Inperson or online?</h6>
-                                                            <div class="form-group">
-                                                                <select class="form-control select2bs4" style="width: 100%;">
-                                                                    <option selected="selected">Inperson</option>
-                                                                    <option>Online</option>
-                                                                </select>
-                                                                <p>We will ask for either address or any required links later in the form</p>
-                                                            </div>
+                                                        @*                                                        <div class="mb-3">
+                                                        <h6>Inperson or online?</h6>
+                                                        <div class="form-group">
+                                                        <select class="form-control select2bs4" style="width: 100%;">
+                                                        <option selected="selected">Inperson</option>
+                                                        <option>Online</option>
+                                                        </select>
+                                                        <p>We will ask for either address or any required links later in the form</p>
+                                                        </div>
                                                         </div>
                                                         <br />*@
-
-                                                        <div class="mb-3">
-                                                            <h6>One time or reoccuring?</h6>
-                                                            <div class="form-group">
-                                                                <select class="form-control select2bs4" style="width: 100%;">
-                                                                    <option selected="selected">One time</option>
-                                                                    <option>Reoccuring</option>
-                                                                </select>
-                                                                <p>We will ask for either date and time or date range later in the form</p>
-                                                            </div>
-                                                        </div>
-                                                        <br />
-
-                                                        <div class="mb-3">
-                                                            <h6>Description:</h6>
-                                                            <textarea class="form-control" id="summernote" rows="5" name="oppdesc">
-                                                                Place <em>some</em> <u>text</u> <strong>here</strong>
-                                                                </textarea>
-                                                            <p>This is what people will rely on when viewing your opportunity. You can always change this later!</p>
-                                                        </div>
-
-                                                        @*                                                            <div class="mb-3">
-                                                        <h6>Timeframe:</h6>
-                                                        <div class="input-group">
-                                                        <div class="input-group-prepend">
-                                                        <span class="input-group-text"><i class="far fa-clock"></i></span>
-                                                        </div>
-                                                        <input type="text" class="form-control float-right" id="reservationtime">
-                                                        </div>
-                                                        <p>What date and time does your first opportunity start and last one end</p>
-                                                        </div>
-
-                                                        <div class="justify-content-center">
-                                                            <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
-                                                        </div>*@
-                                                        <br />
-
-                                                        <!-- Submit button -->
-                                                    </form>
-
-
-                                                    <button class="btn btn-primary" onclick="stepper.next()">Next</button>
-                                                </div>
-
-
-                                                <div id="details-part" class="content" role="tabpanel" aria-labelledby="details-part-trigger">
-
-
-                                                    <form id="account" method="post">
-
-                                                        <div class="mb-3">
-                                                            <h6>Address</h6>
-                                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
-                                                        </div>
-                                                        <br />
-
-                                                        <div class="mb-3">
-                                                            <h6>Inperson or online?</h6>
-                                                            <div class="form-group">
-                                                                <select class="form-control select2bs4" style="width: 100%;">
-                                                                    <option selected="selected">Inperson</option>
-                                                                    <option>Online</option>
-                                                                </select>
-                                                                <p>We will ask for either address or any required links later in the form</p>
-                                                            </div>
-                                                        </div>
-                                                        <br />
 
                                                         <div class="mb-3">
                                                             <h6>One time or reoccuring?</h6>
@@ -214,6 +147,65 @@
                                                     </form>
 
 
+                                                    <button class="btn btn-primary" onclick="stepper.next()">Next</button>
+                                                </div>
+
+
+                                                <div id="details-part" class="content" role="tabpanel" aria-labelledby="details-part-trigger">
+
+
+                                                    <form id="account" method="post">
+
+                                                        <div class="mb-3">
+                                                            <h6>Address</h6>
+                                                            <input type="text" class="form-control" placeholder="" name="opptitle" value="">
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>Status</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">Private</option>
+                                                                    <option>Public</option>
+                                                                </select>
+                                                                <p>Whether or not this will appear on the public search</p>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>Tags</h6>
+                                                            <div class="form-group">
+                                                                <select class="form-control select2bs4" style="width: 100%;">
+                                                                    <option selected="selected">One time</option>
+                                                                    <option>Reoccuring</option>
+                                                                </select>
+                                                                <p>We will ask for either date and time or date range later in the form</p>
+                                                            </div>
+                                                        </div>
+                                                        <br />
+
+                                                        <div class="mb-3">
+                                                            <h6>Timeframe:</h6>
+                                                            <div class="input-group">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text"><i class="far fa-clock"></i></span>
+                                                                </div>
+                                                                <input type="text" class="form-control float-right" id="reservationtime">
+                                                            </div>
+                                                            <p>What date and time does your opportunity start and end</p>
+                                                        </div>
+
+                                                        <div class="justify-content-center">
+                                                            <div class="g-recaptcha" data-sitekey="6Le8jJojAAAAAE6DrIJcVv0H5htZ3S_CKBwBMmSX"></div>
+                                                        </div>
+                                                        <br />
+
+                                                        <!-- Submit button -->
+                                                    </form>
+
+
                                                     <button class="btn btn-primary" onclick="stepper.previous()">Previous</button>
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                                 </div>
@@ -228,7 +220,7 @@
                     </div>
 
 
-                    
+
 
 
                     <div class="col-12 col-md-12 col-lg-4 order-1 order-md-2">
@@ -267,7 +259,7 @@
                             </li>
                         </ul>
                         <div class="text-center mt-5 mb-3">
-                            <a href="#" class="btn btn-sm btn-primary">Report Bug</a>
+                            <a class="btn btn-sm btn-primary" asp-area="" asp-page="/Content/ReportBug">Report Bug</a>
                         </div>
                     </div>
                 </div>

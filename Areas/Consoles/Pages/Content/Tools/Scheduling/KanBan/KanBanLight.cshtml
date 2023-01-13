@@ -14,23 +14,19 @@
     <!-- Left navbar links -->
 
     <ul class="navbar-nav">
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="//Content/Tools/Scheduling/Calendar/Calendarlight">Overview</a>
-        </li>
-        @*<li class="nav-item d-none d-sm-inline-block">
-        <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Todo/Todo">Todo</a>
-        </li>*@
+
         <li class="nav-item d-none d-sm-inline-block active">
             <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">Board</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="//Content/Tools/Scheduling/Calendar/Calendarlight">Calendar</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Calendar/Calendarlight">Calendar</a>
         </li>
 
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">List</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities">Opportunities</a>
         </li>
+
     </ul>
 </nav>
 
@@ -44,7 +40,7 @@
           </div>
           <div class="col-sm-6 d-none d-sm-block">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a asp-area="" asp-page="/HomePages/index">Home</a></li>
               <li class="breadcrumb-item active">Kanban Board</li>
             </ol>
           </div>

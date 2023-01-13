@@ -1,10 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Outreach.Areas.Consoles.Pages.Content.Tools.Scheduling.Todo
-
+namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 {
-    public class TodoModel : PageModel
+    public class MembersModel : PageModel
     {
         public void OnGet()
         {

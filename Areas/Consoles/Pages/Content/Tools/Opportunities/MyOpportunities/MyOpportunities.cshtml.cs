@@ -7,15 +7,15 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
 {
     public class MyOpportunitiesModel : PageModel
     {
-
         public List<Opportunity> oppList { get; set; }
         public List<Tag> ListTag = new List<Tag>();
+        public List<string> SelectedTagIds = new List<string>();
         public string defaultsearchtext = "";
         public void OnGet()
         {
             GeneralUtilities ut = new GeneralUtilities();
 
-            if (Request.Query["Searchkeyword"] != "")
+            if (Request.Query["Searchkeyword"].ToString() != "")
             {
                 string txtSearch = Request.Query["Searchkeyword"];
                 oppList = ut.SearchOpportunities(txtSearch, "");
@@ -24,7 +24,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
             }
             else
             {
-                oppList = ut.GetRecentPostOpportunities(10);
+                oppList = new List<Opportunity> { };
             }
 
             Tag tag = new Tag();
@@ -57,21 +57,21 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
 
 
             string txtSearch = "";
-            if (Request.Form["TxtSearch1"] != "")
+            if (Request.Form["TxtSearch"] != "")
             {
-                txtSearch = Request.Form["TxtSearch1"];
+                defaultsearchtext = Request.Form["TxtSearch"];
             }
-            //else if (Request.Form["TxtSearch2"] != "")
-            //{
-            //    txtSearch = Request.Form["TxtSearch2"];
-            //}
 
             GeneralUtilities ut = new GeneralUtilities();
 
-            if (txtSearch != null || Request.Form["chktag"] != "")
+            if (txtSearch != null || Request.Form["chkTag"] != "")
             {
-                oppList = ut.SearchOpportunities(txtSearch, Request.Form["chktag"]);
+                SelectedTagIds = Request.Form["chkTag"].ToString().Split(',').ToList();
+                oppList = ut.SearchOpportunities(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
             }
+
+            Tag tag = new Tag();
+            ListTag = tag.GetReferencedTagsbyOpptunityId(""); // get all active tags
         }
         //Response.Redirect("Index");
     }

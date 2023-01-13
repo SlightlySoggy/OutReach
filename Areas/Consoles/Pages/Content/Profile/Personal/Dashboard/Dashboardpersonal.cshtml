@@ -17,7 +17,7 @@
                         </div><!-- /.col -->
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a asp-area="" asp-page="/HomePages/index">Home</a></li>
                                 <li class="breadcrumb-item active">Dashboard v1</li>
                             </ol>
                         </div><!-- /.col -->
@@ -36,38 +36,38 @@
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2300</span>
+                                            <span class="info-box-text text-center text-muted">Volunteer Hours</span>
+                                            <span class="info-box-number text-center text-muted mb-0">Null</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                            <span class="info-box-number text-center text-muted mb-0">2000</span>
+                                            <span class="info-box-text text-center text-muted">Opportuniies Created</span>
+                                            <span class="info-box-number text-center text-muted mb-0">Null</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-4">
                                     <div class="info-box bg-light">
                                         <div class="info-box-content">
-                                            <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                                            <span class="info-box-number text-center text-muted mb-0">20</span>
+                                            <span class="info-box-text text-center text-muted">Applied Opportunities</span>
+                                            <span class="info-box-number text-center text-muted mb-0">Null</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-12">
-                                    <h4>Recent Activity</h4>
+                                    <h4>Upcoming Volunteer Opportunity</h4>
                                     <div class="post">
                                         <div class="user-block">
                                             <img class="img-circle img-bordered-sm" src="../../dist/img/user1-128x128.jpg" alt="user image">
                                             <span class="username">
-                                                <a href="#">Jonathan Burke Jr.</a>
+                                                <a href="#">Edmonton Food Bank</a>
                                             </span>
-                                            <span class="description">Shared publicly - 7:45 PM today</span>
+                                            <span class="description">7:45 PM today</span>
                                         </div>
                                         <!-- /.user-block -->
                                         <p>
@@ -90,17 +90,16 @@
                             <div class="text-muted">
                                 <p class="text-sm">
                                     Client Company
-                                    <b class="d-block">Deveint Inc</b>
+                                    <b class="d-block">Outreaching World!</b>
                                 </p>
                                 <p class="text-sm">
                                     Project Leader
-                                    <b class="d-block">Tony Chicken</b>
+                                    <b class="d-block">Maxwell Li</b>
                                 </p>
                             </div>
 
                             <div class="text-center mt-5 mb-3">
-                                <a href="#" class="btn btn-sm btn-primary">Add files</a>
-                                <a href="#" class="btn btn-sm btn-warning">Report Bug</a>
+                                <a class="btn btn-sm btn-primary" asp-area="" asp-page="/Content/ReportBug">Report Bug</a>
                             </div>
                         </div>
                     </div>
@@ -122,7 +121,7 @@
                                         To Do List
                                     </h3>
 
-                                    <div class="card-tools">
+@*                                    <div class="card-tools">
                                         <ul class="pagination pagination-sm">
                                             <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
                                             <li class="page-item"><a href="#" class="page-link">1</a></li>
@@ -130,7 +129,7 @@
                                             <li class="page-item"><a href="#" class="page-link">3</a></li>
                                             <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
                                         </ul>
-                                    </div>
+                                    </div>*@
                                 </div>
                                 <!-- /.card-header -->
                                 <div class="card-body">
@@ -250,7 +249,7 @@
                         <section class="col-lg-5 connectedSortable">
 
 
-                            <!-- DIRECT CHAT -->
+                            @*<!-- DIRECT CHAT -->
                             <div class="card direct-chat direct-chat-primary">
                                 <div class="card-header">
                                     <h3 class="card-title">Direct Chat</h3>
@@ -445,8 +444,11 @@
                                     </form>
                                 </div>
                                 <!-- /.card-footer-->
+
                             </div>
-                            <!--/.direct-chat -->
+                            <!--/.direct-chat -->*@
+
+
                             <!-- Calendar -->
                             <div class="card">
                                 <div class="card-header border-0">
@@ -458,7 +460,7 @@
                                     <div class="card-tools">
                                         <!-- button with a dropdown -->
                                         <div class="btn-group">
-                                            <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                            <button type="button" class="btn btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
                                                 <i class="fas fa-bars"></i>
                                             </button>
                                             <div class="dropdown-menu" role="menu">
@@ -468,10 +470,10 @@
                                                 <a href="#" class="dropdown-item">View calendar</a>
                                             </div>
                                         </div>
-                                        <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                        <button type="button" class="btn btn-sm" data-card-widget="collapse">
                                             <i class="fas fa-minus"></i>
                                         </button>
-                                        <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                        <button type="button" class="btn btn-sm" data-card-widget="remove">
                                             <i class="fas fa-times"></i>
                                         </button>
                                     </div>
