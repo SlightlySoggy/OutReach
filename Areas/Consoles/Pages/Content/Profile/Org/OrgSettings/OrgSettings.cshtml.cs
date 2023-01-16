@@ -87,38 +87,9 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             return Page();
 
         }
+         
 
-        public IActionResult OnPostUploadFileAsync(IFormFile postedFile)
-        {
-            //string fileName = Path.GetFileName(postedFile.FileName);
-            //string contentType = postedFile.ContentType;
-            //using (MemoryStream ms = new MemoryStream())
-            //{
-            //    postedFile.CopyTo(ms);
-            //    string constr = this.Configuration.GetConnectionString("MyConn");
-            //    using (SqlConnection con = new SqlConnection(constr))
-            //    {
-            //        string query = "INSERT INTO tblFiles VALUES (@Name, @ContentType, @Data)";
-            //        using (SqlCommand cmd = new SqlCommand(query))
-            //        {
-            //            cmd.Connection = con;
-            //            cmd.Parameters.AddWithValue("@Name", fileName);
-            //            cmd.Parameters.AddWithValue("@ContentType", contentType);
-            //            cmd.Parameters.AddWithValue("@Data", ms.ToArray());
-            //            con.Open();
-            //            cmd.ExecuteNonQuery();
-            //            con.Close();
-            //        }
-            //    }
-            //}
-
-            string result = "";
-            result = SaveUploadFile(postedFile, Request.Form["hid_CurrentOrgid"], Request.Form["hid_userId"]);
-
-            return RedirectToPage("OrgSettings");
-        }
-
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync(IFormFile postedFile)
         { 
             string result = "";
 
@@ -133,7 +104,7 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             //else
             //    orgInfo.OrganizationTaskStatusId = "1";
 
-
+            GeneralUtilities ut = new GeneralUtilities();
 
             if (string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrgid"]))
             { //special for new Organization 
@@ -142,56 +113,46 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
 
                 result = orgInfo.Save(); // Insert a new Organization 
             }
-            else
+            else 
             {
                 orgInfo.Id = Request.Form["hid_CurrentOrgid"];
-
-                ////1 update the Organization leader selection for existing Organization 
-
-                //GeneralUtilities ut = new GeneralUtilities();
-                //Organization existingOrganization = new Organization(Request.Form["hid_CurrentOrganizationid"]);
-                //List<string> newUserLeadlist = Request.Form["inputOrganizationLeader"].ToString().Split(',').ToList();
-
-
-                //result = ut.ProcessLinkedUsers(existingOrganization.ManagerUserIds, newUserLeadlist, "1", orgInfo.Id, "1");
-
-
-                ////2 update the Organization member selection for existing Organization  
-                //List<string> newMemberlist = Request.Form["inputOrganizationMember"].ToString().Split(',').ToList();
-
-                ////remove lead user from the member selection  
-                //List<string> newMemberlist2 = new List<string>();
-                //var differentMembers2 = newMemberlist.Where(p2 => newUserLeadlist.All(p => p2 != p)).ToList<string>();
-                //differentMembers2.ForEach(u => newMemberlist2.Add(u));
-
-                //result = ut.ProcessLinkedUsers(existingOrganization.MemberUserIds, newMemberlist2, "1", orgInfo.Id, "0");
-
-
-
-                // update existing Organization
-
-                //string imageUrl = SaveImageFile(ImgUpload, "images/new", 600, 600, "images");
-
-                //SaveFile(Attachment);
-
+                 
                 result = orgInfo.Save();
+            }
+            orgInfo = new Organization(orgInfo.Id);
 
+            string tmpFielID = "";
+
+            if (postedFile != null)
+            {
+                if (orgInfo.Logo.Id != null && orgInfo.Logo.Id != "")
+                {
+                    UploadFile uf = new UploadFile(orgInfo.Logo.Id);
+                    uf.Delete(); // delete old attachment.
+
+                }
+                tmpFielID = ut.SaveUploadFile(postedFile, "1", orgInfo.Id, "1", Request.Form["hid_userId"]);
+                if (ut.IsNumeric(tmpFielID))
+                {
+                    orgInfo.Logo.Id = tmpFielID;
+                    result = "ok";
+                }
             }
 
-
-
-            if (result == "ok" && !string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrganizationid"]))
+            if (result == "ok" && !string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrgid"]))
             {
                 Random random = new Random();
                 int randomNumber = random.Next(1000, 9999);
 
-                Response.Redirect("OrganizationsEditLight?OrganizationId=" + Request.Form["hid_CurrentOrganizationid"] + "&Random=" + randomNumber.ToString());
+                //Response.Redirect("OrgSettings?OrgId=" + Request.Form["hid_CurrentOrgid"] + "&Random=" + randomNumber.ToString());
                 //Response.Redirect("#");
+
+                return Page();
             }
-            else if (result.Contains("failed") == false && string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrganizationid"]))
-            {
-                Response.Redirect("OrganizationSettings?Orgid=" + result);
-            }
+            //else if (result.Contains("failed") == false && string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrgid"]))
+            //{
+            //    Response.Redirect("OrgSettings?Orgid=" + result);
+            //}
             else
             {
                 errorMessage = result;
@@ -204,60 +165,8 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
         //{
         //}
 
-        public string SaveUploadFile(IFormFile logofile, string OrgId, string UserId)
-        { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
-            string result = "ok";
-            string fileName = Path.GetFileName(logofile.FileName);
-            string contentType = logofile.ContentType;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                logofile.CopyTo(ms);
 
-                UploadFile uf = new UploadFile();
-                uf.Id = "";
-                uf.Name = fileName;
-                uf.Data = ms.ToArray();
-                uf.ContentType = contentType;
-                uf.GroupTypeId = "1";
-                uf.LinkedGroupId = OrgId;
-                uf.UploadUserId = UserId;
-                uf.UploadDate = DateTime.Now.ToString();
-
-                result = uf.Save();
-                 
-            }
-            
-            return result;
-        }
-
-
-        public void SaveUploadFile2(IFormFile logofile, string OrgId)
-        { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
-
-            string fileName = Path.GetFileName(logofile.FileName);
-            string contentType = logofile.ContentType;
-            using (MemoryStream ms = new MemoryStream())
-            {
-                logofile.CopyTo(ms);
-                var builder = WebApplication.CreateBuilder();
-                string constr = builder.Configuration.GetConnectionString("MyAffDBConnection");
-                using (SqlConnection con = new SqlConnection(constr))
-                {
-                    string query = "Update Organization set Logo=@Logo where Id=@OrgId";
-                    using (SqlCommand cmd = new SqlCommand(query))
-                    {
-                        cmd.Connection = con;
-                        cmd.Parameters.AddWithValue("@Logo", ms.ToArray());
-                        cmd.Parameters.AddWithValue("@OrgId", OrgId);
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
-                    }
-                }
-            }
-
-            // return RedirectToPage("Index");
-        }
+         
 
         //private bool IsImage(HttpPostedFile file)
         //{

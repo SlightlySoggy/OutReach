@@ -22,14 +22,20 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Tags
             tag.Id = "0";
             tag.TagName = Request.Form["tagname"];
             tag.StatusId = "1";
-            var result = tag.Save(tag.Id);
+            var result = "";
+
+            if (Request.Form["tagname"].ToString().Trim()!="")
+            { 
+            result = tag.Save(tag.Id);
+
+            }
 
             if (result == "ok")
             { 
                 successMessage = "Tag name was changed successfully.";
 
 
-                Response.Redirect("Index");
+                //Response.Redirect("Index");
             }
             else
             {

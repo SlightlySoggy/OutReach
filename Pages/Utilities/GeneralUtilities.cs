@@ -1361,6 +1361,32 @@ namespace Outreach.Pages.Utilities
         }
 
 
+        public string SaveUploadFile(IFormFile uploadfile, string GroupTypeId, string LinkedGroupId, string FileTypeId, string UserId)
+        { // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx
+            string result = "ok";
+            string fileName = Path.GetFileName(uploadfile.FileName);
+            string contentType = uploadfile.ContentType;
+            using (MemoryStream ms = new MemoryStream())
+            {
+                uploadfile.CopyTo(ms);
+
+                UploadFile uf = new UploadFile();
+                uf.Id = "";
+                uf.Name = fileName;
+                uf.Data = ms.ToArray();
+                uf.ContentType = contentType;
+                uf.GroupTypeId = GroupTypeId;
+                uf.LinkedGroupId = LinkedGroupId;
+                uf.FileTypeId = FileTypeId;
+                uf.UploadUserId = UserId;
+                uf.UploadDate = DateTime.Now.ToString();
+
+                result = uf.Save();
+
+            }
+
+            return result;
+        }
 
     } 
 } 

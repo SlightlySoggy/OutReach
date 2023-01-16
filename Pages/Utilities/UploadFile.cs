@@ -49,12 +49,12 @@ namespace Outreach.Pages.Utilities
                 {
                     connection.Open();
                     string sql = "";
-                    if (Id.Trim() != "")
+                    if (id.Trim() != "")
 
                         sql = " Select ul.Id, ul.Name, ul.Data, ul.ContentType, ul.FileTypeId, ul.GroupTypeId, ul.LinkedGroupId, ul.UploadUserId, ul.UploadDate, LinkTo=gt.name " +
                             " from UploadFile ul with(nolock) " +
                             " left join GroupType gt on gt.Id = ul.GroupTypeId " +
-                            " where Id='" + id + "'  ";
+                            " where ul.Id='" + id + "'  ";
 
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
@@ -137,7 +137,7 @@ namespace Outreach.Pages.Utilities
             //save the new UploadFile into the database, One task can only link to one thing: Org, team or project
             // https://www.aspsnippets.com/Articles/ASPNet-Core-Razor-Pages-Upload-Files-Save-Insert-file-to-Database-and-Download-Files.aspx 
 
-            string result = "ok";
+            string result = ""; // will return fileID or "Failed" message
             int newID = 0;
             try
             {
@@ -183,7 +183,7 @@ namespace Outreach.Pages.Utilities
                         //cmd.ExecuteNonQuery();
                         newID = (Int32)cmd.ExecuteScalar();
                         Id = newID.ToString();
-
+                        result = Id;
                     }
                 }
             }

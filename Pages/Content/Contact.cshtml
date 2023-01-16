@@ -70,35 +70,55 @@
                     <div class="col-md-6">
                         <div class="wow fadeInUp" data-wow-delay="0.5s">
                             <h1 class="mb-4">Message Us</h1>
-                            <form>
+                            <form method="post">
+                                <!-- Manditory for form functionality (Post back) -->
                                 <div class="row g-3">
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="name" placeholder="Your Name">
+                                            <input type="text" class="form-control" id="name" placeholder="Your Name" aria-required="true" name="inputName" value="@Model.ContactInfo.Name">
                                             <label for="name">Your Name</label>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating">
-                                            <input type="email" class="form-control" id="email" placeholder="Your Email">
+                                            <input type="text" class="form-control" id="name" placeholder="Your Email" aria-required="true" name="inputEmail" value="@Model.ContactInfo.Email">
                                             <label for="email">Your Email</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <input type="text" class="form-control" id="subject" placeholder="Subject">
+                                            <input type="text" class="form-control" id="name" placeholder="Subject" aria-required="true" name="inputSubject" value="@Model.ContactInfo.Subject">
                                             <label for="subject">Subject</label>
                                         </div>
                                     </div>
                                     <div class="col-12">
                                         <div class="form-floating">
-                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px"></textarea>
+                                            <textarea class="form-control" placeholder="Leave a message here" id="message" style="height: 150px" aria-required="true" name="inputMessage">@Model.ContactInfo.Message</textarea>
                                             <label for="message">Message</label>
                                         </div>
                                     </div>
+
+                                    <input type="hidden" class="form-control" placeholder="" name="hidUserId" value="@Model.user_id">
+
                                     <div class="col-12">
                                         <button class="btn btn-primary w-100 py-3" type="submit">Send Message</button>
                                     </div>
+
+                                    @if (Model.successMessage.Length > 0)
+                                    {
+                                        <div class='alert alert-success alert-dismissible fade show' Tag='alert'>
+                                            <strong>@Model.successMessage</strong>
+                                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                        </div>
+                                    }
+                                    @if (Model.errorMessage.Length > 0)
+                                    {
+                                        <div class='alert alert-warning alert-dismissible fade show' Tag='alert'>
+                                            <strong>@Model.errorMessage</strong>
+                                            <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>
+                                        </div>
+                                    }
+
                                 </div>
                             </form>
                         </div>
@@ -112,4 +132,3 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
