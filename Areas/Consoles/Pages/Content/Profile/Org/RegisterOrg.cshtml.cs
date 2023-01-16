@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -12,8 +13,10 @@ using System.Security.Cryptography;
 namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
 
 {
+    [Authorize]
     public class RegisterOrganizationModel : PageModel
     {
+        
         public Organization orgInfo = new Organization();
 
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -40,8 +43,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to find signin user info.");
+                //throw new InvalidOperationException($"Unable to find signin user info.");
                 return Page();
+                //Response.Redirect("RegisterOrganization?Orgid=" + result);
             }
             GeneralUtilities ut = new GeneralUtilities();
             user_id = ut.GetLoginUserIntIDbyGUID(user.Id); 
@@ -113,7 +117,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
             if (string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrgid"]))
             { //special for new Organization 
                 orgInfo.CreatedDate = DateTime.Now.ToString();
-                orgInfo.CreatedUserId = Request.Form["hid_userId"];  
+                orgInfo.CreatedUserId = Request.Form["hid_userId"];
+                orgInfo.PrimaryContactUserId = Request.Form["hid_userId"];
+
 
                 result = orgInfo.Save(); // Insert a new Organization 
             }
@@ -160,7 +166,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org
             }
             else if (result.Contains("failed") == false && string.IsNullOrWhiteSpace(Request.Form["hid_CurrentOrganizationid"]))
             {
-                Response.Redirect("RegisterOrganization?Orgid=" + result); 
+                Response.Redirect("OrgSettings?Orgid=" + result); 
             }
             else
             {

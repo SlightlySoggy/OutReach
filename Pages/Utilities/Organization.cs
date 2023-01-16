@@ -129,7 +129,9 @@ namespace Outreach.Pages.Utilities
                                     string LogoFileID = reader["LogoFileID"].ToString();
                                     Logo = new UploadFile(LogoFileID);
                                 }
-                                  
+                                else 
+                                    Logo = new UploadFile();
+
                             }
                         }
                     }
@@ -164,7 +166,7 @@ namespace Outreach.Pages.Utilities
                         sql = "INSERT INTO [Organization] " +
                                       "(Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL ) VALUES " +
                                       "(@Name,@Description,@Address,@PrimaryContactUserId,@CreatedDate,@CreatedUserId,@StatusId,@Phone,@Email,@WebURL );" +
-                                      "Select newID=MAX(id) FROM Task";
+                                      "Select newID=MAX(id) FROM Organization";
                     }
                     else
                     {

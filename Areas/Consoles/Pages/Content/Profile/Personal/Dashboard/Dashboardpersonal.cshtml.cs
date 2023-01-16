@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -6,6 +7,8 @@ using Outreach.Pages.Opportunities;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Profile.Personal.Dashboard
 {
+    [Authorize]
+
     public class DashboardpersonalModel : PageModel
     {
         public string UserName { get; set; }

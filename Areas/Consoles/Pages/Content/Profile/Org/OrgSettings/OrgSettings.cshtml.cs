@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -16,6 +17,7 @@ using System.Xml.Linq;
 
 namespace Outreach.Areas.Identity.Pages.RegisterOrg
 {
+    [Authorize]
     public class OrganizationSettingsModel : PageModel
     {
         public Organization orgInfo = new Organization();
@@ -121,20 +123,21 @@ namespace Outreach.Areas.Identity.Pages.RegisterOrg
             }
             orgInfo = new Organization(orgInfo.Id);
 
-            string tmpFielID = "";
+            string tmpFileID = "";
 
             if (postedFile != null)
             {
-                if (orgInfo.Logo.Id != null && orgInfo.Logo.Id != "")
+                if (orgInfo.Logo != null && orgInfo.Logo.Id != null && orgInfo.Logo.Id != "")
                 {
                     UploadFile uf = new UploadFile(orgInfo.Logo.Id);
                     uf.Delete(); // delete old attachment.
 
                 }
-                tmpFielID = ut.SaveUploadFile(postedFile, "1", orgInfo.Id, "1", Request.Form["hid_userId"]);
-                if (ut.IsNumeric(tmpFielID))
+                tmpFileID = ut.SaveUploadFile(postedFile, "1", orgInfo.Id, "1", Request.Form["hid_userId"]);
+                if (ut.IsNumeric(tmpFileID))
                 {
-                    orgInfo.Logo.Id = tmpFielID;
+                    orgInfo.Logo = new UploadFile(tmpFileID);
+                    orgInfo.Logo.Id = tmpFileID;
                     result = "ok";
                 }
             }

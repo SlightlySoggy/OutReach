@@ -1,4 +1,15 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using Outreach.Data;
+@inject SignInManager<ApplicationUser> SignInManager
+@{
+    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+}
+
+@*@model Outreach.Areas.Consoles.Pages.Shared._LayoutProfileLightModel*@
+
+
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -275,13 +286,27 @@
 
 
                         <!--ADMIN ONLY VIEW PLEASE-->
-                        <li class="nav-item">
+                        <li class="nav-item"> 
+
+                        @if (hasExternalLogins)
+                        {
                             <a href="#" class="nav-link">
                                 <p>
                                     Administrator
                                     <i class="right fas fa-angle-left"></i>
                                 </p>
                             </a>
+                        }
+                        else
+                        { 
+                        }
+
+@*                            <a href="#" class="nav-link">
+                                <p>
+                                    Administrator
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>*@
                             <ul class="nav nav-treeview">
                                 <li>
                                     <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Admin/Tags/Index">

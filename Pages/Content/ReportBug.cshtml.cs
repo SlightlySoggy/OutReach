@@ -44,7 +44,6 @@ namespace Outreach.Pages.Content
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
-                throw new InvalidOperationException($"Unable to find signin user info.");
                 return Page();
             }
             GeneralUtilities ut = new GeneralUtilities();
