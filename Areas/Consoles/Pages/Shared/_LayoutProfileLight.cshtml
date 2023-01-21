@@ -1,8 +1,36 @@
 ﻿@using Microsoft.AspNetCore.Identity;
 @using Outreach.Data;
-@inject SignInManager<ApplicationUser> SignInManager
+@using Outreach.Pages.Utilities;
+@*@inject RoleManager<IdentityRole> roleManager  *@
+@inject UserManager<ApplicationUser> _userManager
 @{
-    var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+
+    var user = await _userManager.GetUserAsync(User);
+
+    //var role = await roleManager.FindByNameAsync("Administrator");
+
+    Boolean userinAdminrole = false;
+    if (user != null)
+        userinAdminrole = await _userManager.IsInRoleAsync(user, "Administrator"); 
+
+    Boolean userinOrgRole = false;
+    if (user != null)
+        userinAdminrole = await _userManager.IsInRoleAsync(user, "Administrator");
+
+    List<Organization> OrganizationList = new List<Organization>();
+
+    GeneralUtilities ut = new GeneralUtilities();
+
+    OrganizationList = ut.GetOrganizationListByUserGUID(user.Id);
+
+
+    
+
+
+
+
+
+
 }
 
 @*@model Outreach.Areas.Consoles.Pages.Shared._LayoutProfileLightModel*@
@@ -107,7 +135,7 @@
 
                 <!-- MESSAGES BUTTON -->
 
-                @*<!-- Messages Dropdown Menu -->
+                <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
@@ -164,10 +192,10 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
                     </div>
-                </li>*@
+                </li>
 
 
-                @*<!-- Notifications Dropdown Menu -->
+                <!-- Notifications Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -203,7 +231,7 @@
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
                     </a>
-                </li>*@
+                </li>
             </ul>
         </nav>
         <!-- /.navbar -->
@@ -288,7 +316,7 @@
                         <!--ADMIN ONLY VIEW PLEASE-->
                         <li class="nav-item"> 
 
-                        @if (hasExternalLogins)
+                        @if (userinAdminrole)
                         {
                             <a href="#" class="nav-link">
                                 <p>
@@ -348,11 +376,13 @@
                         <!--ADMIN ONLY VIEW PLEASE-->
 
                         <li class="nav-header"><b>ORGANIZATION</b></li>
+                        @foreach (var org in OrganizationList)
+                        { 
 
                         <!-- TEAMS VIEW IN PROGRESS -->
                         <li class="list-group-item nav-item">
                             <span style="display: table-cell; padding: 0 8px; vertical-align: middle;">
-                                <a asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails">Org Name </a>
+                                    <a asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails" asp-route-OrgId=@org.Id>@org.Name</a>
                             </span>
 
                             <span class="" style="display: table-cell; padding: 0 8px; vertical-align: middle;">
@@ -360,7 +390,7 @@
                                     <i class="fa-solid fa-ellipsis nav-icon"></i>
                                 </a>
                                 
-                                @*<div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                     <a href="#" class="dropdown-item">
                                         <!-- Message Start -->
                                         <div class="media">
@@ -376,9 +406,9 @@
                                         </div>
                                         <!-- Message End -->
                                     </a>
-                                </div>*@
+                                </div>
                             </span>
-@*
+
                             <span class="nav-link" style="display: table-cell; vertical-align: middle;">
                                 <i class="balls fas fa-angle-left nav-icon"></i>
                             </span>
@@ -390,9 +420,20 @@
                                         <p>MEDIA</p>
                                     </a>
                                 </li>
-                            </ul>*@
+
+                                                                <li>
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamDetail">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>FINANCES</p>
+                                    </a>
+                                </li>
+
+                            </ul>
                         </li>
                         <!-- TEAMS VIEW IN PROGRESS END -->
+
+                        } 
+
                     </ul>
                 </nav>
 

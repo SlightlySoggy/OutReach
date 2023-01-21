@@ -5,8 +5,10 @@ using Microsoft.VisualBasic;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq.Expressions;
 using System.Net;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -1148,13 +1150,53 @@ namespace Outreach.Pages.Utilities
 
             if (NameSearch.Trim() != "")
             {
-                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1 and o.Name like  '%" + NameSearch + "%' order by o.Name ";
+                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1 and o.Name like  '%" + NameSearch + "%' order by o.Name ";
             }
             else
             { // get all active Organization
 
-                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1  order by o.Name ";
+                sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,SStatus=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1  order by o.Name ";
             }
+
+            listPro = GetOrganizationListBySQLQuery(sql);
+
+            return listPro;
+        }
+        public Boolean IsUserAuthorizedtoAccessOrganization(string Guid = "",string OrgId = "")
+        { // retrive Organization info by part of its name 
+            Boolean result = false;
+            List<Organization> lo = GetOrganizationListByUserGUID(Guid);
+            foreach (Organization o in lo)
+            {
+                if (o.Id== OrgId)
+                {
+                    result = true;
+
+                }
+            }
+
+            return result;
+        }
+        public List<Organization> GetOrganizationListByUserGUID(string Guid = "")
+        { // retrive Organization info by part of its name 
+
+            List<Organization> listPro = new List<Organization>();
+            string sql = "";
+
+            if (Guid.Trim() != "")
+            {
+                sql = "Select o.Id,O.Name,O.Description,O.Address,O.PrimaryContactUserId,O.CreatedDate,O.CreatedUserId,O.StatusId,O.Phone,O.Email,O.WebURL,Status=st.StatusName  from Organization o with(nolock) " +
+                    " left join AspNetUsers u on u.User_Id = o.PrimaryContactUserId " +
+                    " left join StandardStatus st on st.Id = o.StatusId    " +
+                    " where o.statusid=1 and ((u.Id= '" + Guid + "') or " +
+                    " exists (select ul.UserId from UserLinkage ul inner join AspNetUsers u2 on u2.User_Id = ul.UserId where ul.GroupTypeId=1 and ul.LinkedGroupId=o.Id and ul.IsLead=1 " +
+                    " and u2.Id= '" + Guid + "'))"; 
+            }
+            //else
+            //{ // get all active Organization
+
+            //    sql = "select o.Id,Name,Description,Address,PrimaryContactUserId,CreatedDate,CreatedUserId,StatusId,Phone,Email,WebURL,Logo,Status=st.StatusName from Organization o with(nolock) left join StandardStatus st on st.Id = o.StatusId where o.statusid=1  order by o.Name ";
+            //}
 
             listPro = GetOrganizationListBySQLQuery(sql);
 
@@ -1386,6 +1428,51 @@ namespace Outreach.Pages.Utilities
             }
 
             return result;
+        }
+
+
+        public bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+                return false;
+
+            try
+            {
+                // Normalize the domain
+                email = Regex.Replace(email, @"(@)(.+)$", DomainMapper,
+                                      RegexOptions.None, TimeSpan.FromMilliseconds(200));
+
+                // Examines the domain part of the email and normalizes it.
+                string DomainMapper(Match match)
+                {
+                    // Use IdnMapping class to convert Unicode domain names.
+                    var idn = new IdnMapping();
+
+                    // Pull out and process domain name (throws ArgumentException on invalid)
+                    string domainName = idn.GetAscii(match.Groups[2].Value);
+
+                    return match.Groups[1].Value + domainName;
+                }
+            }
+            catch (RegexMatchTimeoutException e)
+            {
+                return false;
+            }
+            catch (ArgumentException e)
+            {
+                return false;
+            }
+
+            try
+            {
+                return Regex.IsMatch(email,
+                    @"^[^@\s]+@[^@\s]+\.[^@\s]+$",
+                    RegexOptions.IgnoreCase, TimeSpan.FromMilliseconds(250));
+            }
+            catch (RegexMatchTimeoutException)
+            {
+                return false;
+            }
         }
 
     } 

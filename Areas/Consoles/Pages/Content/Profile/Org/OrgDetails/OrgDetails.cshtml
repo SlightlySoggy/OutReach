@@ -18,7 +18,7 @@
         </li>
 *@
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/Members">Members</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/Members" asp-route-OrgId=@Model.OrgId>Members</a>
         </li>
 @*
         <li class="nav-item d-none d-sm-inline-block">
@@ -26,7 +26,7 @@
         </li>
 *@
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities">Opportunities</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities" asp-route-OrgId=@Model.UserId>Opportunities</a>
         </li>
     </ul>
 
@@ -67,7 +67,7 @@
                                         <div class="info-box bg-light">
                                             <div class="info-box-content">
                                                 <span class="info-box-text text-center text-muted">Estimated budget</span>
-                                                <span class="info-box-number text-center text-muted mb-0">6969</span>
+                                                <span class="info-box-number text-center text-muted mb-0">null</span>
                                             </div>
                                         </div>
                                     </div>
@@ -75,7 +75,7 @@
                                         <div class="info-box bg-light">
                                             <div class="info-box-content">
                                                 <span class="info-box-text text-center text-muted">Total amount spent</span>
-                                                <span class="info-box-number text-center text-muted mb-0">6969</span>
+                                                <span class="info-box-number text-center text-muted mb-0">null</span>
                                             </div>
                                         </div>
                                     </div>
@@ -83,7 +83,7 @@
                                         <div class="info-box bg-light">
                                             <div class="info-box-content">
                                                 <span class="info-box-text text-center text-muted">Estimated project duration</span>
-                                                <span class="info-box-number text-center text-muted mb-0">6969</span>
+                                                <span class="info-box-number text-center text-muted mb-0">null</span>
                                             </div>
                                         </div>
                                     </div>
