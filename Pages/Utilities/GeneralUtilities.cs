@@ -11,6 +11,7 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace Outreach.Pages.Utilities
 {
@@ -23,6 +24,28 @@ namespace Outreach.Pages.Utilities
         public int GetLoginUserIntIDbyGUID(string guid)
         {
             int intUserId = 0;
+            string sql = "";
+            if (guid.Trim() != "")
+            {
+                sql = "select user_id from AspNetUsers with(nolock) where Id='" + guid + "'";
+            }
+            intUserId = GetLoginUserIntIDbySQL(sql);
+            return intUserId;
+        }
+        public int GetLoginUserIntIDbyEmail(string email)
+        {
+            int intUserId = 0;
+            string sql = "";
+            if (email.Trim() != "")
+            {
+                sql = "select top 1 user_id from AspNetUsers with(nolock) where email='" + email + "'";
+            }
+            intUserId = GetLoginUserIntIDbySQL(sql);
+            return intUserId;
+        }
+        public int GetLoginUserIntIDbySQL(string sql)
+        {
+            int intUserId = 0;
             try
             {
                 var builder = WebApplication.CreateBuilder();
@@ -30,21 +53,19 @@ namespace Outreach.Pages.Utilities
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
-                    connection.Open();
-                    string sql = "select user_id from AspNetUsers with(nolock) where Id='" + guid + "'";
-                    using (SqlCommand command = new SqlCommand(sql, connection))
+                    connection.Open(); 
+                    using (SqlCommand cmd = new SqlCommand(sql, connection))
                     {
-                        using (SqlDataReader reader = command.ExecuteReader())
+                        //intUserId = (Int32)cmd.ExecuteScalar(); // threw error if no record is found
+
+                        using (SqlDataReader reader = cmd.ExecuteReader())
                         {
                             while (reader.Read())
-                            { 
-
-                                if (reader["user_id"].GetType() != typeof(DBNull))
-                                {
-                                    intUserId = reader.GetInt32(0);
-                                } 
+                            {
+                                intUserId = reader.GetInt32(0);
                             }
                         }
+
                     }
                 }
             }
@@ -693,7 +714,7 @@ namespace Outreach.Pages.Utilities
             return ifchanged;
         }
 
-        public string ProcessLinkedUsers(List<UserLinkage> ptuserlist, List<string> newuidlist, string groupTypeId, string linkedGroupId, string isLead = "")
+        public string ProcessLinkedUsers(List<UserLinkage> removeUidList, List<string> newuidlist, string groupTypeId, string linkedGroupId, string isLead = "")
         { // Delete the members from UserLinkage if they are not in the newuidlist, add new member if 
           // GroupTypeId;  //1:Organization,2:Team,3:Project,4:Task
           // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
@@ -702,20 +723,20 @@ namespace Outreach.Pages.Utilities
             List<string> memberTobeDeletedIds = new List<string>(); //return the Id list of member need to be deleted.
             List<string> memberTobeAddedIds = new List<string>(); //return the Id list of member need to be deleted.
              
-            if (ptuserlist.Count > 0 && newuidlist.Count == 0)
+            if (removeUidList.Count > 0 && newuidlist.Count == 0)
             {//delete all, no new member
-                ptuserlist.ForEach(u => memberTobeDeletedIds.Add(u.UserId));
+                removeUidList.ForEach(u => memberTobeDeletedIds.Add(u.UserId));
             }
-            else if (ptuserlist.Count == 0 && newuidlist.Count > 0)
+            else if (removeUidList.Count == 0 && newuidlist.Count > 0)
             {//all new members
                 memberTobeAddedIds = newuidlist;
             }
             else  
             { 
-                var differentMembers1 = ptuserlist.Where(p => newuidlist.All(p2 => p2 != p.UserId)).ToList<UserLinkage>();
+                var differentMembers1 = removeUidList.Where(p => newuidlist.All(p2 => p2 != p.UserId)).ToList<UserLinkage>();
                 differentMembers1.ForEach(u => memberTobeDeletedIds.Add(u.Id));
 
-                var differentMembers2 = newuidlist.Where(p2 => ptuserlist.All(p => p2 != p.UserId)).ToList<string>();
+                var differentMembers2 = newuidlist.Where(p2 => removeUidList.All(p => p2 != p.UserId)).ToList<string>();
                 differentMembers2.ForEach(u => memberTobeAddedIds.Add(u)); 
             } 
 
@@ -748,15 +769,15 @@ namespace Outreach.Pages.Utilities
 
             return result;
         }
-        public Boolean IsTeamMemberChanged(List<TeamUser> ptuserlist, List<string> newuidlist)
+        public Boolean IsTeamMemberChanged(List<TeamUser> removeUidList, List<string> newuidlist)
         { // mark if user is selected
             Boolean match = false;
 
-            //if (ptuserlist != null && newuidlist != null) 
-            if (ptuserlist.Count > 0 && newuidlist.Count > 0 && ptuserlist.Count != newuidlist.Count)
+            //if (removeUidList != null && newuidlist != null) 
+            if (removeUidList.Count > 0 && newuidlist.Count > 0 && removeUidList.Count != newuidlist.Count)
             {
                 List<string> ori_uidlist = new List<string>();
-                ptuserlist.ForEach(u => ori_uidlist.Add(u.UserId));
+                removeUidList.ForEach(u => ori_uidlist.Add(u.UserId));
                 match = CompareTwoList(ori_uidlist, newuidlist);
             }
             return match;
@@ -1161,14 +1182,14 @@ namespace Outreach.Pages.Utilities
             listPro = GetOrganizationListBySQLQuery(sql);
 
             return listPro;
-        }
-        public Boolean IsUserAuthorizedtoAccessOrganization(string Guid = "",string OrgId = "")
+        } 
+        public Boolean IsUserAuthorizedtoAccessOrganization(string Guid = "", string OrgId = "")
         { // retrive Organization info by part of its name 
             Boolean result = false;
             List<Organization> lo = GetOrganizationListByUserGUID(Guid);
             foreach (Organization o in lo)
             {
-                if (o.Id== OrgId)
+                if (o.Id == OrgId)
                 {
                     result = true;
 

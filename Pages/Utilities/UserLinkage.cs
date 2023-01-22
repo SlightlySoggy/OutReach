@@ -122,7 +122,7 @@ namespace Outreach.Pages.Utilities
         {
             //save the new UserLinkage into the database, One task can only link to one thing: Org, team or project
 
-            string result = "ok";
+            string result = "failed";
             int newProdID = 0;
             try
             {
@@ -132,20 +132,35 @@ namespace Outreach.Pages.Utilities
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    string sql = "INSERT INTO UserLinkage " +
-                                  "(UserId,GroupTypeId,LinkedGroupId,IsLead) VALUES " +
-                                  "(@UserId,@GroupTypeId,@LinkedGroupId,@IsLead);" +
-                                  "Select newID=MAX(id)  FROM UserLinkage  "; 
+                    //string sql = " INSERT INTO UserLinkage " +
+                    //              " (UserId,GroupTypeId,LinkedGroupId,IsLead) VALUES " +
+                    //              " (@UserId,@GroupTypeId,@LinkedGroupId,@IsLead) " +
+                    string sql = " INSERT INTO UserLinkage " +
+                                  " Select UserId=" + this.UserId + ", GroupTypeId=" + this.GroupTypeId + " , LinkedGroupId=" + this.LinkedGroupId + " , IsLead=" + this.IsLead + " " + 
+                                  //" Where not exists (Select 1 from UserLinkage u where u.UserId=@UserId and u.GroupTypeId=@GroupTypeId and u.LinkedGroupId=@LinkedGroupId) " + // require to declare @UserId again 
+                                  " Where not exists (Select 1 from UserLinkage u where u.UserId='" + this.UserId + "' and u.GroupTypeId='" + this.GroupTypeId + "' and u.LinkedGroupId='" + this.LinkedGroupId + "' ) " +
+                                  " Select top 1 Id from UserLinkage u2 where u2.UserId='" + this.UserId + "' and u2.GroupTypeId='" + this.GroupTypeId + "' and u2.LinkedGroupId='" + this.LinkedGroupId + "' and u2.IsLead = '" + this.IsLead + "' ";
 
                     using (SqlCommand cmd = new SqlCommand(sql, connection))
                     { 
-                        cmd.Parameters.AddWithValue("@UserId", this.UserId);
-                        cmd.Parameters.AddWithValue("@GroupTypeId", this.GroupTypeId);
-                        cmd.Parameters.AddWithValue("@LinkedGroupId", this.LinkedGroupId);
-                        cmd.Parameters.AddWithValue("@IsLead", this.IsLead); 
-                          
-                        //cmd.ExecuteNonQuery();
-                        newProdID = (Int32)cmd.ExecuteScalar();
+                        //cmd.Parameters.AddWithValue("@UserId", this.UserId);
+                        //cmd.Parameters.AddWithValue("@GroupTypeId", this.GroupTypeId);
+                        //cmd.Parameters.AddWithValue("@LinkedGroupId", this.LinkedGroupId);
+                        //cmd.Parameters.AddWithValue("@IsLead", this.IsLead);
+                        using (SqlCommand command = new SqlCommand(sql, connection))
+                        {
+                            using (SqlDataReader reader = command.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    //cmd.ExecuteNonQuery();
+                                    //newProdID = (Int32)cmd.ExecuteScalar(); may threw exception if nothing to return
+
+                                    newProdID = reader.GetInt32(0);
+                                    result = " ok";
+                                }
+                            }
+                        }
                          
                     }
                 }
