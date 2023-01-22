@@ -28,7 +28,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
                     using (SqlConnection connection = new SqlConnection(connectionString))
                     {
                         connection.Open();
-                        String sql = "SELECT User_Id,UserName,Email,Password='',Created_at=convert(varchar,Created_at)  FROM AspNetUsers  with(nolock) ";
+                        String sql = "SELECT User_Id,UserName,Email,IsLead='',Created_at=convert(varchar,Created_at)  FROM AspNetUsers  with(nolock) ";
                         using (SqlCommand command = new SqlCommand(sql, connection))
                         {
                             using (SqlDataReader reader = command.ExecuteReader())
@@ -39,7 +39,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
                                     userinfo.User_Id = reader.GetInt32(0).ToString();
                                     userinfo.UserName = reader.GetString(1);
                                     userinfo.Email = reader.GetString(2);
-                                    userinfo.Password = reader.GetString(3);
+                                    userinfo.IsLead = reader.GetString(3);
                                     userinfo.Created_at = reader.GetString(4);
 
                                 ListUsers.Add(userinfo);

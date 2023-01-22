@@ -14,6 +14,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
         public String lastName; 
         public String PhoneNumber; 
         public String Email;
+        public String IsLead;
         public String Password;
         public String Created_at;
         public String IsSelected; // sepecial use when project or task select member 
@@ -27,6 +28,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
             PhoneNumber = "";
             Email = "";
             Password = "";
+            IsLead = "";
             Created_at = "";
             IsSelected = "";//  "selected"
         }
@@ -45,7 +47,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT Id,User_Id,UserName,Email,Password='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) Where User_Id='" + User_Id + "' ";
+                    String sql = "SELECT Id,User_Id,UserName,Email,u.Password='',IsLead='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) Where User_Id='" + User_Id + "' ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())
@@ -72,6 +74,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
                                 if (reader["Password"].GetType() != typeof(DBNull))
                                 {
                                     Password = reader["Password"].ToString();
+                                }
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
+                                {
+                                    IsLead = reader["IsLead"].ToString();
                                 }
                                 if (reader["Created_at"].GetType() != typeof(DBNull))
                                 {

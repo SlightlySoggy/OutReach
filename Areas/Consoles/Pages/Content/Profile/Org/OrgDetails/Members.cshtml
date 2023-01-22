@@ -72,7 +72,6 @@
                 <div class="row">
                     <div class="col-12 col-md-12 col-lg-8 order-2 order-md-1">
                         <div class="row">
-                            
                         </div>
                         <div class="row">
                             <div class="col-12">
@@ -94,7 +93,7 @@
 
                                                     </div>
                                                 </div>
-                                                
+
                                                 <div class="col-6">
                                                     <div class="form-group">
                                                         <label>Order By:</label>
@@ -153,51 +152,59 @@
 
             </div>
 
-            
 
-            <!-- /.card-header -->
-            <div class="card-body pb-0">
-                <div class="row">
-                    <!-- Contact Card-->
-                    <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
-                        <div class="card bg-light d-flex flex-fill">
-                            <div class="card-header text-muted border-bottom-0">
-                                Lead (Role)
-                            </div>
-                            <div class="card-body pt-0">
-                                <div class="row">
-                                    <div class="col-7">
-                                        <h2 class="lead"><b>Maxwell Li (Name)</b></h2>
-@*                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
-*@                                        <ul class="ml-4 mb-0 fa-ul text-muted">
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span> Address: Demo Street 123, Demo City 04312, NJ</li>
-                                            <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: + 800 - 12 12 23 52</li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-5 text-center">
-                                        <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+            @foreach (var m in Model.OrgMemberList)
+            {
+                <!-- /.card-header -->
+                <div class="card-body pb-0">
+                    <div class="row">
+                        <!-- Contact Card-->
+                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                            <div class="card bg-light d-flex flex-fill">
+@*                              <div class="card-header text-muted border-bottom-0">
+                                    Lead (Role)<
+                                </div>*@
+                                <div class="card-body pt-0">
+                                    <div class="row">
+                                        <div class="col-7">
+                                            @if (@m.IsLead == "True")
+                                            {
+                                                <p>Lead (Role)</p>
+                                            <h2 class="lead"><b>Name: @m.firstName @m.lastName</b></h2>
+                                            }
+                                            else
+                                            {
+                                            <h2 class="regular"><b>Name: @m.firstName @m.lastName</b></h2>
+                                            }
+                                            @*                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
+                                        *@                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>Email: @m.Email</li>
+                                                <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: @m.PhoneNumber</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-5 text-center">
+                                            <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-footer">
-                                <div class="text-right">
-@*                                    <a href="#" class="btn btn-sm bg-teal">
-                                        <i class="fas fa-comments"></i>
+                                <div class="card-footer">
+                                    <div class="text-right">
+                                        @*                                    <a href="#" class="btn btn-sm bg-teal">
+                                    <i class="fas fa-comments"></i>
                                     </a>*@
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-pen"></i> Edit
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-primary">
-                                        <i class="fas fa-user"></i> View Profile
-                                    </a>
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-pen"></i> Edit
+                                        </a>
+                                        <a href="#" class="btn btn-sm btn-primary">
+                                            <i class="fas fa-user"></i> View Profile
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Contact Card End Duplicate to populate-->
-                    
                 </div>
-            </div>
+            }
 
             <div class="card-footer">
                 <nav aria-label="Contacts Page Navigation">
@@ -222,30 +229,30 @@
 
 <form method="post" asp-page-handler="AddMember">
 
-<div class="modal fade" id="modal-lg">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <div class="modal fade" id="modal-lg">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title">Add Member</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
 
-                <!-- Pills navs -->
-                <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="tab-login"
-                           aria-controls="pills-login" asp-page="./Login" asp-route-returnUrl="">Invite</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="tab-register"
-                           aria-controls="pills-register" asp-page="./Register" asp-route-returnUrl="">Invite With Link</a>
-                    </li>
-                </ul>
-                <br />
-                 
+                    <!-- Pills navs -->
+                    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="tab-login"
+                               aria-controls="pills-login" asp-page="./Login" asp-route-returnUrl="">Invite</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="tab-register"
+                               aria-controls="pills-register" asp-page="./Register" asp-route-returnUrl="">Invite With Link</a>
+                        </li>
+                    </ul>
+                    <br />
+
 
                     <div class="row g-3">
 
@@ -258,21 +265,21 @@
                         </div>
 
                         <input type="hidden" class="form-control" placeholder="" name="hidUserId" value="@Model.user_id">
-                        <input type="hidden" class="form-control" placeholder="" name="hidOrgid" value="@Model.orgInfo.Id"> 
+                        <input type="hidden" class="form-control" placeholder="" name="hidOrgid" value="@Model.orgInfo.Id">
                     </div>
 
 
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                    @*<button type="submit" class="btn btn-primary" asp-page-handler="AddMember">Save changes</button>*@
+                </div>
             </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" >Save changes</button>
-                @*<button type="submit" class="btn btn-primary" asp-page-handler="AddMember">Save changes</button>*@
-            </div>
+
         </div>
 
     </div>
-
-</div>
 
 </form>
 

@@ -1328,17 +1328,18 @@ namespace Outreach.Pages.Utilities
           // LinkedGroupId; //value can be: OrganizationId, TeamId, ProjectId, TaskId
 
 
-            List<LoginUserInfo> userlist = new List<LoginUserInfo>();
+            List<LoginUserInfo> userlist = new List<LoginUserInfo>(); 
 
-            string sql = "SELECT u.Id,u.User_Id,u.UserName,u.Email,Password='',Created_at=convert(varchar,Created_at),u.firstName, u.lastName,u.PhoneNumber " + 
+            string sql = "SELECT u.Id,u.User_Id,u.UserName,u.Email,Password='',isLead=Isnull(ul.isLead,0),Created_at=convert(varchar,Created_at),u.firstName, u.lastName,u.PhoneNumber " +
                          " FROM AspNetUsers U with(nolock) " +
-                         " Left join UserLinkage ul with(nolock) on ul.UserId = u.User_Id " + 
+                         " Left join UserLinkage ul with(nolock) on ul.UserId = u.User_Id " +
                          " Where ul.LinkedGroupId = '" + linkedGroupId + "' and ul.GroupTypeId = '" + groupTypeId + "' ";
 
             if (isLead.Trim().ToLower() == "true" || isLead.Trim().ToLower() == "1")
-                sql = sql + " and Isnull(ul.isLead,0) = 1 ";
+                sql = sql + " and Isnull(ul.isLead,0) = 1  order by u.firstName, u.lastName ";
             else if (isLead.Trim().ToLower() == "false" || isLead.Trim().ToLower() == "0")
-                sql = sql + " and Isnull(ul.isLead,0) = 0 "; 
+                sql = sql + " and Isnull(ul.isLead,0) = 0  order by u.firstName, u.lastName ";
+            else sql = sql + " order by Isnull(ul.isLead,0) desc,u.firstName, u.lastName ";
 
             userlist = GetLoginUserListbySQL(sql);
 
@@ -1388,6 +1389,10 @@ namespace Outreach.Pages.Utilities
                                 if (reader["Password"].GetType() != typeof(DBNull))
                                 {
                                     userinfo.Password = reader["Password"].ToString();
+                                }
+                                if (reader["IsLead"].GetType() != typeof(DBNull))
+                                {
+                                    userinfo.IsLead = reader["IsLead"].ToString();
                                 }
                                 if (reader["Created_at"].GetType() != typeof(DBNull))
                                 {

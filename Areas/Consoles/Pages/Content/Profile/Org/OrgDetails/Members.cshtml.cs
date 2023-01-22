@@ -2,15 +2,16 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.WebUtilities; 
+using Microsoft.AspNetCore.WebUtilities;
 using Outreach.Data;
-using Outreach.Pages.Utilities;  
+using Outreach.Pages.Utilities;
 using System.Text.Encodings.Web;
-using System.Text; 
+using System.Text;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Cryptography;
+using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 {
@@ -24,6 +25,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
         private readonly ILogger<MembersModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+
+        public List<LoginUserInfo> OrgMemberList = new List<LoginUserInfo>();
+
 
         public Organization orgInfo = new Organization();
         public string orgId = "";
@@ -68,10 +72,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             { // must has an OrgID passed in    
                 orgId = Request.Query["OrgId"];
                 orgInfo = new Organization(orgId);
+
+                OrgMemberList = ut.GetLoginUserList("1", orgId, "");
             }
 
-            Tag tag = new Tag();
-            ListTag = tag.GetReferencedTagsbyOpptunityId(""); // get all active tags
         }
 
         public async Task<IActionResult> OnPostAsync(IFormFile postedFile)
@@ -156,7 +160,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             }
         }
 
-        public async Task<IActionResult> OnPostAddMemberAsync(string rurl="")
+        public async Task<IActionResult> OnPostAddMemberAsync(string rurl = "")
         {
             Random random = new Random();
             int randomNumber = random.Next(1000, 9999);
@@ -176,7 +180,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             List<string> validUserId = new List<string>();
 
             GeneralUtilities ut = new GeneralUtilities();
- 
+
             if (Request.Form["MemberEmailList"].ToString() != "")
             {
                 string emaillist = Request.Form["MemberEmailList"];
@@ -209,7 +213,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
                     else
                     {
                         InvalidEmaillist += e + ", ";
-                    }  
+                    }
                 }
             }
 
@@ -240,7 +244,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             return Page();
         }
         public void OnPostAddMember2()
-        { 
+        {
             string clickedbuttonName = "";
 
             GeneralUtilities ut = new GeneralUtilities();
@@ -256,7 +260,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
                         ValidEmaillist += e + ", ";
                     }
                     else
-                    { 
+                    {
                         InvalidEmaillist += e + ", ";
                     }
 
@@ -297,7 +301,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             {
                 defaultsearchtext = Request.Form["TxtSearch"];
             }
-             
+
 
             if (txtSearch != null || Request.Form["chkTag"] != "")
             {
