@@ -12,6 +12,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using System.Security.Cryptography;
 using Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users;
+using Microsoft.AspNetCore.Http;
 
 namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 {
@@ -66,98 +67,62 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 
         public void OnGet()
         {
-            GeneralUtilities ut = new GeneralUtilities();
-
             if (!string.IsNullOrWhiteSpace(Request.Query["OrgId"]))
             { // must has an OrgID passed in    
                 orgId = Request.Query["OrgId"];
+                orgInfo = new Organization(orgId); 
+
+            }
+            OrgMemberList = GeMemberByCondition(); 
+
+        }
+
+        private List<LoginUserInfo> GeMemberByCondition(string searchType = "", string txtSearch = "")
+        {
+            List<LoginUserInfo> returnUserList = new List<LoginUserInfo>();
+            GeneralUtilities ut = new GeneralUtilities();  
+
+            if (searchType == "2")
+            { // search primary contact only 
+                returnUserList.Add(orgInfo.PrimaryContactUser);
+            }
+            else if(searchType == "3")
+            { // search lead only 
+                returnUserList = ut.GetLoginUserList("1", orgId, "1");  //get all lead members in this organization 
+            }
+            if (searchType == "4")
+            { // search Regular Member only 
+                returnUserList = ut.GetLoginUserList("1", orgId, "0");  //get all regular members in this organization 
+            } 
+            else
+            {
+                returnUserList = ut.GetLoginUserList("1", orgId, "");  //get all members in this organization 
+            }
+
+            if (searchType != "")
+            {
+                returnUserList= returnUserList.FindAll(x=>x.firstName.Contains(txtSearch) || x.lastName.Contains(txtSearch) || x.Email.Contains(txtSearch)).ToList();
+            }
+
+            return returnUserList;
+
+        }
+
+
+        public async Task<IActionResult> OnPostSearchMemberAsync(string rurl = "")
+        {
+            string searchType = Request.Form["selSearchType"];
+            string txtSearch = Request.Form["Searchkeyword"];
+            if (!string.IsNullOrWhiteSpace(Request.Form["hidOrgid1"]))
+            { // must has an OrgID passed in    
+                orgId = Request.Form["hidOrgid1"];
                 orgInfo = new Organization(orgId);
 
-                OrgMemberList = ut.GetLoginUserList("1", orgId, "");
             }
 
-        }
-
-        public async Task<IActionResult> OnPostAsync(IFormFile postedFile)
-        {
-            string result = "";
-
-            orgInfo.Name = Request.Form["inputName"];
-            orgInfo.Description = Request.Form["inputDescription"];
-            orgInfo.Email = Request.Form["inputEmail"];
-
-            GeneralUtilities ut = new GeneralUtilities();
-
-            if (string.IsNullOrWhiteSpace(Request.Form["hidOrgid"]))
-            { //special for new Organization 
-                orgInfo.CreatedDate = DateTime.Now.ToString();
-                orgInfo.CreatedUserId = Request.Form["hidUserId"];
-
-                result = orgInfo.Save(); // Insert a new Organization 
-            }
-            else
-            {
-                orgInfo.Id = Request.Form["hidOrgid"];
-
-                result = orgInfo.Save();
-            }
-            orgInfo = new Organization(orgInfo.Id);
-
-            string tmpFileID = "";
-
-            if (postedFile != null)
-            {
-                if (orgInfo.Logo != null && orgInfo.Logo.Id != null && orgInfo.Logo.Id != "")
-                {
-                    UploadFile uf = new UploadFile(orgInfo.Logo.Id);
-                    uf.Delete(); // delete old attachment.
-
-                }
-                tmpFileID = ut.SaveUploadFile(postedFile, "1", orgInfo.Id, "1", Request.Form["hidUserId"]);
-                if (ut.IsNumeric(tmpFileID))
-                {
-                    orgInfo.Logo = new UploadFile(tmpFileID);
-                    orgInfo.Logo.Id = tmpFileID;
-                    result = "ok";
-                }
-            }
-
-            if (result == "ok" && !string.IsNullOrWhiteSpace(Request.Form["hidOrgid"]))
-            {
-                //Random random = new Random();
-                //int randomNumber = random.Next(1000, 9999);
-
-                //Response.Redirect("OrgSettings?OrgId=" + Request.Form["hidOrgid"] + "&Random=" + randomNumber.ToString());
-                //Response.Redirect("#");
-
-                return Page();
-            }
-            //else if (result.Contains("failed") == false && string.IsNullOrWhiteSpace(Request.Form["hidOrgid"]))
-            //{
-            //    Response.Redirect("OrgSettings?Orgid=" + result);
-            //}
-            else
-            {
-                errorMessage = result;
-            }
+            OrgMemberList = GeMemberByCondition(searchType, txtSearch);
             return Page();
 
-        }
-        public void OnPostSearchMember()
-        {
-            GeneralUtilities ut = new GeneralUtilities();
-
-            if (Request.Query["Searchkeyword"].ToString() != "")
-            {
-                string txtSearch = Request.Query["Searchkeyword"];
-                oppList = ut.SearchOpportunities(txtSearch, "");
-
-                defaultsearchtext = txtSearch;
-            }
-            else
-            {
-                oppList = new List<Opportunity> { };
-            }
         }
 
         public async Task<IActionResult> OnPostAddMemberAsync(string rurl = "")

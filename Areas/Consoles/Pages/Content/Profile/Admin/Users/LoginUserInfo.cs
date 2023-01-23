@@ -34,7 +34,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
         }
 
 
-        public  LoginUserInfo(string User_Id = "")
+        public  LoginUserInfo(string uid = "")
         { // retrive login user by org ID in the future, now just list all
 
             List<LoginUserInfo> userlist = new List<LoginUserInfo>();
@@ -47,7 +47,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Administrator.Users
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
-                    String sql = "SELECT Id,User_Id,UserName,Email,u.Password='',IsLead='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) Where User_Id='" + User_Id + "' ";
+                    String sql = "SELECT Id,User_Id,UserName,Email,Password='',IsLead='',Created_at=convert(varchar,Created_at),firstName, lastName ,PhoneNumber FROM AspNetUsers  with(nolock) Where User_Id='" + uid + "' ";
                     using (SqlCommand command = new SqlCommand(sql, connection))
                     {
                         using (SqlDataReader reader = command.ExecuteReader())

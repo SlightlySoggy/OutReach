@@ -18,7 +18,7 @@
         </li>
         *@
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/Members">Members</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/Members" asp-route-OrgId=@Model.orgId>Members</a>
         </li>
         @*
         <li class="nav-item d-none d-sm-inline-block">
@@ -26,7 +26,7 @@
         </li>
         *@
         <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities">Opportunities</a>
+            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities" asp-route-OrgId=@Model.user_id>Opportunities</a>
         </li>
     </ul>
 </nav>
@@ -83,10 +83,13 @@
                                                     <div class="form-group">
                                                         @*                                                        <select class="select2" multiple="multiple" data-placeholder="Any" style="width: 100%;">
 
-                                                        *@                                                        <label>Result Type:</label>
-                                                        <select class="select2" style="width: 100%;">
-
-                                                            <option selected>Opportunities</option>
+                                                        *@                                                        
+                                                        <label>Result Type:</label>
+                                                        <select class="select2" style="width: 100%;" name="selSearchType"> 
+                                                            <option value=1 selected>Any</option>
+                                                            <option value=2>Primary Contact</option>
+                                                            <option value=3>Lead</option>
+                                                            <option value=4>Regular Member</option>
                                                             @*                                                          <option>Organizations</option>
                                                             <option>Users</option>*@
                                                         </select>
@@ -94,7 +97,7 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="col-6">
+@*                                                <div class="col-6">
                                                     <div class="form-group">
                                                         <label>Order By:</label>
                                                         <select class="select2" style="width: 100%;" name="chkorderby">
@@ -104,9 +107,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group">*@
+
                                                 <div class="input-group input-group-lg">
-                                                    <input type="text" name="TxtSearch" class="form-control form-control-lg" placeholder="Type your keywords here" value="">
+                                                    <input type="text" name="Searchkeyword" class="form-control form-control-lg" placeholder="Type your keywords here" >
                                                     <div class="input-group-append">
                                                         <button type="submit" class="btn btn-lg btn-default">
                                                             <i class="fa fa-search"></i>
@@ -116,6 +120,10 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <input type="hidden" class="form-control" placeholder="" name="hidUserId1" value="@Model.user_id">
+                                    <input type="hidden" class="form-control" placeholder="" name="hidOrgid1" value="@Model.orgInfo.Id">
+
                                 </form>
                             </div>
                         </div>
@@ -158,8 +166,8 @@
                 <!-- /.card-header -->
                 <div class="card-body pb-0">
                     <div class="row">
-                        <!-- Contact Card-->
-                        <div class="col-12 col-sm-6 col-md-4 d-flex align-items-stretch flex-column">
+                        <!-- Contact Card--> 
+                        <div class="col-12 col-sm-3 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
 @*                              <div class="card-header text-muted border-bottom-0">
                                     Lead (Role)<
@@ -167,20 +175,20 @@
                                 <div class="card-body pt-0">
                                     <div class="row">
                                         <div class="col-7">
+                                            <h2 class="lead"><b>Name: @m.firstName @m.lastName</b></h2>
+                                            <ul class="ml-4 mb-0 fa-ul text-muted">
                                             @if (@m.IsLead == "True")
                                             {
-                                                <p>Lead (Role)</p>
-                                            <h2 class="lead"><b>Name: @m.firstName @m.lastName</b></h2>
+                                                    <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>Leader</li>
                                             }
-                                            else
+                                            @if (m.User_Id == Model.orgInfo.PrimaryContactUserId)
                                             {
-                                            <h2 class="regular"><b>Name: @m.firstName @m.lastName</b></h2>
-                                            }
-                                            @*                                        <p class="text-muted text-sm"><b>About: </b> Web Designer / UX / Graphic Artist / Coffee Lover </p>
-                                        *@                                        <ul class="ml-4 mb-0 fa-ul text-muted">
+                                               <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>Primary Contact</li> 
+                                            }  
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-building"></i></span>Email: @m.Email</li>
                                                 <li class="small"><span class="fa-li"><i class="fas fa-lg fa-phone"></i></span> Phone #: @m.PhoneNumber</li>
-                                            </ul>
+                                             </ul>
+                                              
                                         </div>
                                         <div class="col-5 text-center">
                                             <img src="../../dist/img/user1-128x128.jpg" alt="user-avatar" class="img-circle img-fluid">

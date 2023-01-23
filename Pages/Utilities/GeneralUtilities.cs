@@ -1333,13 +1333,15 @@ namespace Outreach.Pages.Utilities
             string sql = "SELECT u.Id,u.User_Id,u.UserName,u.Email,Password='',isLead=Isnull(ul.isLead,0),Created_at=convert(varchar,Created_at),u.firstName, u.lastName,u.PhoneNumber " +
                          " FROM AspNetUsers U with(nolock) " +
                          " Left join UserLinkage ul with(nolock) on ul.UserId = u.User_Id " +
+                         //" Left join Organization o with(nolock) on 1='" + linkedGroupId + "' and o.Id = '" + groupTypeId + "'" + 
                          " Where ul.LinkedGroupId = '" + linkedGroupId + "' and ul.GroupTypeId = '" + groupTypeId + "' ";
 
-            if (isLead.Trim().ToLower() == "true" || isLead.Trim().ToLower() == "1")
+            if (isLead.Trim().ToLower() == "true" || isLead.Trim().ToLower() == "1") // find the leader
                 sql = sql + " and Isnull(ul.isLead,0) = 1  order by u.firstName, u.lastName ";
-            else if (isLead.Trim().ToLower() == "false" || isLead.Trim().ToLower() == "0")
+            else if (isLead.Trim().ToLower() == "false" || isLead.Trim().ToLower() == "0") // find the regular member
                 sql = sql + " and Isnull(ul.isLead,0) = 0  order by u.firstName, u.lastName ";
-            else sql = sql + " order by Isnull(ul.isLead,0) desc,u.firstName, u.lastName ";
+            else sql = sql + " order by Isnull(ul.isLead,0) desc,u.firstName, u.lastName "; // list all members
+            //else sql = sql + " order by case when groupTypeId=1 and o.PrimaryUserId=u.Id then 1 else 2 end, Isnull(ul.isLead,0) desc,u.firstName, u.lastName "; // list all members
 
             userlist = GetLoginUserListbySQL(sql);
 
