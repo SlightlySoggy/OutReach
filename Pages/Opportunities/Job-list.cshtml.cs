@@ -19,7 +19,7 @@ namespace Outreach.Pages.Opportunities
             if (Request.Query["Searchkeyword"].ToString() != "")
             {
                 string txtSearch = Request.Query["Searchkeyword"];
-                oppList = ut.SearchOpportunities(txtSearch, "");
+                oppList = ut.getOpportunityListByCondition(txtSearch, "");
 
                 defaultsearchtext = txtSearch;
             }
@@ -46,16 +46,6 @@ namespace Outreach.Pages.Opportunities
         public void OnPost()
         {
             // https://www.learnrazorpages.com/razor-pages/handler-methods
-            string clickedbuttonName = "";
-            if (Request.Form["submitbutton1"] != "")
-            {
-                clickedbuttonName = Request.Form["submitbutton1"]; 
-            }
-            //else if (Request.Form["submitbutton2"] != "")
-            //{ 
-            //    clickedbuttonName = Request.Form["submitbutton2"];
-            //}
-
 
             string txtSearch = "";
             if (Request.Form["TxtSearch"] != "")
@@ -68,8 +58,9 @@ namespace Outreach.Pages.Opportunities
             if (txtSearch != null || Request.Form["chkTag"] != "")
             {
                 SelectedTagIds = Request.Form["chkTag"].ToString().Split(',').ToList();
-                oppList = ut.SearchOpportunities(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
+                oppList = ut.getOpportunityListByCondition(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
             }
+             
 
             Tag tag = new Tag();
             ListTag = tag.GetReferencedTagsbyOpptunityId(""); // get all active tags

@@ -7,169 +7,9 @@
 <!-- fullCalendar -->
 <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
 
-
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-dark">
-    <!-- Left navbar links -->
-
-    <ul class="navbar-nav">
-
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">Board</a>
-        </li>
-
-        <li class="nav-item d-none d-sm-inline-block active">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Calendar/Calendarlight">Calendar</a>
-        </li>
-
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities">Opportunities</a>
-        </li>
-
-    </ul>
-
-    @*<!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-        <!-- Navbar Search -->
-        <li class="nav-item">
-            <a class="nav-link" data-widget="navbar-search" href="#" role="button">
-                <i class="fas fa-search"></i>
-            </a>
-            <div class="navbar-search-block">
-                <form class="form-inline">
-                    <div class="input-group input-group-sm">
-                        <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
-                        <div class="input-group-append">
-                            <button class="btn btn-navbar" type="submit">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <button class="btn btn-navbar" type="button" data-widget="navbar-search">
-                                <i class="fas fa-times"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-        </li>
-
-        <!-- Messages Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-comments"></i>
-                <span class="badge badge-danger navbar-badge">3</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="../../dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Brad Diesel
-                                <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">Call me whenever you can...</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="../../dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                John Pierce
-                                <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">I got your message bro</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <!-- Message Start -->
-                    <div class="media">
-                        <img src="../../dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
-                        <div class="media-body">
-                            <h3 class="dropdown-item-title">
-                                Nora Silvester
-                                <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                            </h3>
-                            <p class="text-sm">The subject goes here</p>
-                            <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                        </div>
-                    </div>
-                    <!-- Message End -->
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-            </div>
-        </li>
-        <!-- Notifications Dropdown Menu -->
-        <li class="nav-item dropdown">
-            <a class="nav-link" data-toggle="dropdown" href="#">
-                <i class="far fa-bell"></i>
-                <span class="badge badge-warning navbar-badge">15</span>
-            </a>
-            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                <span class="dropdown-item dropdown-header">15 Notifications</span>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-envelope mr-2"></i> 4 new messages
-                    <span class="float-right text-muted text-sm">3 mins</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-users mr-2"></i> 8 friend requests
-                    <span class="float-right text-muted text-sm">12 hours</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item">
-                    <i class="fas fa-file mr-2"></i> 3 new reports
-                    <span class="float-right text-muted text-sm">2 days</span>
-                </a>
-                <div class="dropdown-divider"></div>
-                <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-            </div>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-                <i class="fas fa-expand-arrows-alt"></i>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-                <i class="fas fa-th-large"></i>
-            </a>
-        </li>
-    </ul>*@
-
-</nav>
-
-
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Calendar</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a asp-area="" asp-page="/HomePages/index">Home</a></li>
-                        <li class="breadcrumb-item active">Calendar</li>
-                    </ol>
-                </div>
-            </div>
-        </div><!-- /.container-fluid -->
-    </section>
+</br>
 
     <!-- Main content -->
     <section class="content">
@@ -233,7 +73,7 @@
                     <div class="card card-primary">
                         <div class="card-body p-0">
                             <!-- THE CALENDAR -->
-                            <div id="calendar"></div>
+                            <div id="calendar" name="calendar1"></div>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -267,7 +107,99 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <!-- Page specific script -->
+
+
 <script>
+    function SaveCal() {
+        alert("aa");
+        //var eventsFromCalendar = $('#calendar').fullCalendar('#external-events');
+        var eventsFromCalendar = $('#calendar');
+        
+        alert(eventsFromCalendar);
+        //alert(eventsFromCalendar.getEventById('a1'));
+        var a = eventsFromCalendar.getEvents();
+
+        alert(a);
+
+        var a1 = $('#calendar').getEventById('a1'); // an event object!
+
+        alert(a1);
+
+    //    var events = $.map(eventsFromCalendar, function (item, i) {
+    //        var event = new Object();
+    //        event.id = item.id;
+    //        event.start = item.start;
+    //        event.end = item.end;
+    //        event.title = item.title;
+    //        event.color = item.color;
+    //        return event;
+    //    });
+
+    //    $.ajax(
+    //        {
+    //            type: 'POST',
+    //            contentType: 'application/json',
+    //            data: JSON.stringify(events),     ** <--I have to pass data here but how ???**
+    //                dataType : 'json',
+    //        url: "Calendar.aspx/SaveEvents",
+    //        cache: false,
+    //        success: function (response) {
+    //            alert('Events saved successfully');
+    //        },
+
+    //        error: function (err) {
+    //            alert('Error Saving Events');
+    //        }
+    //            });
+    //return false;
+    //        
+    }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'timeGridWeek',
+            editable: true,
+            headerToolbar: {
+                start: 'prev,next today',
+                center: 'title',
+                end: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            selectable: true, //can click to set event
+            selectMirror: true, // so it's solid
+            unselectAuto: false, //if you click outside calendar, event doesn't disappear, but if you click inside calendar, event still disappears
+            eventStartEditable: true,
+            eventResizableFromStart: true,
+            eventDurationEditable: true,
+            select: function (selectionInfo) {
+                calendar.addEvent({
+                    title: 'dynamic event',
+                    start: selectionInfo.start,
+                    end: selectionInfo.end //need these and not endTime/startTime, otherwise they won't re-render
+                });
+                calendar.unselect();
+            },
+            eventClick: function (eventClickInfo) {
+                eventClickInfo.event.remove();
+            }
+
+
+
+        });
+        calendar.render();
+
+        function getEvents() {
+            alert("aa");
+            //var a = calendar.getEvents();
+        }
+
+        document.getElementById('getevent').addEventListener('click', getEvents);
+
+    });
+</script>
+<script>
+   
     $(function () {
 
         /* initialize the external events
@@ -336,13 +268,15 @@
             //Random default events
             events: [
                 {
-                    title: 'All Day Event',
+                    id:'a1',
+                    title: 'All Day Evnt',
                     start: new Date(y, m, 1),
                     backgroundColor: '#f56954', //red
                     borderColor: '#f56954', //red
                     allDay: true
-                },
+                },  
                 {
+                    id:'a2',
                     title: 'Long Event',
                     start: new Date(y, m, d - 5),
                     end: new Date(y, m, d - 2),
@@ -350,6 +284,7 @@
                     borderColor: '#f39c12' //yellow
                 },
                 {
+                    id:'a3',
                     title: 'Meeting',
                     start: new Date(y, m, d, 10, 30),
                     allDay: false,
@@ -357,6 +292,7 @@
                     borderColor: '#0073b7' //Blue
                 },
                 {
+                    id:'a4',
                     title: 'Lunch',
                     start: new Date(y, m, d, 12, 0),
                     end: new Date(y, m, d, 14, 0),
@@ -365,6 +301,7 @@
                     borderColor: '#00c0ef' //Info (aqua)
                 },
                 {
+                    id:'a5',
                     title: 'Birthday Party',
                     start: new Date(y, m, d + 1, 19, 0),
                     end: new Date(y, m, d + 1, 22, 30),
@@ -373,6 +310,7 @@
                     borderColor: '#00a65a' //Success (green)
                 },
                 {
+                    id: 'a6',
                     title: 'Click for Google',
                     start: new Date(y, m, 28),
                     end: new Date(y, m, 29),

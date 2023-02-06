@@ -147,25 +147,33 @@
         </div>
         <!-- /.card -->
 
+
+
+
+
+
+
+
+
+        <!-- Card -->
         <div class="card card-solid">
             <div class="card-header">
                 <h3 class="card-title">
-
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-lg">
                         Add Member
                     </button>
                     <h4 class="modal-title">@Model.ValidEmaillist</h4><br />
                     <h4 class="modal-title">@Model.InvalidEmaillist</h4><br />
                 </h3>
-
             </div>
 
 
-            @foreach (var m in Model.OrgMemberList)
-            {
+            
                 <!-- /.card-header -->
                 <div class="card-body pb-0">
                     <div class="row">
+                    @foreach (var m in Model.OrgMemberList)
+                    {
                         <!-- Contact Card--> 
                         <div class="col-12 col-sm-3 col-md-4 d-flex align-items-stretch flex-column">
                             <div class="card bg-light d-flex flex-fill">
@@ -210,9 +218,10 @@
                                 </div>
                             </div>
                         </div>
+                    }
                     </div>
                 </div>
-            }
+            
 
             <div class="card-footer">
                 <nav aria-label="Contacts Page Navigation">

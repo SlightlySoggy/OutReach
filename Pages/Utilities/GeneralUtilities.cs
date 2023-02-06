@@ -163,7 +163,7 @@ namespace Outreach.Pages.Utilities
             return listOpp;
 
         }
-        public List<Opportunity> SearchOpportunities(string searchtxt, string tagids = "", string orderby = "")
+        public List<Opportunity> getOpportunityListByCondition(string searchtxt, string tagids = "", string orderby = "")
         { 
 
             List<Opportunity> listOpp = new List<Opportunity>();

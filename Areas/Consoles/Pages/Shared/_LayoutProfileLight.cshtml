@@ -134,7 +134,7 @@
                 </li>
 
                 <!-- MESSAGES BUTTON -->
-
+                @*
                 <!-- Messages Dropdown Menu -->
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
@@ -226,7 +226,7 @@
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
-                </li>
+                </li>*@
                 <li class="nav-item">
                     <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
                         <i class="fas fa-th-large"></i>
@@ -293,7 +293,7 @@
                                 </li>
 
                                 <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">
+                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/Calendar/Calendarlight">
                                         <i class="fa fa-solid fa-clock nav-icon"></i>
                                         <p>
                                             Scheduling
@@ -381,8 +381,8 @@
 
                         <!-- TEAMS VIEW IN PROGRESS -->
                         <li class="list-group-item nav-item">
-                            <span style="display: table-cell; padding: 0 8px; vertical-align: middle;">
-                                    <a asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails" asp-route-OrgId=@org.Id>@org.Name</a>
+                                <span style="display: table-cell; padding: 0 8px; vertical-align: middle;">
+                                    <a class="d-inline-block text-truncate" style="max-width: 100px;" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/OrgDetails" asp-route-OrgId=@org.Id>@org.Name</a>
                             </span>
 
                             <span class="" style="display: table-cell; padding: 0 8px; vertical-align: middle;">
@@ -409,7 +409,7 @@
                                 </div>
                             </span>
 
-                            <span class="nav-link" style="display: table-cell; vertical-align: middle;">
+                            <span class="nav-link" style="display: table-cell; vertical-align: middle; width: 0.5%">
                                 <i class="balls fas fa-angle-left nav-icon"></i>
                             </span>
 
@@ -420,14 +420,6 @@
                                         <p>MEDIA</p>
                                     </a>
                                 </li>
-
-                                                                <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamDetail">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>FINANCES</p>
-                                    </a>
-                                </li>
-
                             </ul>
                         </li>
                         <!-- TEAMS VIEW IN PROGRESS END -->

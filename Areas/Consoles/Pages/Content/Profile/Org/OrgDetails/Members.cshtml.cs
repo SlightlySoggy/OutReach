@@ -90,7 +90,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             { // search lead only 
                 returnUserList = ut.GetLoginUserList("1", orgId, "1");  //get all lead members in this organization 
             }
-            if (searchType == "4")
+            else if (searchType == "4")
             { // search Regular Member only 
                 returnUserList = ut.GetLoginUserList("1", orgId, "0");  //get all regular members in this organization 
             } 
@@ -99,9 +99,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
                 returnUserList = ut.GetLoginUserList("1", orgId, "");  //get all members in this organization 
             }
 
-            if (searchType != "")
+            if (txtSearch != "") // if the search bar is not empty then search contacts via email/first name/lastname
             {
-                returnUserList= returnUserList.FindAll(x=>x.firstName.Contains(txtSearch) || x.lastName.Contains(txtSearch) || x.Email.Contains(txtSearch)).ToList();
+                returnUserList = returnUserList.FindAll(x=>x.firstName.Contains(txtSearch) || x.lastName.Contains(txtSearch) || x.Email.Contains(txtSearch)).ToList();
             }
 
             return returnUserList;
@@ -241,7 +241,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
                 {
                     InvalidEmaillist = "Invalid Email: " + InvalidEmaillist;
                 }
-                //oppList = ut.SearchOpportunities(txtSearch, "");
+                //oppList = ut.getOpportunityListByCondition(txtSearch, "");
 
                 //defaultsearchtext = txtSearch;
             }
@@ -271,7 +271,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             if (txtSearch != null || Request.Form["chkTag"] != "")
             {
                 SelectedTagIds = Request.Form["chkTag"].ToString().Split(',').ToList();
-                oppList = ut.SearchOpportunities(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
+                oppList = ut.getOpportunityListByCondition(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
             }
 
             Tag tag = new Tag();

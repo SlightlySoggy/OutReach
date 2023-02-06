@@ -81,7 +81,7 @@ namespace Outreach.Pages.Utilities
                     connection.Open();
                     string sql = "";
                     if (Opp_Id.Trim() != "")
-                        sql = "Select Id,TagName,StatusId from Tag with(nolock) where isnull(StatusId,1) = 1 and Id in (Select Id=TagId from TagTag  with(nolock) where TagId ='" + Opp_Id + "') order by TagName ";
+                        sql = "Select Id,TagName,StatusId from Tag with(nolock) where isnull(StatusId,1) = 1 and Id in (Select Id=TagId from OpportunityTag  with(nolock) where OpportunityId ='" + Opp_Id + "') order by TagName ";
                     else
                         sql = "Select Id,TagName,StatusId from Tag with(nolock) where isnull(StatusId,1) = 1 order by TagName ";
 

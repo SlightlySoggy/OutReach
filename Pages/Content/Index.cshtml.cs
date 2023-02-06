@@ -57,7 +57,7 @@ namespace Outreach.Pages.Content
 
             if (txtSearch != null || Request.Form["chktag"] != "")
             {
-                oppList = ut.SearchOpportunities(txtSearch, Request.Form["chktag"]);
+                oppList = ut.getOpportunityListByCondition(txtSearch, Request.Form["chktag"]);
             }
         }
         //Response.Redirect("Index");

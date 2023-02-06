@@ -18,7 +18,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
             if (Request.Query["Searchkeyword"].ToString() != "")
             {
                 string txtSearch = Request.Query["Searchkeyword"];
-                oppList = ut.SearchOpportunities(txtSearch, "");
+                oppList = ut.getOpportunityListByCondition(txtSearch, "");
 
                 defaultsearchtext = txtSearch;
             }
@@ -67,7 +67,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
             if (txtSearch != null || Request.Form["chkTag"] != "")
             {
                 SelectedTagIds = Request.Form["chkTag"].ToString().Split(',').ToList();
-                oppList = ut.SearchOpportunities(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
+                oppList = ut.getOpportunityListByCondition(defaultsearchtext, Request.Form["chkTag"], Request.Form["chkorderby"]);
             }
 
             Tag tag = new Tag();
