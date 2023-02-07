@@ -4,40 +4,14 @@
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
 
-<!-- Navbar -->
-<nav class="main-header navbar navbar-expand navbar-dark">
-    <!-- Left navbar links -->
+<partial name="_AdminNavPartial" />
 
-    <ul class="navbar-nav">
-        @*<li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="//Content/Tools/Scheduling/Calendar/Calendarlight">Overview</a>
-        </li>
-        
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Scheduling/KanBan/KanBanLight">Calendar</a>
-        </li>
-*@
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Org/OrgDetails/Members" asp-route-OrgId=@Model.OrgId>Members</a>
-        </li>
-@*
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamLight">Teams</a>
-        </li>
-*@
-        <li class="nav-item d-none d-sm-inline-block">
-            <a class="nav-link" asp-area="Consoles" asp-page="/Content/Tools/Opportunities/MyOpportunities/MyOpportunities" asp-route-OrgId=@Model.UserId>Opportunities</a>
-        </li>
-    </ul>
-
-
-</nav>
 <form enctype="multipart/form-data" method="post">
 
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
         <div class="row d-flex justify-content-center">
-            <div class="col-11">
+            <div class="col-8">
 
                 <!-- Main content -->
                 </br>
@@ -77,7 +51,7 @@
                                     <div class="col-12">
                                         <h4>Organization Summary</h4>
                                         <div class="post">
-                                            
+
                                             <!-- /.user-block -->
                                             <p>
                                                 Lorem ipsum represents a long-held tradition for designers,
@@ -160,6 +134,42 @@
                                     <!-- /.card-body -->
                                 </div>
                                 <!-- /.card -->
+                                
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Shortcuts</h3>
+                                        <div class="card-tools">
+                                            <button type="button" class="btn btn-tool btn-default" data-toggle="modal" data-target="#modal-lg">
+                                                Add Shortcut
+                                            </button>
+                                            @*                                <span class="badge badge-danger">8 New Members</span>
+                                            *@                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-tool" data-card-widget="remove">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-body p-0">
+                                        <ul class="users-list clearfix">
+                                            <li>
+                                                <img src="dist/img/user1-128x128.jpg" alt="User Image">
+                                                <a class="users-list-name" href="#">Google Drive</a>
+                                                <span class="users-list-date">Role</span>
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+
+                            </section>
+                            <!-- /.Left col -->
+                            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+                            <section class="col-lg-6 connectedSortable">
+
+
                                 <!-- DIRECT CHAT -->
                                 <div class="card direct-chat direct-chat-primary">
                                     <div class="card-header">
@@ -359,125 +369,136 @@
                                 <!--/.direct-chat -->
 
                             </section>
-                            <!-- /.Left col -->
+                            <!-- right col -->
+                        </div>
+                        <!-- /.row (main row) -->
+                    </div>
 
-                            <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                            <section class="col-lg-6 connectedSortable">
+                </section>
+                <!-- /.content -->
 
+            </div>
 
-                                <div class="card">
-                                    <div class="card-header border-0">
-                                        <div class="d-flex justify-content-between">
-                                            <h3 class="card-title">General Timeline</h3>
-                                            <a href="">See full timeline</a>
-                                        </div>
-                                    </div>
-                                    <div class="card-body">
-                                        <div class="row">
+            <div class="col-4">
 
-                                            <div class="col-md-12">
-
-                                                <div class="timeline">
-
-                                                    <div class="time-label">
-                                                        <span class="bg-red">10 Feb. 2014</span>
-                                                    </div>
+                <!-- Main content -->
+                </br>
+                <section class="content">
+                    <div class="container-fluid">
+                        <!-- Main row -->
+                        <div class="row">
 
 
-                                                    <div>
-                                                        <i class="fas fa-envelope bg-blue"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                                                            <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
-                                                            <div class="timeline-body">
-                                                                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                                                                weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                                                                jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                                                                quora plaxo ideeli hulu weebly balihoo...
-                                                            </div>
-                                                            <div class="timeline-footer">
-                                                                <a class="btn btn-primary btn-sm">Read more</a>
-                                                                <a class="btn btn-danger btn-sm">Delete</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div>
-                                                        <i class="fas fa-user bg-green"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
-                                                            <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div>
-                                                        <i class="fas fa-comments bg-yellow"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
-                                                            <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
-                                                            <div class="timeline-body">
-                                                                Take me to your leader!
-                                                                Switzerland is small and neutral!
-                                                                We are more like Germany, ambitious and misunderstood!
-                                                            </div>
-                                                            <div class="timeline-footer">
-                                                                <a class="btn btn-warning btn-sm">View comment</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="time-label">
-                                                        <span class="bg-green">3 Jan. 2014</span>
-                                                    </div>
-
-
-                                                    <div>
-                                                        <i class="fa fa-camera bg-purple"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
-                                                            <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
-                                                            <div class="timeline-body">
-                                                                <img src="https://placehold.it/150x100" alt="...">
-                                                                <img src="https://placehold.it/150x100" alt="...">
-                                                                <img src="https://placehold.it/150x100" alt="...">
-                                                                <img src="https://placehold.it/150x100" alt="...">
-                                                                <img src="https://placehold.it/150x100" alt="...">
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div>
-                                                        <i class="fas fa-video bg-maroon"></i>
-                                                        <div class="timeline-item">
-                                                            <span class="time"><i class="fas fa-clock"></i> 5 days ago</span>
-                                                            <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
-                                                            <div class="timeline-body">
-                                                                <div class="embed-responsive embed-responsive-16by9">
-                                                                    <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" allowfullscreen></iframe>
-                                                                </div>
-                                                            </div>
-                                                            <div class="timeline-footer">
-                                                                <a href="#" class="btn btn-sm bg-maroon">See comments</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div>
-                                                        <i class="fas fa-clock bg-gray"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
+                            <div class="">
+                                <div class="card-header border-0">
+                                    <div class="d-flex justify-content-between">
+                                        <h3 class="card-title">General Timeline</h3>
+                                        <a href="">See full timeline</a>
                                     </div>
                                 </div>
+                                <div class="card-body">
+                                    <div class="row">
 
-                            </section>
-                            <!-- right col -->
+                                        <div class="col-md-12">
+
+                                            <div class="timeline">
+
+                                                <div class="time-label">
+                                                    <span class="bg-red">10 Feb. 2014</span>
+                                                </div>
+
+
+                                                <div>
+                                                    <i class="fas fa-envelope bg-blue"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                                                        <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+                                                        <div class="timeline-body">
+                                                            Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                                                            weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                                                            jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                                                            quora plaxo ideeli hulu weebly balihoo...
+                                                        </div>
+                                                        <div class="timeline-footer">
+                                                            <a class="btn btn-primary btn-sm">Read more</a>
+                                                            <a class="btn btn-danger btn-sm">Delete</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div>
+                                                    <i class="fas fa-user bg-green"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+                                                        <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
+                                                    </div>
+                                                </div>
+
+
+                                                <div>
+                                                    <i class="fas fa-comments bg-yellow"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+                                                        <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+                                                        <div class="timeline-body">
+                                                            Take me to your leader!
+                                                            Switzerland is small and neutral!
+                                                            We are more like Germany, ambitious and misunderstood!
+                                                        </div>
+                                                        <div class="timeline-footer">
+                                                            <a class="btn btn-warning btn-sm">View comment</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="time-label">
+                                                    <span class="bg-green">3 Jan. 2014</span>
+                                                </div>
+
+
+                                                <div>
+                                                    <i class="fa fa-camera bg-purple"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
+                                                        <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+                                                        <div class="timeline-body">
+                                                            <img src="https://placehold.it/150x100" alt="...">
+                                                            <img src="https://placehold.it/150x100" alt="...">
+                                                            <img src="https://placehold.it/150x100" alt="...">
+                                                            <img src="https://placehold.it/150x100" alt="...">
+                                                            <img src="https://placehold.it/150x100" alt="...">
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                                <div>
+                                                    <i class="fas fa-video bg-maroon"></i>
+                                                    <div class="timeline-item">
+                                                        <span class="time"><i class="fas fa-clock"></i> 5 days ago</span>
+                                                        <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
+                                                        <div class="timeline-body">
+                                                            <div class="embed-responsive embed-responsive-16by9">
+                                                                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" allowfullscreen></iframe>
+                                                            </div>
+                                                        </div>
+                                                        <div class="timeline-footer">
+                                                            <a href="#" class="btn btn-sm bg-maroon">See comments</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div>
+                                                    <i class="fas fa-clock bg-gray"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <!-- /.row (main row) -->
                     </div>
