@@ -19,11 +19,10 @@
 
     List<Organization> OrganizationList = new List<Organization>();
 
+
     GeneralUtilities ut = new GeneralUtilities();
 
     OrganizationList = ut.GetOrganizationListByUserGUID(user.Id);
-
-
     
 
 
@@ -409,18 +408,24 @@
                                 </div>
                             </span>
 
-                            <span class="nav-link" style="display: table-cell; vertical-align: middle; width: 0.5%">
+                             <span class="nav-link" style="display: table-cell; vertical-align: middle; width: 0.5%">
                                 <i class="balls fas fa-angle-left nav-icon"></i>
-                            </span>
-
-                            <ul class="nav nav-treeview">
-                                <li>
-                                    <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamDetail">
-                                        <i class="far fa-circle nav-icon"></i>
-                                        <p>MEDIA</p>
-                                    </a>
-                                </li>
-                            </ul>
+                             </span>
+                                <ul class="nav nav-treeview">
+                                @{
+                                    List<Team> Teamlist = new List<Team>(); Teamlist = ut.GetTeamListByOrgIdAndUserGUID(org.Id, user.Id);
+                                }
+                                @foreach (var t in Teamlist)
+                                        
+                                {
+                                    <li>
+                                        <a class="nav-link" asp-area="Consoles" asp-page="/Content/Profile/Team/TeamDetail" asp-route-TeamId=@t.Id>
+                                            <i class="far fa-circle nav-icon"></i>
+                                                <p>@t.Name</p> 
+                                        </a>
+                                    </li>
+                                }
+                                </ul>
                         </li>
                         <!-- TEAMS VIEW IN PROGRESS END -->
 
@@ -429,6 +434,7 @@
                     </ul>
                 </nav>
 
+                 
 
 
 

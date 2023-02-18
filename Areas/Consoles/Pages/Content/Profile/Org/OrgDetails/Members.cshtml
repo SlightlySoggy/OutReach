@@ -4,7 +4,8 @@
     Layout = "/Areas/Consoles/Pages/Shared/_LayoutProfileLight.cshtml";
 }
 
-<partial name="_AdminNavPartial" />
+<partial name="_AdminNavPartial" model="Model"  />
+@*@Html.Partial("_AdminNavPartial",Model)*@
 
 <div class="content-wrapper">
 
@@ -94,7 +95,7 @@
                                     </div>
 
                                     <input type="hidden" class="form-control" placeholder="" name="hidUserId1" value="@Model.user_id">
-                                    <input type="hidden" class="form-control" placeholder="" name="hidOrgid1" value="@Model.orgInfo.Id">
+                                    <input type="hidden" class="form-control" placeholder="" name="hidOrgId1" value="@Model.orgInfo.Id">
 
                                 </form>
                             </div>
@@ -254,7 +255,7 @@
                         </div>
 
                         <input type="hidden" class="form-control" placeholder="" name="hidUserId" value="@Model.user_id">
-                        <input type="hidden" class="form-control" placeholder="" name="hidOrgid" value="@Model.orgInfo.Id">
+                        <input type="hidden" class="form-control" placeholder="" name="hidOrgId" value="@Model.orgInfo.Id">
                     </div>
 
 

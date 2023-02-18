@@ -31,7 +31,8 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 
 
         public Organization orgInfo = new Organization();
-        public string orgId = "";
+        public string OrgId = "";
+        public string UserId = "";
         public string ValidEmaillist = "";
         public string InvalidEmaillist = "";
         public List<Opportunity> oppList { get; set; }
@@ -68,9 +69,9 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
         public void OnGet()
         {
             if (!string.IsNullOrWhiteSpace(Request.Query["OrgId"]))
-            { // must has an OrgID passed in    
-                orgId = Request.Query["OrgId"];
-                orgInfo = new Organization(orgId); 
+            { // must has an OrgId passed in    
+                OrgId = Request.Query["OrgId"];
+                orgInfo = new Organization(OrgId); 
 
             }
             OrgMemberList = GeMemberByCondition(); 
@@ -88,15 +89,15 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
             }
             else if(searchType == "3")
             { // search lead only 
-                returnUserList = ut.GetLoginUserList("1", orgId, "1");  //get all lead members in this organization 
+                returnUserList = ut.GetLoginUserList("1", OrgId, "1");  //get all lead members in this organization 
             }
             else if (searchType == "4")
             { // search Regular Member only 
-                returnUserList = ut.GetLoginUserList("1", orgId, "0");  //get all regular members in this organization 
+                returnUserList = ut.GetLoginUserList("1", OrgId, "0");  //get all regular members in this organization 
             } 
             else
             {
-                returnUserList = ut.GetLoginUserList("1", orgId, "");  //get all members in this organization 
+                returnUserList = ut.GetLoginUserList("1", OrgId, "");  //get all members in this organization 
             }
 
             if (txtSearch != "") // if the search bar is not empty then search contacts via email/first name/lastname
@@ -113,10 +114,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
         {
             string searchType = Request.Form["selSearchType"];
             string txtSearch = Request.Form["Searchkeyword"];
-            if (!string.IsNullOrWhiteSpace(Request.Form["hidOrgid1"]))
-            { // must has an OrgID passed in    
-                orgId = Request.Form["hidOrgid1"];
-                orgInfo = new Organization(orgId);
+            if (!string.IsNullOrWhiteSpace(Request.Form["hidOrgId1"]))
+            { // must has an OrgId passed in    
+                OrgId = Request.Form["hidOrgId1"];
+                orgInfo = new Organization(OrgId);
 
             }
 
@@ -129,11 +130,11 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
         {
             Random random = new Random();
             int randomNumber = random.Next(1000, 9999);
-            string returnUrl = "Members?OrgId=" + Request.Form["hidOrgid"] + "&Random=" + randomNumber.ToString(); //Url.Content("~/");
+            string returnUrl = "Members?OrgId=" + Request.Form["hidOrgId"] + "&Random=" + randomNumber.ToString(); //Url.Content("~/");
 
-            if (!string.IsNullOrWhiteSpace(Request.Form["hidOrgid"]))
+            if (!string.IsNullOrWhiteSpace(Request.Form["hidOrgId"]))
             {
-                orgId = Request.Form["hidOrgid"];
+                OrgId = Request.Form["hidOrgId"];
             }
             else
             {
@@ -198,7 +199,7 @@ namespace Outreach.Areas.Consoles.Pages.Content.Profile.Org.OrgDetails
 
                 List<UserLinkage> memberTobeDeletedIds = new List<UserLinkage>(); //nothing to be deleted, only add new here
 
-                result = ut.ProcessLinkedUsers(memberTobeDeletedIds, validUserId, "1", orgId, "0");
+                result = ut.ProcessLinkedUsers(memberTobeDeletedIds, validUserId, "1", OrgId, "0");
 
             }
             if (InvalidEmaillist != "")

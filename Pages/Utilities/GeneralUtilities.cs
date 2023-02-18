@@ -805,13 +805,37 @@ namespace Outreach.Pages.Utilities
             bool isNum = Double.TryParse(Convert.ToString(Expression), System.Globalization.NumberStyles.Any, System.Globalization.NumberFormatInfo.InvariantInfo, out retNum);
             return isNum;
         }
-         
 
+        // -------------------------------------------------
+        public List<Team> GetTeamListByOrgIdAndUserGUID(String OrgId, String Guid)
+        { // retrive Team/Team info by part of its name 
+
+            List<Team> teamlist = new List<Team>();
+            string sql = "";
+
+            if (Guid.Trim() != "" && OrgId != "") 
+            {
+                sql = "Select t.Id,t.Name,t.Description,t.OrganizationId,t.CreatedDate,t.CreatedUserId,t.StatusId,Status=st.StatusName" +
+                    " from Team t with(nolock) " +
+                    " left join StandardStatus st on st.Id = t.StatusId " +
+                    " left join Organization o on o.Id = t.OrganizationId " +
+                    " where t.statusid=1 and o.Id= '" + OrgId + "' " +
+                    " and exists (select ul.UserId from UserLinkage ul inner join AspNetUsers u2 on u2.User_Id = ul.UserId where ul.GroupTypeId=2 and ul.LinkedGroupId=t.Id " +
+                    " and u2.Id= '" + Guid + "')";
+            } 
+
+            teamlist = GetTeamListBySQLQuery(sql);
+
+            return teamlist;
+        }
+        //" exists (select ul.UserId from UserLinkage ul inner join AspNetUsers u2 on u2.User_Id = ul.UserId where ul.GroupTypeId=2 and ul.LinkedGroupId=t.Id and ul.IsLead=1 " +
+
+        // -------------------------------------------------
 
         public List<Team> GetTeamListByNameSearch(string NameSearch = "")
         { // retrive Team/Team info by part of its name 
 
-            List<Team> listPro = new List<Team>();
+            List<Team> teamlist = new List<Team>();
             string sql = "";
 
             if (NameSearch.Trim() != "")
@@ -823,16 +847,15 @@ namespace Outreach.Pages.Utilities
                 sql = "Select t.Id,Name,Description,OrganizationId,CreatedDate,CreatedUserId,StatusId ,Status=st.StatusName from Team t with(nolock)  left join StandardStatus st on st.Id = t.StatusId  where t.statusid=1  order by t.Name ";
             }
 
-            listPro = GetTeamListBySQLQuery(sql);
+            teamlist = GetTeamListBySQLQuery(sql);
 
-            return listPro;
+            return teamlist;
         }
-
 
         public List<Team> GetTeamListBySQLQuery(string sql)
         { // retrive Project data by given sql query
 
-            List<Team> listPro = new List<Team>();
+            List<Team> teamlist = new List<Team>();
 
             try
             {
@@ -887,7 +910,7 @@ namespace Outreach.Pages.Utilities
                                 }
 
 
-                                listPro.Add(p);
+                                teamlist.Add(p);
                             }
                         }
                     }
@@ -898,7 +921,7 @@ namespace Outreach.Pages.Utilities
                 Console.WriteLine("Exception: " + ex.Message.ToString());
             }
 
-            return listPro;
+            return teamlist;
         }
 
 
@@ -922,6 +945,8 @@ namespace Outreach.Pages.Utilities
 
             return userlist;
         }
+
+
 
         public List<TeamUser> GetTeamUserListbySQL(string sql)
         { // retrive TeamTask_User data by TeamTask_User ID

@@ -7,6 +7,10 @@ namespace Outreach.Areas.Consoles.Pages.Content.Tools.Opportunities.MyOpportunit
 {
     public class MyOpportunitiesModel : PageModel
     {
+        public string OrgId = "";
+        public string UserId = "";
+        public string ValidEmaillist = "";
+        public string InvalidEmaillist = "";
         public List<Opportunity> oppList { get; set; }
         public List<Tag> ListTag = new List<Tag>();
         public List<string> SelectedTagIds = new List<string>();
