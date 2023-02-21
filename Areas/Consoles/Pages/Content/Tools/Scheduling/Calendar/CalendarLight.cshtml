@@ -7,71 +7,277 @@
 <!-- fullCalendar -->
 <link rel="stylesheet" href="../plugins/fullcalendar/main.css">
 
+<style>
+
+
+
+#event-modal {
+  position: relative;
+  z-index: 7;
+}
+
+.modal-dialog {
+    position: fixed;
+    width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+</style>
+
 <partial name="_AdminNavPartial" model="Model" />
 
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
-</br>
+    </br>
 
     <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="sticky-top mb-3">
-                        <div class="card">
-                            <div class="card-header">
-                                <h4 class="card-title">Draggable Events</h4>
-                            </div>
-                            <div class="card-body">
-                                <!-- the events -->
-                                <div id="external-events">
-                                    <div class="external-event bg-success">Lunch</div>
-                                    <div class="external-event bg-warning">Go home</div>
-                                    <div class="external-event bg-info">Do homework</div>
-                                    <div class="external-event bg-primary">Work on UI design</div>
-                                    <div class="external-event bg-danger">Sleep tight</div>
-                                    <div class="checkbox">
-                                        <label for="drop-remove">
-                                            <input type="checkbox" id="drop-remove">
-                                            remove after drop
-                                        </label>
-                                    </div>
+            <section class="row">
+                <section class="col-lg-3 connectedSortable">
+                    @*                    <div class="sticky-top mb-3">*@
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Draggable Events</h4>
+                        </div>
+                        <div class="card-body">
+                            <!-- the events -->
+                            <div id="external-events">
+                                <div class="external-event bg-success">Lunch</div>
+                                <div class="external-event bg-warning">Go home</div>
+                                <div class="external-event bg-info">Do homework</div>
+                                <div class="external-event bg-primary">Work on UI design</div>
+                                <div class="external-event bg-danger">Sleep tight</div>
+                                <div class="checkbox">
+                                    <label for="drop-remove">
+                                        <input type="checkbox" id="drop-remove">
+                                        remove after drop
+                                    </label>
                                 </div>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Create Event</h3>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- /.card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Create Event</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
+                                <ul class="fc-color-picker" id="color-chooser">
+                                    <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
+                                    <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
+                                    <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
+                                    <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
+                                    <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
+                                </ul>
                             </div>
-                            <div class="card-body">
-                                <div class="btn-group" style="width: 100%; margin-bottom: 10px;">
-                                    <ul class="fc-color-picker" id="color-chooser">
-                                        <li><a class="text-primary" href="#"><i class="fas fa-square"></i></a></li>
-                                        <li><a class="text-warning" href="#"><i class="fas fa-square"></i></a></li>
-                                        <li><a class="text-success" href="#"><i class="fas fa-square"></i></a></li>
-                                        <li><a class="text-danger" href="#"><i class="fas fa-square"></i></a></li>
-                                        <li><a class="text-muted" href="#"><i class="fas fa-square"></i></a></li>
-                                    </ul>
+                            <!-- /btn-group -->
+                            <div class="input-group">
+                                <input id="new-event" type="text" class="form-control" placeholder="Event Title">
+
+                                <div class="input-group-append">
+                                    <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
                                 </div>
                                 <!-- /btn-group -->
-                                <div class="input-group">
-                                    <input id="new-event" type="text" class="form-control" placeholder="Event Title">
-
-                                    <div class="input-group-append">
-                                        <button id="add-new-event" type="button" class="btn btn-primary">Add</button>
-                                    </div>
-                                    <!-- /btn-group -->
-                                </div>
-                                <!-- /input-group -->
                             </div>
+                            <!-- /input-group -->
                         </div>
                     </div>
-                </div>
+
+                    <!-- TO DO List -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="ion ion-clipboard mr-1"></i>
+                                To Do List
+                            </h3>
+
+                            @*                                    <div class="card-tools">
+                            <ul class="pagination pagination-sm">
+                            <li class="page-item"><a href="#" class="page-link">&laquo;</a></li>
+                            <li class="page-item"><a href="#" class="page-link">1</a></li>
+                            <li class="page-item"><a href="#" class="page-link">2</a></li>
+                            <li class="page-item"><a href="#" class="page-link">3</a></li>
+                            <li class="page-item"><a href="#" class="page-link">&raquo;</a></li>
+                            </ul>
+                            </div>*@
+                        </div>
+                        <!-- /.card-header -->
+                        <div class="card-body">
+                            <ul class="todo-list" data-widget="todo-list">
+                                <li>
+                                    <!-- drag handle -->
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <!-- checkbox -->
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo1" id="todoCheck1">
+                                        <label for="todoCheck1"></label>
+                                    </div>
+                                    <!-- todo text -->
+                                    <span class="text">Design a nice theme</span>
+                                    <!-- Emphasis label -->
+                                    <small class="badge badge-danger"><i class="far fa-clock"></i> 2 mins</small>
+                                    <!-- General tools such as edit or delete-->
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo2" id="todoCheck2" checked>
+                                        <label for="todoCheck2"></label>
+                                    </div>
+                                    <span class="text">Make the theme responsive</span>
+                                    <small class="badge badge-info"><i class="far fa-clock"></i> 4 hours</small>
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo3" id="todoCheck3">
+                                        <label for="todoCheck3"></label>
+                                    </div>
+                                    <span class="text">Let theme shine like a star</span>
+                                    <small class="badge badge-warning"><i class="far fa-clock"></i> 1 day</small>
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo4" id="todoCheck4">
+                                        <label for="todoCheck4"></label>
+                                    </div>
+                                    <span class="text">Let theme shine like a star</span>
+                                    <small class="badge badge-success"><i class="far fa-clock"></i> 3 days</small>
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo5" id="todoCheck5">
+                                        <label for="todoCheck5"></label>
+                                    </div>
+                                    <span class="text">Check your messages and notifications</span>
+                                    <small class="badge badge-primary"><i class="far fa-clock"></i> 1 week</small>
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span class="handle">
+                                        <i class="fas fa-ellipsis-v"></i>
+                                        <i class="fas fa-ellipsis-v"></i>
+                                    </span>
+                                    <div class="icheck-primary d-inline ml-2">
+                                        <input type="checkbox" value="" name="todo6" id="todoCheck6">
+                                        <label for="todoCheck6"></label>
+                                    </div>
+                                    <span class="text">Let theme shine like a star</span>
+                                    <small class="badge badge-secondary"><i class="far fa-clock"></i> 1 month</small>
+                                    <div class="tools">
+                                        <i class="fas fa-edit"></i>
+                                        <i class="fas fa-trash-o"></i>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- /.card-body -->
+                        <div class="card-footer clearfix">
+                            <button type="button" class="btn btn-primary float-right"><i class="fas fa-plus"></i> Add item</button>
+                        </div>
+                    </div>
+                    <!-- /.card -->
+                    @*                    </div>*@
+
+
+
+                    <!-- Modals -->
+
+
+@*                    <div class="modal fade" id="event-modal" role="dialog" aria-labelledby="myModalLabel" style=" top: 70px; left: 250px;">
+*@                    <div class="modal-dialog modal-lg" style="z-index: 2;">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Edit Event</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <!-- Pills navs -->
+                                    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="tab-login"
+                                               aria-controls="pills-login" asp-page="./Login" asp-route-returnUrl="">Invite</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="tab-register"
+                                               aria-controls="pills-register" asp-page="./Register" asp-route-returnUrl="">Invite With Link</a>
+                                        </li>
+                                    </ul>
+                                    <br />
+
+
+                                    <div class="row g-3">
+
+
+                                        <div class="col-12">
+                                            <div class="form-floating">
+                                                <label for="message">Email Addresses:</label>
+                                                <select data-tags="true" class="select2" multiple="multiple" name="MemberEmailList"></select>
+                                            </div>
+                                        </div>
+
+                                        <input type="hidden" class="form-control" placeholder="" name="hidUserId" value="">
+                                        <input type="hidden" class="form-control" placeholder="" name="hidOrgId" value="">
+                                    </div>
+
+
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+ @*                   </div>*@
+
+                </section>
                 <!-- /.col -->
-                <div class="col-md-9">
+                <section class="col-md-9">
                     <div class="card card-primary">
                         <div class="card-body p-0">
                             <!-- THE CALENDAR -->
@@ -80,22 +286,19 @@
                         <!-- /.card-body -->
                     </div>
                     <!-- /.card -->
-                </div>
+                </section>
                 <!-- /.col -->
-            </div>
-            <!-- /.row -->
-        </div><!-- /.container-fluid -->
+            </section>
+        </div>
+        <!-- /.row -->
     </section>
-    <!-- /.content -->
-</div>
+</div><!-- /.container-fluid -->
 <!-- /.content-wrapper -->
-
 <!-- Control Sidebar -->
 <aside class="control-sidebar control-sidebar-dark">
     <!-- Control sidebar content goes here -->
 </aside>
 <!-- /.control-sidebar -->
-
 <!-- ./wrapper -->
 <!-- jQuery -->
 <script src="../plugins/jquery/jquery.min.js"></script>
@@ -112,52 +315,6 @@
 
 
 <script>
-    function SaveCal() {
-        alert("aa");
-        //var eventsFromCalendar = $('#calendar').fullCalendar('#external-events');
-        var eventsFromCalendar = $('#calendar');
-        
-        alert(eventsFromCalendar);
-        //alert(eventsFromCalendar.getEventById('a1'));
-        var a = eventsFromCalendar.getEvents();
-
-        alert(a);
-
-        var a1 = $('#calendar').getEventById('a1'); // an event object!
-
-        alert(a1);
-
-    //    var events = $.map(eventsFromCalendar, function (item, i) {
-    //        var event = new Object();
-    //        event.id = item.id;
-    //        event.start = item.start;
-    //        event.end = item.end;
-    //        event.title = item.title;
-    //        event.color = item.color;
-    //        return event;
-    //    });
-
-    //    $.ajax(
-    //        {
-    //            type: 'POST',
-    //            contentType: 'application/json',
-    //            data: JSON.stringify(events),     ** <--I have to pass data here but how ???**
-    //                dataType : 'json',
-    //        url: "Calendar.aspx/SaveEvents",
-    //        cache: false,
-    //        success: function (response) {
-    //            alert('Events saved successfully');
-    //        },
-
-    //        error: function (err) {
-    //            alert('Error Saving Events');
-    //        }
-    //            });
-    //return false;
-    //        
-    }
-</script>
-<script>
     document.addEventListener('DOMContentLoaded', function () {
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -168,23 +325,20 @@
                 center: 'title',
                 end: 'dayGridMonth,timeGridWeek,timeGridDay'
             },
-            selectable: true, //can click to set event
+            //selectable: true, //can click to set event
             selectMirror: true, // so it's solid
             unselectAuto: false, //if you click outside calendar, event doesn't disappear, but if you click inside calendar, event still disappears
             eventStartEditable: true,
             eventResizableFromStart: true,
             eventDurationEditable: true,
-            select: function (selectionInfo) {
-                calendar.addEvent({
-                    title: 'dynamic event',
-                    start: selectionInfo.start,
-                    end: selectionInfo.end //need these and not endTime/startTime, otherwise they won't re-render
-                });
-                calendar.unselect();
-            },
-            eventClick: function (eventClickInfo) {
-                eventClickInfo.event.remove();
-            }
+            //select: function (selectionInfo) {
+            //    calendar.addEvent({
+            //        title: 'dynamic event',
+            //        start: selectionInfo.start,
+            //        end: selectionInfo.end //need these and not endTime/startTime, otherwise they won't re-render
+            //    });
+            //    calendar.unselect();
+            //}
 
 
 
@@ -199,9 +353,8 @@
         document.getElementById('getevent').addEventListener('click', getEvents);
 
     });
-</script>
-<script>
-   
+
+
     $(function () {
 
         /* initialize the external events
@@ -270,15 +423,15 @@
             //Random default events
             events: [
                 {
-                    id:'a1',
+                    id: 'a1',
                     title: 'All Day Evnt',
                     start: new Date(y, m, 1),
                     backgroundColor: '#f56954', //red
                     borderColor: '#f56954', //red
                     allDay: true
-                },  
+                },
                 {
-                    id:'a2',
+                    id: 'a2',
                     title: 'Long Event',
                     start: new Date(y, m, d - 5),
                     end: new Date(y, m, d - 2),
@@ -286,7 +439,7 @@
                     borderColor: '#f39c12' //yellow
                 },
                 {
-                    id:'a3',
+                    id: 'a3',
                     title: 'Meeting',
                     start: new Date(y, m, d, 10, 30),
                     allDay: false,
@@ -294,7 +447,7 @@
                     borderColor: '#0073b7' //Blue
                 },
                 {
-                    id:'a4',
+                    id: 'a4',
                     title: 'Lunch',
                     start: new Date(y, m, d, 12, 0),
                     end: new Date(y, m, d, 14, 0),
@@ -303,7 +456,7 @@
                     borderColor: '#00c0ef' //Info (aqua)
                 },
                 {
-                    id:'a5',
+                    id: 'a5',
                     title: 'Birthday Party',
                     start: new Date(y, m, d + 1, 19, 0),
                     end: new Date(y, m, d + 1, 22, 30),
@@ -321,7 +474,33 @@
                     borderColor: '#3c8dbc' //Primary (light-blue)
                 }
             ],
+            //select:{
+            //    // show modal dialog
+            //    $('#event-modal').modal('show');
+
+            //    /*
+            //    bind event submit. Will perform a ajax call in order to save the event to the database.
+            //    When save is successful, close modal dialog and refresh fullcalendar.
+            //    */
+            //    /*
+            //    $("#event-modal").find('form').on('submit', function() {
+            //        $.ajax({
+            //            url: 'yourFileUrl.php',
+            //            data: $("#event-modal").serialize(),
+            //            type: 'post',
+            //            dataType: 'json',
+            //            success: function(response) {
+            //                // if saved, close modal
+            //                $("#event-modal").modal('hide');
+
+            //                // refetch event source, so event will be showen in calendar
+            //                $("#calendar").fullCalendar( 'refetchEvents' );
+            //            }
+            //        });
+            //    });*/
+            //},
             editable: true,
+            selectable: true,
             droppable: true, // this allows things to be dropped onto the calendar !!!
             drop: function (info) {
                 // is the "remove after drop" checkbox checked?
@@ -329,6 +508,40 @@
                     // if so, remove the element from the "Draggable Events" list
                     info.draggedEl.parentNode.removeChild(info.draggedEl);
                 }
+            },
+            select: function (info) {
+                //alert('selected ' + info.startStr + ' to ' + info.endStr);
+
+                // reset modal if it isn't visible
+                 
+                //alert($('.modal-dialog').css);
+                if (!($('.modal.in').length)) {
+                    $('.modal-dialog').css({
+                        top: 100,
+                        left: 300
+                    });
+                }
+                 
+
+                $('#event-modal').modal({
+                    backdrop: false,
+                    show: true
+                });
+
+                $('.modal-dialog').draggable({
+                    handle: ".modal-header"
+                });
+
+            },
+
+            eventClick: function (eventClickInfo) {
+                //eventClickInfo.event.remove();
+                //$('#event-modal').modal('show');
+                var a = (calendar.getEvents());
+                const myJSON = JSON.stringify(a);
+                document.getElementById("hiddencalendararray").value = myJSON;
+                alert(document.getElementById("hiddencalendararray").value);
+
             }
         });
 
